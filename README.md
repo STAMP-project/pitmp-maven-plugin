@@ -14,3 +14,6 @@ Maven plugin to handle multimodule project for Pitest-Descartes
         <version>0.1.0</version>
       </plugin>
 
+4. Run Descartes
+   mvn descartes:descartes
+
