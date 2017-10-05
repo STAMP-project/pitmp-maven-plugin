@@ -6,8 +6,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 
 // **********************************************************************
-@Mojo(name = "descartes")
-public class DescartesMojo extends AbstractMojo
+@Mojo(name = "hello")
+public class DescartesHelloMojo extends AbstractMojo
 {
    // **********************************************************************
    // public
