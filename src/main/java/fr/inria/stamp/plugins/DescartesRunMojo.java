@@ -110,6 +110,8 @@ public class DescartesRunMojo extends AbstractMojo
       String nextIndentation = indentation + "   ";
       DependencyManagement dependencyManager = null;
 
+      if (pomFile.exists())
+      {
       try
       {
          MyProjectModel = mavenReader.read(new FileReader(pomFile));
@@ -146,6 +148,11 @@ public class DescartesRunMojo extends AbstractMojo
       {          
          System.out.println(indentation + "# " + aModule);
          readDependencies(aModule, nextIndentation);
+      }
+      }
+      else
+      {
+         System.out.println(indentation + "#skipping descartes: no pom.xml");
       }
    }
 
