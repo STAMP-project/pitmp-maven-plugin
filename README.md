@@ -1,8 +1,6 @@
-descartes-maven-plugin
-
 Descartes Maven plugin
 ----------------------
-To handle multimodule project for Pitest-Descartes
+To handle multi-module project for Pitest-Descartes
 
 Being developed, not ready yet . :-)
 
