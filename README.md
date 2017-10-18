@@ -9,6 +9,7 @@ Install the plugin
 ------------------
 ```
 git clone https://github.com/STAMP-project/descartes-maven-plugin.git
+cd descartes-maven-plugin
 mvn install
 ```
 
