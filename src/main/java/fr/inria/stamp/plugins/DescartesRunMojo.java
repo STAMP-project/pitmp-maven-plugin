@@ -1,165 +1,111 @@
 package fr.inria.stamp.plugins;
 
 // **********************************************************************
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.plugins.annotations.ResolutionScope;
-
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
-import org.apache.maven.model.Model;
-import org.apache.maven.model.DependencyManagement;
-import org.apache.maven.model.Dependency;
-
 import java.util.*;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+
+import org.pitest.functional.Option;
+import org.pitest.functional.predicate.Predicate;
+import org.pitest.mutationtest.config.PluginServices;
+import org.pitest.mutationtest.config.ReportOptions;
+import org.pitest.mutationtest.tooling.CombinedStatistics;
+
+import org.pitest.maven.AbstractPitMojo;
+import org.pitest.maven.GoalStrategy;
+import org.pitest.maven.DependencyFilter;
+import org.pitest.maven.NonEmptyProjectCheck;
+import org.pitest.maven.MojoToReportOptionsConverter;
+import org.pitest.maven.SurefireConfigConverter;
 
 // **********************************************************************
-// @Mojo(name = "run", requiresDependencyResolution = ResolutionScope.TEST)
-@Mojo(name = "run")
-public class DescartesRunMojo extends AbstractMojo
+@Mojo(name = "run", defaultPhase = LifecyclePhase.VERIFY,
+   requiresDependencyResolution = ResolutionScope.TEST)
+public class DescartesRunMojo extends AbstractPitMojo
 {
    // **********************************************************************
    // public
    // **********************************************************************
    // ******** attributes
-   @Parameter(defaultValue = "${project.build.directory}",
-      property = "outputDir", required = true)
-   private File outputDirectory;
-
-   String OutputFileName;
 
    // **********************************************************************
    // ******** methods
-   DescartesRunMojo()
+   public DescartesRunMojo()
    {
-      OutputFileName = "descartes.results";
+      super(new RunDescartesStrategy(),
+         new DependencyFilter(new PluginServices
+            (AbstractPitMojo.class.getClassLoader())),
+         new PluginServices(AbstractPitMojo.class.getClassLoader()),
+         new NonEmptyProjectCheck());
    }
 
    // **********************************************************************
-   // org.apache.maven.plugin.MojoExecutionException
-   //    if an unexpected problem occurs: ==> "BUILD ERROR"
-   // org.apache.maven.plugin.MojoFailureException
-   //    if an expected problem: ==> "BUILD FAILURE"
-   public void execute() throws MojoExecutionException
+   // public DescartesRunMojo(final GoalStrategy strategy,
+   //   final Predicate<Artifact> filter, final PluginServices plugins,
+   //   final Predicate<MavenProject> nonEmptyProjectCheck)
+   // {
+   //    super(strategy, filter, plugins, nonEmptyProjectCheck);
+   // }
+
+   // **********************************************************************
+   // protected
+   // **********************************************************************
+   // ******** methods
+   @Override
+   protected Option<CombinedStatistics> analyse()
+      throws MojoExecutionException
    {
-      getLog().info("Hello, I'll run Descartes ASAP. :-)");
+      Option<CombinedStatistics> result;
 
-      createOutputDir();
+      // this.targetClasses = makeConcreteList(findModifiedClassNames());
+      //
+      // if (this.targetClasses.isEmpty())
+      // {
+      //    this.getLog().info
+      //       ("No modified files found - nothing to mutation test, analyseLastCommit="
+      //        + this.analyseLastCommit);
+      //    result = Option.none();
+      // }
+      // else
+      // {
+      //    logClassNames();
+      //    defaultTargetTestsToGroupNameIfNoValueSet();
+      //    final ReportOptions data = new MojoToReportOptionsConverter(this,
+      //       new SurefireConfigConverter(), filter).convert();
+      //    data.setFailWhenNoMutations(false);
+      //
+      //    result = Option.some(this.goalStrategy.execute(detectBaseDir(), data,
+      //       plugins, new HashMap<String, String>()));
+      // }
 
-      readDependencies(".", "       ");
+      System.out.println("################ DescartesRunMojo: extends AbstractPitMojo for multi-module project");
+
+      final ReportOptions data = new MojoToReportOptionsConverter(this,
+        new SurefireConfigConverter(), filter).convert();
+
+      // data.setFailWhenNoMutations(false);
+
+      System.out.println("################ ReportOptions");
+
+      result = Option.some(this.goalStrategy.execute(detectBaseDir(), data,
+         this.plugins, this.getEnvironmentVariables()));
+
+      return(result);
    }
 
    // **********************************************************************
    // private
    // **********************************************************************
    // ******** attributes
-   Model MyProjectModel;
 
    // **********************************************************************
    // ******** methods
-   public void createOutputDir() throws MojoExecutionException
-   {
-      if (! outputDirectory.exists())
-      {
-         outputDirectory.mkdirs();
-      }
-
-      File resultFile = new File(outputDirectory, OutputFileName);
-
-      FileWriter myWriter = null;
-      try
-      {
-         myWriter = new FileWriter(resultFile);
-         myWriter.write(OutputFileName);
-      }
-      catch (IOException e)
-      {
-         throw new MojoExecutionException("Error creating file " + resultFile, e);
-      }
-      finally
-      {
-         if (myWriter != null)
-         {
-            try
-            {
-               myWriter.close();
-            }
-            catch (IOException e)
-            {
-               // ignore
-            }
-         }
-      }
-   }
-
-   // **********************************************************************
-   public void readDependencies(String pomDir, String indentation)
-      throws MojoExecutionException
-   {
-      MavenXpp3Reader mavenReader = new MavenXpp3Reader();
-      List<Dependency> theDependencies;
-      List<String> theModules;
-      File pomFile = new File(pomDir + "/pom.xml");
-      String nextIndentation = indentation + "   ";
-      DependencyManagement dependencyManager = null;
-
-      if (pomFile.exists())
-      {
-      try
-      {
-         MyProjectModel = mavenReader.read(new FileReader(pomFile));
-      }
-      catch (Exception e)
-      {
-         throw new MojoExecutionException
-            ("ReadDependencies phase: Error reading file " + pomFile, e);
-      }
-
-      dependencyManager = MyProjectModel.getDependencyManagement();
-      if (dependencyManager != null)
-      {
-         theDependencies = dependencyManager.getDependencies();
-         System.out.println(indentation + "DependencyManagement dependencies (" +
-            theDependencies.size() + "): ");
-         for (Dependency aDependency: theDependencies)
-         {          
-            printDependency(indentation, aDependency);
-         }
-      }
-
-      theDependencies = MyProjectModel.getDependencies();
-      System.out.println(indentation + "Dependencies (" + theDependencies.size() +
-         "): ");
-      for (Dependency aDependency: theDependencies)
-      {          
-         printDependency(indentation, aDependency);
-      }
-
-      theModules = MyProjectModel.getModules();
-      System.out.println(indentation + "Modules (" + theModules.size() + "): ");
-      for (String aModule: theModules)
-      {          
-         System.out.println(indentation + "# " + aModule);
-         readDependencies(aModule, nextIndentation);
-      }
-      }
-      else
-      {
-         System.out.println(indentation + "#skipping descartes: no pom.xml");
-      }
-   }
-
-   // **********************************************************************
-   public void printDependency(String indentation, Dependency aDependency)
-   {
-      System.out.println(indentation + "# " + aDependency.getArtifactId() + " (scope: " + 
-         aDependency.getScope() + ")");
-   }
 }

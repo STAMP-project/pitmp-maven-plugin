@@ -6,7 +6,7 @@
 
   <groupId>fr.inria.stamp.plugins</groupId>
   <artifactId>descartes-maven-plugin</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <packaging>maven-plugin</packaging>
 
   <name>Maven plugin to handle multimodule project for Pitest-Descartes</name>
@@ -32,11 +32,34 @@
       <version>3.4</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-project</artifactId>
+      <version>2.0.11</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.pitest</groupId>
+      <artifactId>pitest</artifactId>
+      <version>1.2.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.pitest</groupId>
+      <artifactId>pitest-entry</artifactId>
+      <version>1.2.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.pitest</groupId>
+      <artifactId>pitest-maven</artifactId>
+      <version>1.2.0</version>
+    </dependency>
 
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.8.2</version>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

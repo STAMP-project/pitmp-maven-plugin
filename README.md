@@ -24,6 +24,10 @@ Running Descartes
     <version>0.1.0</version>
   </plugin>
 ```
+* Compile your project
+```
+mvn install
+```
 * Run Descartes
 ```
 mvn descartes:run
