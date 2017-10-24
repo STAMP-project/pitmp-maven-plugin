@@ -1,10 +1,6 @@
 package fr.inria.stamp.plugins;
 
 // **********************************************************************
-import java.util.*;
-
-import java.io.File;
-
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -34,9 +30,6 @@ public class DescartesRunMojo extends AbstractPitMojo
    // **********************************************************************
    // public
    // **********************************************************************
-   // ******** attributes
-
-   // **********************************************************************
    // ******** methods
    public DescartesRunMojo()
    {
@@ -46,14 +39,6 @@ public class DescartesRunMojo extends AbstractPitMojo
          new PluginServices(AbstractPitMojo.class.getClassLoader()),
          new NonEmptyProjectCheck());
    }
-
-   // **********************************************************************
-   // public DescartesRunMojo(final GoalStrategy strategy,
-   //   final Predicate<Artifact> filter, final PluginServices plugins,
-   //   final Predicate<MavenProject> nonEmptyProjectCheck)
-   // {
-   //    super(strategy, filter, plugins, nonEmptyProjectCheck);
-   // }
 
    // **********************************************************************
    // protected
@@ -68,12 +53,17 @@ public class DescartesRunMojo extends AbstractPitMojo
       final ReportOptions data = new MojoToReportOptionsConverter(this,
         new SurefireConfigConverter(), filter).convert();
 
-      // ?? data.setFailWhenNoMutations(false);
-      DescartesProject.initialize(getProject());
+      DescartesContext.getInstance().updateData(getProject());
 
       result = Option.some(this.goalStrategy.execute(detectBaseDir(), data,
          this.plugins, this.getEnvironmentVariables()));
 
       return(result);
    }
+
+   // **********************************************************************
+   // private
+   // **********************************************************************
+   // ******** methods
+   static DescartesContext runningContext = null;
 }

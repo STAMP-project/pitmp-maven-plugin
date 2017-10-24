@@ -23,6 +23,12 @@ public class DescartesProject
    // public
    // **********************************************************************
    // ******** attributes
+   public String getName()
+   {
+      return(mvnProject.getArtifactId());
+   }
+
+   // **********************************************************************
    public File getBaseDirParam()
    {
       return(baseDirParam);
@@ -45,93 +51,6 @@ public class DescartesProject
    {
       return(mvnProject);
    }
-
-   // **********************************************************************
-   // **********************************************************************
-   public static MavenProject getRootProject()
-   {
-      return(rootProject);
-   }
-
-   // **********************************************************************
-   public static MavenProject getCurrentMvnProject()
-   {
-      return(currentMvnProject);
-   }
-
-   // **********************************************************************
-   public static DescartesProject getCurrentProject()
-   {
-      DescartesProject theProject = null;
-
-      if (currentProjectIndex >= 0 && currentProjectIndex < cardProjects())
-      {
-         theProject = dProjects.get(currentProjectIndex);
-      }
-
-      return(theProject);
-   }
-
-   // **********************************************************************
-   public static int cardProjects()
-   {
-      return(dProjects.size());
-   }
-
-   // **********************************************************************
-   public static DescartesProject getProjects(int index)
-   {
-      DescartesProject theProject = null;
-
-      if (index >= 0 && index < cardProjects())
-      {
-         theProject = dProjects.get(currentProjectIndex);
-      }
-
-      return(theProject);
-   }
-
-   // **********************************************************************
-   public static void appendProjects(DescartesProject aProject)
-   {
-      dProjects.add(aProject);
-      currentProjectIndex = cardProjects() - 1;
-   }
-
-   // **********************************************************************
-   public static DescartesProject findInProjects(String aName)
-   {
-      DescartesProject theProject = null;
-
-      for (int i = 0; (i < cardProjects() && theProject == null); i++)
-      {
-         if (getProjects(i).getMavenProject().getArtifactId() == aName)
-         {
-            theProject = getProjects(i);
-         }
-      }
-
-      return(theProject);
-   }
-
-   // **********************************************************************
-   // ******** methods
-   public static void initialize(MavenProject currentProject)
-   {
-      if (rootProject == null)
-      {
-         if (currentProject.getParent() != null)
-         // no parents means non muilt-module project
-         {
-            rootProject = currentProject.getParent();
-         }
-      }
-      currentMvnProject = currentProject;
-   }
-
-
-   // **********************************************************************
-   // **********************************************************************
 
    // **********************************************************************
    public int cardTestRuns()
@@ -169,8 +88,12 @@ public class DescartesProject
       envVarParam = environmentVariables;
       testRuns = new ArrayList<DescartesRun>();
 
+      System.out.println("# DescartesProject.DescartesProject");
       // first run instance is the regular pit one
       appendTestRuns(new DescartesRun(this, theOptions));
+
+      System.out.println("# root Id: " + DescartesContext.getInstance().getRootProject().getArtifactId());
+      System.out.println("# project Id: " + mvnProject.getArtifactId());
    }
 
    // **********************************************************************
@@ -208,13 +131,14 @@ public class DescartesProject
       for (int i = 0; i < myDependencies.size(); i++)
       {
          projectName = myDependencies.get(i).getArtifactId();
-         anotherModule = findInProjects(projectName);
+         anotherModule = DescartesContext.getInstance().findInProjects(projectName);
+         System.out.println("# projectName = " + projectName + " - anotherModule = "
+            + anotherModule);
          if (anotherModule != null)
          {
-            newRun = new DescartesRun(getTestRuns(0));
+            newRun = new DescartesRun(getTestRuns(0),
+               anotherModule.getTestRuns(0).getPitOptions());
             appendTestRuns(newRun);
-            // merge options
-            newRun.mergeOptions(anotherModule.getTestRuns(0).getPitOptions());
          }
       }
    }
@@ -248,12 +172,6 @@ public class DescartesProject
    // private
    // **********************************************************************
    // ******** attributes
-   private static MavenProject rootProject = null;
-   private static MavenProject currentMvnProject = null;
-   private static ArrayList<DescartesProject> dProjects =
-      new ArrayList<DescartesProject>();
-   private static int currentProjectIndex = -1;
-
    private MavenProject mvnProject = null;
    private File baseDirParam;
    private PluginServices pluginsParam;

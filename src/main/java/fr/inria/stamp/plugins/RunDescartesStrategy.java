@@ -32,33 +32,20 @@ public class RunDescartesStrategy implements GoalStrategy
    {
       CombinedStatistics result = null;
 
-      DescartesProject.appendProjects(new DescartesProject
-         (DescartesProject.getCurrentMvnProject(), data, baseDir, plugins,
-          environmentVariables));
       System.out.println("################################################################");
       System.out.println("# RunDescartesStrategy.execute");
-      System.out.println("################################################################");
-      // printInfo(false);
+      System.out.println("# rootProject: " +
+         DescartesContext.getInstance().getRootProject().getArtifactId());
+      System.out.println("# currentProject: " +
+         DescartesContext.getInstance().getCurrentMvnProject().getArtifactId());
 
-      result = DescartesProject.getCurrentProject().execute();
+      DescartesContext.getInstance().appendProjects(new DescartesProject
+         (DescartesContext.getInstance().getCurrentMvnProject(), data, baseDir, plugins,
+          environmentVariables));
+      // DescartesContext.getInstance().printInfo(false);
+
+      result = DescartesContext.getInstance().getCurrentProject().execute();
       System.out.println("################################################################");
       return result;
-   }
-
-   // **********************************************************************
-   public void printInfo(boolean allProjects)
-   {
-      System.out.println("################################");
-      System.out.println("# projects count: " + DescartesProject.cardProjects());
-      System.out.println("# current project: " +
-         DescartesProject.getCurrentProject().getMavenProject().getArtifactId());
-      if (allProjects)
-      {
-         for (int i = 0; i < DescartesProject.cardProjects(); i++)
-         {
-            DescartesProject.getProjects(i).printInfo();
-         }
-      }
-      System.out.println("################################");
    }
 }

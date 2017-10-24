@@ -78,10 +78,10 @@ public class DescartesRun
    }
 
    // **********************************************************************
-   public DescartesRun(DescartesRun sourceRun)
+   public DescartesRun(DescartesRun sourceRun, ReportOptions otherPackageOptions)
    {
       dParent = sourceRun.dParent;
-      pitOptions = cloneOptions(sourceRun.pitOptions);
+      pitOptions = mergeOptions(sourceRun.pitOptions, otherPackageOptions);
    }
 
    // **********************************************************************
@@ -90,8 +90,8 @@ public class DescartesRun
       EntryPoint pitEntryPoint = null;
       AnalysisResult execResult = null;
 
-      System.out.println("################ DescartesRun.execute");
-      printInfo();
+      System.out.println("################################ DescartesRun.execute");
+      printInfo(getPitOptions());
 
       pitEntryPoint = new EntryPoint();
       execResult = pitEntryPoint.execute(getBaseDir(), getPitOptions(),
@@ -101,31 +101,33 @@ public class DescartesRun
          throw new MojoExecutionException("fail", execResult.getError().value());
       }
       results = execResult.getStatistics().value();
+      System.out.println("################################");
    }
 
    // **********************************************************************
-   public void mergeOptions(ReportOptions otherOptions)
-   {
-      // to do
-   }
-
-   // **********************************************************************
-   public void printInfo()
+   public void printInfo(ReportOptions data)
    {
       System.out.println("#");
-      System.out.println("# targetTests: " + getPitOptions().getTargetTests());
-      System.out.println("# targetClasses: " + getPitOptions().getTargetClasses());
-      System.out.println("# codePaths: " + getPitOptions().getCodePaths());
-      System.out.println("# sourceDirs: " + getPitOptions().getSourceDirs());
-      System.out.println("# classPathElements: " + getPitOptions().getClassPathElements());
-      System.out.println("# mutationEngine: " + getPitOptions().getMutationEngine());
+      System.out.println("# targetTests: " + data.getTargetTests());
+      System.out.println("# targetClasses: " + data.getTargetClasses());
+      System.out.println("# codePaths: " + data.getCodePaths());
+      System.out.println("# sourceDirs: " + data.getSourceDirs());
+      System.out.println("# classPathElements: " + data.getClassPathElements());
+      System.out.println("# mutationEngine: " + data.getMutationEngine());
       System.out.println("#");
-
    }
 
    // **********************************************************************
-   public ReportOptions cloneOptions(ReportOptions srcOptions)
+   public ReportOptions mergeOptions(ReportOptions srcOptions, ReportOptions classOptions)
    {
+      ArrayList<Predicate<String>> targetClasses;
+      ArrayList<Predicate<String>> codePaths;
+
+      System.out.println("################################ DescartesRun.mergeOptions");
+      printInfo(srcOptions);
+      System.out.println("######## and");
+      printInfo(classOptions);
+
       ReportOptions newOptions = new ReportOptions();
 
       newOptions.setVerbose(srcOptions.isVerbose());
@@ -139,8 +141,9 @@ public class DescartesRun
          (srcOptions.getDependencyAnalysisMaxDistance());
       newOptions.addChildJVMArgs(new ArrayList<String>
          (srcOptions.getJvmArgs()));
-      newOptions.setTargetClasses(new ArrayList<Predicate<String>>
-         (srcOptions.getTargetClasses()));
+      targetClasses = new ArrayList<Predicate<String>>(srcOptions.getTargetClasses());
+      targetClasses.addAll(classOptions.getTargetClasses());
+      newOptions.setTargetClasses(targetClasses);
       
       newOptions.setMutateStaticInitializers
          (srcOptions.isMutateStaticInitializers());
@@ -165,6 +168,7 @@ public class DescartesRun
 
       newOptions.setFailWhenNoMutations
          (srcOptions.shouldFailWhenNoMutations());
+
       newOptions.setCodePaths(new ArrayList<String>
          (srcOptions.getCodePaths()));
       newOptions.setMutationUnitSize(srcOptions.getMutationUnitSize());
@@ -172,10 +176,16 @@ public class DescartesRun
          (srcOptions.shouldCreateTimeStampedReports());
       newOptions.setDetectInlinedCode(srcOptions.isDetectInlinedCode());
 
-      newOptions.setHistoryInputLocation(new File
-         (srcOptions.getHistoryInputLocation().getPath()));
-      newOptions.setHistoryOutputLocation(new File
-         (srcOptions.getHistoryOutputLocation().getPath()));
+      if (srcOptions.getHistoryInputLocation() != null)
+      {
+         newOptions.setHistoryInputLocation(new File
+            (srcOptions.getHistoryInputLocation().getPath()));
+      }
+      if (srcOptions.getHistoryInputLocation() != null)
+      {
+         newOptions.setHistoryOutputLocation(new File
+            (srcOptions.getHistoryOutputLocation().getPath()));
+      }
 
       newOptions.setExportLineCoverage(srcOptions.shouldExportLineCoverage());
       newOptions.setMutationThreshold(srcOptions.getMutationThreshold());
