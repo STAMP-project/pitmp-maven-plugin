@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import org.apache.maven.project.MavenProject;
 
+import org.pitest.maven.AbstractPitMojo;
+
 // **********************************************************************
 public class DescartesContext
 {
@@ -29,9 +31,9 @@ public class DescartesContext
    }
 
    // **********************************************************************
-   public MavenProject getCurrentMvnProject()
+   public AbstractPitMojo getCurrentMojo()
    {
-      return(currentMvnProject);
+      return(currentMojo);
    }
 
    // **********************************************************************
@@ -41,7 +43,7 @@ public class DescartesContext
 
       if (currentProjectIndex >= 0 && currentProjectIndex < cardProjects())
       {
-         theProject = dProjects.get(currentProjectIndex);
+         theProject = getProjects(currentProjectIndex);
       }
 
       return(theProject);
@@ -50,53 +52,52 @@ public class DescartesContext
    // **********************************************************************
    public int cardProjects()
    {
-      return(dProjects.size());
+      return(_Projects.size());
    }
 
-   // **********************************************************************
+   // ***********
    public DescartesProject getProjects(int index)
    {
       DescartesProject theProject = null;
 
       if (index >= 0 && index < cardProjects())
       {
-         theProject = dProjects.get(index);
+         theProject = _Projects.get(index);
       }
 
       return(theProject);
    }
 
-   // **********************************************************************
+   // ***********
    public void appendProjects(DescartesProject aProject)
    {
-      System.out.println("######## appendProjects: " + aProject);
-      System.out.println("# name = " + aProject.getName() + " - card = " +
-         cardProjects());
+      // System.out.println("######## appendProjects: " + aProject);
+      // System.out.println("# name = " + aProject.getName() + " - card = " +
+      //   cardProjects());
       // printInfo(true);
       System.out.println("#");
 
-      dProjects.add(aProject);
+      _Projects.add(aProject);
       currentProjectIndex = cardProjects() - 1;
 
-      System.out.println("# addedProject: " + dProjects.get(cardProjects() - 1));
-      System.out.println("# currentProject: " + getCurrentProject());
-      System.out.println("# name = " + getCurrentProject().getName() + " - card = " +
-         cardProjects());
+      // System.out.println("# addedProject: " + getProjects(cardProjects() - 1));
+      // System.out.println("# currentProject: " + getCurrentProject());
+      // System.out.println("# name = " + getCurrentProject().getName() + " - card = " +
+      //    cardProjects());
       // printInfo(true);
    }
 
-   // **********************************************************************
+   // ***********
    public DescartesProject findInProjects(String aName)
    {
       DescartesProject theProject = null;
       String id;
 
-      System.out.println("# findInProjects: " + aName + " - card = " + cardProjects());
+      // System.out.println("# findInProjects: " + aName + " - card = " + cardProjects());
       for (int i = 0; (i < cardProjects() && theProject == null); i++)
       {
-         id = getProjects(i).getMavenProject().getArtifactId();
-         System.out.println("# i: " + i + " - Id = " + id + " - dProject: " +
-            getProjects(i) + " - mvnProject: " + getProjects(i).getMavenProject());
+         id = getProjects(i).getTheMojo().getProject().getArtifactId();
+         // System.out.println("# i: " + i + " - Id = " + id);
          if (id.equals(aName))
          {
             theProject = getProjects(i);
@@ -110,21 +111,22 @@ public class DescartesContext
    // ******** methods
    public DescartesContext()
    {
-      dProjects = new ArrayList<DescartesProject>();
+      _Projects = new ArrayList<DescartesProject>();
+      int currentProjectIndex = -1;
    }
 
    // **********************************************************************
-   public void updateData(MavenProject currentProject)
+   public void updateData(AbstractPitMojo mojo)
    {
       if (rootProject == null)
       {
-         if (currentProject.getParent() != null)
+         if (mojo.getProject().getParent() != null)
          // no parents means non multi-module project
          {
-            rootProject = currentProject.getParent();
+            rootProject = mojo.getProject().getParent();
          }
       }
-      currentMvnProject = currentProject;
+      currentMojo = mojo;
    }
 
    // **********************************************************************
@@ -136,7 +138,7 @@ public class DescartesContext
       if (getCurrentProject() != null)
       {
          System.out.println("# current project: " +
-            getCurrentProject().getMavenProject().getArtifactId());
+            getCurrentProject().getTheMojo().getProject().getArtifactId());
       }
 
       if (printAll)
@@ -145,7 +147,6 @@ public class DescartesContext
          {
             System.out.println("# project[" + i + "]= " + getProjects(i));
             System.out.println("# name = " + getProjects(i).getName());
-            System.out.println("# name = " + dProjects.get(i).getName());
          }
       }
       System.out.println("########");
@@ -157,8 +158,8 @@ public class DescartesContext
    // ******** attributes
    private static DescartesContext instance;
 
-   private MavenProject rootProject = null;
-   private MavenProject currentMvnProject = null;
-   private ArrayList<DescartesProject> dProjects = null;
-   private int currentProjectIndex = -1;
+   private AbstractPitMojo currentMojo;
+   private MavenProject rootProject;
+   private ArrayList<DescartesProject> _Projects;
+   private int currentProjectIndex;
 }

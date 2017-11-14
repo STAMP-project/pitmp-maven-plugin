@@ -20,6 +20,14 @@ import org.pitest.mutationtest.tooling.CombinedStatistics;
 import org.pitest.mutationtest.tooling.EntryPoint;
 import org.pitest.mutationtest.tooling.AnalysisResult;
 import org.pitest.testapi.TestGroupConfig;
+import org.pitest.classpath.DirectoryClassPathRoot;
+
+import org.pitest.maven.AbstractPitMojo;
+import org.pitest.maven.GoalStrategy;
+import org.pitest.maven.DependencyFilter;
+import org.pitest.maven.NonEmptyProjectCheck;
+import org.pitest.maven.MojoToReportOptionsConverter;
+import org.pitest.maven.SurefireConfigConverter;
 
 // **********************************************************************
 public class DescartesRun
@@ -30,37 +38,25 @@ public class DescartesRun
    // ******** associations
    public DescartesProject getParent()
    {
-      return(dParent);
+      return(parentProject);
    }
 
    // **********************************************************************
-   public MavenProject getMavenProject()
+   public DescartesProject getClassToMutateProject()
    {
-      return(getParent().getMavenProject());
-   }
-
-   // **********************************************************************
-   public File getBaseDir()
-   {
-      return(getParent().getBaseDirParam());
-   }
-
-   // **********************************************************************
-   public PluginServices getPlugins()
-   {
-      return(getParent().getPluginsParam());
-   }
-
-   // **********************************************************************
-   public Map<String, String> getEnvironmentVariables()
-   {
-      return(getParent().getEnvVarParam());
+      return(classToMutateProject);
    }
 
    // **********************************************************************
    public ReportOptions getPitOptions()
    {
-      return(pitOptions);
+      return(_PitOptions);
+   }
+
+   // **********************************************************************
+   public void setPitOptions(ReportOptions options)
+   {
+      _PitOptions = options;
    }
 
    // **********************************************************************
@@ -71,17 +67,19 @@ public class DescartesRun
 
    // **********************************************************************
    // ******** methods
-   public DescartesRun(DescartesProject theParent, ReportOptions theOptions)
+   // constructor for the regular pitest run
+   public DescartesRun(DescartesProject theParent)
    {
-      dParent = theParent;
-      pitOptions = theOptions;
+      parentProject = theParent;
+      classToMutateProject = theParent;
    }
 
    // **********************************************************************
-   public DescartesRun(DescartesRun sourceRun, ReportOptions otherPackageOptions)
+   // constructor for additionnal runs
+   public DescartesRun(DescartesRun testSuiteRun, DescartesProject targetClassProject)
    {
-      dParent = sourceRun.dParent;
-      pitOptions = mergeOptions(sourceRun.pitOptions, otherPackageOptions);
+      parentProject = testSuiteRun.parentProject;
+      classToMutateProject = targetClassProject;
    }
 
    // **********************************************************************
@@ -89,19 +87,118 @@ public class DescartesRun
    {
       EntryPoint pitEntryPoint = null;
       AnalysisResult execResult = null;
+      DescartesRunMojo testMojo = (DescartesRunMojo)getParent().getTheMojo();
+      DescartesRunMojo classMojo = (DescartesRunMojo)getClassToMutateProject()
+         .getTheMojo();
 
-      System.out.println("################################ DescartesRun.execute");
-      printInfo(getPitOptions());
+      System.out.println("################################ DescartesRun.execute: IN");
+      System.out.println("# testProject: " + getParent().getName());
+      System.out.println("# classProject: " + getClassToMutateProject().getName());
+      System.out.println("# classProject.outputDir: " +
+         classMojo.getProject().getBuild().getOutputDirectory());
 
       pitEntryPoint = new EntryPoint();
-      execResult = pitEntryPoint.execute(getBaseDir(), getPitOptions(),
-         getPlugins(), getEnvironmentVariables());
+
+      // update the test mojo with the target classes and relative data
+      // except for the regular run
+      if (getParent() != getClassToMutateProject())
+      {
+         modifyTestMojo();
+      }
+
+      System.out.println("######## mojo attributes");
+      System.out.println("#");
+      System.out.println("# Mojo targetTests: " + testMojo.getTargetTests());
+      System.out.println("# Mojo targetClasses: " + testMojo.getModifiedTargetClasses());
+      // System.out.println("# Mojo excludedClasses: " + testMojo.getModifiedExcludedClasses());
+      // System.out.println("# Mojo excludedMethods: " + testMojo.getModifiedExcludedMethods());
+      System.out.println("#");
+
+      // now you can create the ReportOptions and call Pit
+      setPitOptions(new MojoToReportOptionsConverter(testMojo,
+        new SurefireConfigConverter(), testMojo.getFilter()).convert());
+
+      // and modify it to update codePaths:, sourceDirs and classPathElements
+      if (getParent() != getClassToMutateProject())
+      {
+         modifyReportOptions();
+      }
+
+      System.out.println("######## pitEntryPoint.execute");
+      System.out.println("#");
+      System.out.println("# (");
+      System.out.println("# baseDir = " + testMojo.getBaseDir());
+      System.out.println("# options = ");
+      printInfo(getPitOptions());
+      System.out.println("# )");
+
+      execResult = pitEntryPoint.execute(testMojo.getBaseDir(), getPitOptions(),
+         testMojo.getPlugins(), testMojo.getEnvironmentVariables());
       if (execResult.getError().hasSome())
       {
          throw new MojoExecutionException("fail", execResult.getError().value());
       }
       results = execResult.getStatistics().value();
-      System.out.println("################################");
+
+      // ran at least once, so not the regular mojo anymore
+      testMojo.setIsRegularMojo(false);
+
+      System.out.println("################ results");
+      System.out.println(results);
+      System.out.println("################################ DescartesRun.execute: OUT");
+   }
+
+   // **********************************************************************
+   public void modifyTestMojo()
+   {
+      DescartesRunMojo testMojo = (DescartesRunMojo)getParent().getTheMojo();
+      DescartesRunMojo classMojo = (DescartesRunMojo)getClassToMutateProject()
+         .getTheMojo();
+      ArrayList<String> classes = null;
+
+      if (classMojo.getTargetClasses() == null || classMojo.getTargetClasses().isEmpty())
+      // if empty, Pit will mutate all classes of testMojo, like for the regular run
+      // so we need to get the classes
+      {
+         String outputDirName = classMojo.getProject().getBuild()
+            .getOutputDirectory();
+         File outputDir = new File(outputDirName);
+         if (outputDir.exists())
+         {
+            DirectoryClassPathRoot classRoot = new DirectoryClassPathRoot(outputDir);
+            classes = new ArrayList<String>(classRoot.classNames());
+         }
+      }
+      else
+      // just copy the target class list specified in the pom
+      {
+         classes = new ArrayList<String>(classMojo.getTargetClasses());
+      }
+      testMojo.setModifiedTargetClasses(classes);
+   }
+
+   // **********************************************************************
+   public void modifyReportOptions()
+   {
+      ReportOptions classOptions = getClassToMutateProject().getTestRuns(0)
+         .getPitOptions();
+      ArrayList<File> fileList = null;
+      ArrayList<String> stringList = null;
+
+      // merge test and class source directories
+      // CaeL: check if the order impacts the execution
+      fileList = new ArrayList<File>(getPitOptions().getSourceDirs());
+      fileList.addAll(classOptions.getSourceDirs());
+      getPitOptions().setSourceDirs(fileList);
+
+      // merge test and class class paths
+      // CaeL: to do: merge checking conflicts and avoiding duplication
+      // CaeL: to do: merge order ?
+      stringList = new ArrayList<String>(getPitOptions().getClassPathElements());
+      stringList.addAll(classOptions.getClassPathElements());
+      getPitOptions().setClassPathElements(stringList);
+
+      getPitOptions().setCodePaths(new ArrayList<String>(classOptions.getCodePaths()));
    }
 
    // **********************************************************************
@@ -110,6 +207,8 @@ public class DescartesRun
       System.out.println("#");
       System.out.println("# targetTests: " + data.getTargetTests());
       System.out.println("# targetClasses: " + data.getTargetClasses());
+      // System.out.println("# excludedClasses: " + data.getExcludedClasses());
+      // System.out.println("# excludedMethods: " + data.getExcludedMethods());
       System.out.println("# codePaths: " + data.getCodePaths());
       System.out.println("# sourceDirs: " + data.getSourceDirs());
       System.out.println("# classPathElements: " + data.getClassPathElements());
@@ -118,98 +217,11 @@ public class DescartesRun
    }
 
    // **********************************************************************
-   public ReportOptions mergeOptions(ReportOptions srcOptions, ReportOptions classOptions)
-   {
-      ArrayList<Predicate<String>> targetClasses;
-      ArrayList<Predicate<String>> codePaths;
-
-      System.out.println("################################ DescartesRun.mergeOptions");
-      printInfo(srcOptions);
-      System.out.println("######## and");
-      printInfo(classOptions);
-
-      ReportOptions newOptions = new ReportOptions();
-
-      newOptions.setVerbose(srcOptions.isVerbose());
-      newOptions.setReportDir(srcOptions.getReportDir());
-
-      newOptions.setSourceDirs(new ArrayList<File>(srcOptions.getSourceDirs()));
-      newOptions.setClassPathElements(new ArrayList<String>
-         (srcOptions.getClassPathElements()));
-      newOptions.setMutators(new ArrayList<String>(srcOptions.getMutators()));
-      newOptions.setDependencyAnalysisMaxDistance
-         (srcOptions.getDependencyAnalysisMaxDistance());
-      newOptions.addChildJVMArgs(new ArrayList<String>
-         (srcOptions.getJvmArgs()));
-      targetClasses = new ArrayList<Predicate<String>>(srcOptions.getTargetClasses());
-      targetClasses.addAll(classOptions.getTargetClasses());
-      newOptions.setTargetClasses(targetClasses);
-      
-      newOptions.setMutateStaticInitializers
-         (srcOptions.isMutateStaticInitializers());
-      newOptions.setNumberOfThreads
-         (srcOptions.getNumberOfThreads());
-      newOptions.setTimeoutFactor
-         (srcOptions.getTimeoutFactor());
-      newOptions.setTimeoutConstant
-         (srcOptions.getTimeoutConstant());
-
-      newOptions.setLoggingClasses(new ArrayList<String>
-         (srcOptions.getLoggingClasses()));
-      newOptions.setExcludedMethods(new ArrayList<Predicate<String>>
-         (srcOptions.getExcludedMethods()));
-      newOptions.setMaxMutationsPerClass
-         (srcOptions.getMaxMutationsPerClass());
-      newOptions.setExcludedClasses(new ArrayList<Predicate<String>>
-         (srcOptions.getExcludedClasses()));
-
-      newOptions.addOutputFormats(new ArrayList<String>
-         (srcOptions.getOutputFormats()));
-
-      newOptions.setFailWhenNoMutations
-         (srcOptions.shouldFailWhenNoMutations());
-
-      newOptions.setCodePaths(new ArrayList<String>
-         (srcOptions.getCodePaths()));
-      newOptions.setMutationUnitSize(srcOptions.getMutationUnitSize());
-      newOptions.setShouldCreateTimestampedReports
-         (srcOptions.shouldCreateTimeStampedReports());
-      newOptions.setDetectInlinedCode(srcOptions.isDetectInlinedCode());
-
-      if (srcOptions.getHistoryInputLocation() != null)
-      {
-         newOptions.setHistoryInputLocation(new File
-            (srcOptions.getHistoryInputLocation().getPath()));
-      }
-      if (srcOptions.getHistoryInputLocation() != null)
-      {
-         newOptions.setHistoryOutputLocation(new File
-            (srcOptions.getHistoryOutputLocation().getPath()));
-      }
-
-      newOptions.setExportLineCoverage(srcOptions.shouldExportLineCoverage());
-      newOptions.setMutationThreshold(srcOptions.getMutationThreshold());
-      newOptions.setMutationEngine(srcOptions.getMutationEngine());
-      newOptions.setCoverageThreshold(srcOptions.getCoverageThreshold());
-      newOptions.setJavaExecutable(srcOptions.getJavaExecutable());
-      newOptions.setIncludeLaunchClasspath(srcOptions.isIncludeLaunchClasspath());
-      newOptions.setMaximumAllowedSurvivors(srcOptions.getMaximumAllowedSurvivors());
-      newOptions.setExcludedRunners(new ArrayList<String>
-         (srcOptions.getExcludedRunners()));
-
-      newOptions.setGroupConfig(new TestGroupConfig
-         (new ArrayList<String>(srcOptions.getGroupConfig().getExcludedGroups()),
-          new ArrayList<String>(srcOptions.getGroupConfig().getIncludedGroups())));
-      newOptions.setFreeFormProperties(new Properties(srcOptions.getFreeFormProperties()));
-
-      return(newOptions);
-   }
-
-   // **********************************************************************
    // private
    // **********************************************************************
    // ******** attributes
-   private DescartesProject dParent = null;
-   private ReportOptions pitOptions = null;
+   private DescartesProject parentProject = null;
+   private DescartesProject classToMutateProject = null;
    private CombinedStatistics results = null;
+   private ReportOptions _PitOptions = null;
 }

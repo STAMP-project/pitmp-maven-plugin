@@ -7,7 +7,7 @@ import java.util.Map;
 import java.io.File;
 
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.model.Model;
+// import org.apache.maven.model.Model;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.MojoExecutionException;
 
@@ -15,6 +15,8 @@ import org.pitest.functional.Option;
 import org.pitest.mutationtest.config.ReportOptions;
 import org.pitest.mutationtest.config.PluginServices;
 import org.pitest.mutationtest.tooling.CombinedStatistics;
+
+import org.pitest.maven.AbstractPitMojo;
 
 // **********************************************************************
 public class DescartesProject
@@ -25,31 +27,14 @@ public class DescartesProject
    // ******** attributes
    public String getName()
    {
-      return(mvnProject.getArtifactId());
+      return(theMojo.getProject().getArtifactId());
    }
 
    // **********************************************************************
-   public File getBaseDirParam()
-   {
-      return(baseDirParam);
-   }
-
-   // **********************************************************************
-   public PluginServices getPluginsParam()
-   {
-      return(pluginsParam);
-   }
-
-   // **********************************************************************
-   public Map<String, String> getEnvVarParam()
-   {
-      return(envVarParam);
-   }
-
    // ******** associations
-   public MavenProject getMavenProject()
+   public AbstractPitMojo getTheMojo()
    {
-      return(mvnProject);
+      return(theMojo);
    }
 
    // **********************************************************************
@@ -79,33 +64,29 @@ public class DescartesProject
 
    // **********************************************************************
    // ******** methods
-   public DescartesProject(MavenProject theProject, ReportOptions theOptions,
-      File baseDir, PluginServices plugins, Map<String, String> environmentVariables)
+   public DescartesProject(AbstractPitMojo mojo)
    {
-      mvnProject = theProject;
-      baseDirParam = baseDir;
-      pluginsParam = plugins;
-      envVarParam = environmentVariables;
+      theMojo = mojo;
       testRuns = new ArrayList<DescartesRun>();
 
-      System.out.println("# DescartesProject.DescartesProject");
       // first run instance is the regular pit one
-      appendTestRuns(new DescartesRun(this, theOptions));
+      appendTestRuns(new DescartesRun(this));
 
-      System.out.println("# root Id: " + DescartesContext.getInstance().getRootProject().getArtifactId());
-      System.out.println("# project Id: " + mvnProject.getArtifactId());
+      // System.out.println("# root Id: " + DescartesContext.getInstance().getRootProject().getArtifactId());
+      // System.out.println("# project Id: " + theMojo.getProject().getArtifactId());
    }
 
    // **********************************************************************
    public CombinedStatistics execute() throws MojoExecutionException
    {
-      System.out.println("################ DescartesProject.execute");
+      System.out.println("################ DescartesProject.execute: IN");
       printInfo();
 
       // create additionnal runs
       generateRuns();
 
       // run all
+      // first run  is the pitest regular one
       for (int i = 0; i < cardTestRuns(); i++)
       {
          getTestRuns(i).execute();
@@ -115,32 +96,33 @@ public class DescartesProject
       mergeResults();
 
       // return first run results
+      System.out.println("################ DescartesProject.execute: OUT");
       return getTestRuns(0).getResults();
    }
 
    // **********************************************************************
    public void generateRuns()
    {
-      List<Dependency> myDependencies = getMavenProject().getDependencies();
+      List<Dependency> myDependencies = getTheMojo().getProject().getDependencies();
       String projectName;
-      DescartesProject anotherModule;
+      DescartesProject targetClassModule;
       DescartesRun newRun;
 
-      System.out.println("################ DescartesProject.generateRuns");
+      System.out.println("################ DescartesProject.generateRuns: IN");
 
       for (int i = 0; i < myDependencies.size(); i++)
       {
          projectName = myDependencies.get(i).getArtifactId();
-         anotherModule = DescartesContext.getInstance().findInProjects(projectName);
-         System.out.println("# projectName = " + projectName + " - anotherModule = "
-            + anotherModule);
-         if (anotherModule != null)
+         targetClassModule = DescartesContext.getInstance().findInProjects(projectName);
+         System.out.println("# projectName = " + projectName + " - targetClassModule = "
+            + targetClassModule);
+         if (targetClassModule != null)
          {
-            newRun = new DescartesRun(getTestRuns(0),
-               anotherModule.getTestRuns(0).getPitOptions());
+            newRun = new DescartesRun(getTestRuns(0), targetClassModule);
             appendTestRuns(newRun);
          }
       }
+      System.out.println("################ DescartesProject.generateRuns: OUT");
    }
 
    // **********************************************************************
@@ -152,13 +134,13 @@ public class DescartesProject
    // **********************************************************************
    public void printInfo()
    {
-      // List<MavenProject> collectedProjects = getMavenProject().getCollectedProjects();
-      List<Dependency> projectDependencies = getMavenProject().getDependencies();
+      List<Dependency> projectDependencies = getTheMojo().getProject().getDependencies();
 
       System.out.println("################ project: " +
-         getMavenProject().getArtifactId());
+         getTheMojo().getProject().getArtifactId());
       System.out.println("#");
-      System.out.println("# Parent: " + getMavenProject().getParent().getArtifactId());
+      System.out.println("# Parent: " + getTheMojo().getProject().getParent()
+         .getArtifactId());
       System.out.print("# Dependencies: ");
       for (int i = 0; i < projectDependencies.size(); i++)
       {
@@ -172,9 +154,6 @@ public class DescartesProject
    // private
    // **********************************************************************
    // ******** attributes
-   private MavenProject mvnProject = null;
-   private File baseDirParam;
-   private PluginServices pluginsParam;
-   private Map<String, String> envVarParam;
-   private List<DescartesRun> testRuns = null;
+   private AbstractPitMojo theMojo = null;
+   private ArrayList<DescartesRun> testRuns;
 }
