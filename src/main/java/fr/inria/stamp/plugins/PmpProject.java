@@ -19,7 +19,7 @@ import org.pitest.mutationtest.tooling.CombinedStatistics;
 import org.pitest.maven.AbstractPitMojo;
 
 // **********************************************************************
-public class DescartesProject
+public class PmpProject
 {
    // **********************************************************************
    // public
@@ -32,7 +32,7 @@ public class DescartesProject
 
    // **********************************************************************
    // ******** associations
-   public AbstractPitMojo getTheMojo()
+   public PmpMojo getTheMojo()
    {
       return(theMojo);
    }
@@ -44,9 +44,9 @@ public class DescartesProject
    }
 
    // **********************************************************************
-   public DescartesRun getTestRuns(int index)
+   public PmpRun getTestRuns(int index)
    {
-      DescartesRun theRun = null;
+      PmpRun theRun = null;
 
       if (index >= 0 && index < cardTestRuns())
       {
@@ -57,29 +57,29 @@ public class DescartesProject
    }
 
    // **********************************************************************
-   public void appendTestRuns(DescartesRun aRun)
+   public void appendTestRuns(PmpRun aRun)
    {
       testRuns.add(aRun);
    }
 
    // **********************************************************************
    // ******** methods
-   public DescartesProject(AbstractPitMojo mojo)
+   public PmpProject(PmpMojo mojo)
    {
       theMojo = mojo;
-      testRuns = new ArrayList<DescartesRun>();
+      testRuns = new ArrayList<PmpRun>();
 
       // first run instance is the regular pit one
-      appendTestRuns(new DescartesRun(this));
+      appendTestRuns(new PmpRun(this));
 
-      // System.out.println("# root Id: " + DescartesContext.getInstance().getRootProject().getArtifactId());
+      // System.out.println("# root Id: " + PmpContext.getInstance().getRootProject().getArtifactId());
       // System.out.println("# project Id: " + theMojo.getProject().getArtifactId());
    }
 
    // **********************************************************************
    public CombinedStatistics execute() throws MojoExecutionException
    {
-      System.out.println("################ DescartesProject.execute: IN");
+      System.out.println("################ PmpProject.execute: IN");
       printInfo();
 
       // create additionnal runs
@@ -96,7 +96,7 @@ public class DescartesProject
       mergeResults();
 
       // return first run results
-      System.out.println("################ DescartesProject.execute: OUT");
+      System.out.println("################ PmpProject.execute: OUT");
       return getTestRuns(0).getResults();
    }
 
@@ -105,30 +105,30 @@ public class DescartesProject
    {
       List<Dependency> myDependencies = getTheMojo().getProject().getDependencies();
       String projectName;
-      DescartesProject targetClassModule;
-      DescartesRun newRun;
+      PmpProject targetClassModule;
+      PmpRun newRun;
 
-      System.out.println("################ DescartesProject.generateRuns: IN");
+      System.out.println("################ PmpProject.generateRuns: IN");
 
       for (int i = 0; i < myDependencies.size(); i++)
       {
          projectName = myDependencies.get(i).getArtifactId();
-         targetClassModule = DescartesContext.getInstance().findInProjects(projectName);
+         targetClassModule = PmpContext.getInstance().findInProjects(projectName);
          System.out.println("# projectName = " + projectName + " - targetClassModule = "
             + targetClassModule);
          if (targetClassModule != null)
          {
-            newRun = new DescartesRun(getTestRuns(0), targetClassModule);
+            newRun = new PmpRun(getTestRuns(0), targetClassModule);
             appendTestRuns(newRun);
          }
       }
-      System.out.println("################ DescartesProject.generateRuns: OUT");
+      System.out.println("################ PmpProject.generateRuns: OUT");
    }
 
    // **********************************************************************
    public void mergeResults()
    {
-      System.out.println("################ DescartesProject.mergeResults");
+      System.out.println("################ PmpProject.mergeResults");
    }
 
    // **********************************************************************
@@ -154,6 +154,6 @@ public class DescartesProject
    // private
    // **********************************************************************
    // ******** attributes
-   private AbstractPitMojo theMojo = null;
-   private ArrayList<DescartesRun> testRuns;
+   private PmpMojo theMojo = null;
+   private ArrayList<PmpRun> testRuns;
 }

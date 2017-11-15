@@ -29,7 +29,7 @@ import org.pitest.maven.NonEmptyProjectCheck;
 // **********************************************************************
 @Mojo(name = "run", defaultPhase = LifecyclePhase.VERIFY,
    requiresDependencyResolution = ResolutionScope.TEST)
-public class DescartesRunMojo extends AbstractPitMojo
+public class PmpMojo extends AbstractPitMojo
 {
    // **********************************************************************
    // public
@@ -109,7 +109,7 @@ public class DescartesRunMojo extends AbstractPitMojo
 
    // **********************************************************************
    // ******** methods
-   public DescartesRunMojo()
+   public PmpMojo()
    {
       super();
       _IsRegularMojo = true;
@@ -130,17 +130,17 @@ public class DescartesRunMojo extends AbstractPitMojo
       // final ReportOptions data = new MojoToReportOptionsConverter(this,
       //   new SurefireConfigConverter(), filter).convert();
 
-      DescartesContext.getInstance().updateData(this);
+      PmpContext.getInstance().updateData(this);
 
       // result = Option.some(this.goalStrategy.execute(detectBaseDir(), data,
       // result = Option.some(this.goalStrategy.execute(detectBaseDir(),
       //    this.plugins, this.getEnvironmentVariables()));
       // result = Option.some(this.goalStrategy.execute());
 
-      DescartesContext.getInstance().appendProjects(new DescartesProject
-         (DescartesContext.getInstance().getCurrentMojo()));
+      PmpContext.getInstance().appendProjects(new PmpProject
+         (PmpContext.getInstance().getCurrentMojo()));
 
-      result = Option.some(DescartesContext.getInstance().getCurrentProject()
+      result = Option.some(PmpContext.getInstance().getCurrentProject()
          .execute());
 
       // restore mojo initial (regular) data for next runs

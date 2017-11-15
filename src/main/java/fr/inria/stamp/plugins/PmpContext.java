@@ -9,17 +9,17 @@ import org.apache.maven.project.MavenProject;
 import org.pitest.maven.AbstractPitMojo;
 
 // **********************************************************************
-public class DescartesContext
+public class PmpContext
 {
    // **********************************************************************
    // public
    // **********************************************************************
    // ******** assoications
-   public static DescartesContext getInstance()
+   public static PmpContext getInstance()
    {
       if (instance == null)
       {
-         instance = new DescartesContext();
+         instance = new PmpContext();
       }
       return(instance);
    }
@@ -31,15 +31,15 @@ public class DescartesContext
    }
 
    // **********************************************************************
-   public AbstractPitMojo getCurrentMojo()
+   public PmpMojo getCurrentMojo()
    {
       return(currentMojo);
    }
 
    // **********************************************************************
-   public DescartesProject getCurrentProject()
+   public PmpProject getCurrentProject()
    {
-      DescartesProject theProject = null;
+      PmpProject theProject = null;
 
       if (currentProjectIndex >= 0 && currentProjectIndex < cardProjects())
       {
@@ -56,9 +56,9 @@ public class DescartesContext
    }
 
    // ***********
-   public DescartesProject getProjects(int index)
+   public PmpProject getProjects(int index)
    {
-      DescartesProject theProject = null;
+      PmpProject theProject = null;
 
       if (index >= 0 && index < cardProjects())
       {
@@ -69,7 +69,7 @@ public class DescartesContext
    }
 
    // ***********
-   public void appendProjects(DescartesProject aProject)
+   public void appendProjects(PmpProject aProject)
    {
       // System.out.println("######## appendProjects: " + aProject);
       // System.out.println("# name = " + aProject.getName() + " - card = " +
@@ -88,9 +88,9 @@ public class DescartesContext
    }
 
    // ***********
-   public DescartesProject findInProjects(String aName)
+   public PmpProject findInProjects(String aName)
    {
-      DescartesProject theProject = null;
+      PmpProject theProject = null;
       String id;
 
       // System.out.println("# findInProjects: " + aName + " - card = " + cardProjects());
@@ -109,14 +109,14 @@ public class DescartesContext
 
    // **********************************************************************
    // ******** methods
-   public DescartesContext()
+   public PmpContext()
    {
-      _Projects = new ArrayList<DescartesProject>();
+      _Projects = new ArrayList<PmpProject>();
       int currentProjectIndex = -1;
    }
 
    // **********************************************************************
-   public void updateData(AbstractPitMojo mojo)
+   public void updateData(PmpMojo mojo)
    {
       if (rootProject == null)
       {
@@ -156,10 +156,10 @@ public class DescartesContext
    // private
    // **********************************************************************
    // ******** attributes
-   private static DescartesContext instance;
+   private static PmpContext instance;
 
-   private AbstractPitMojo currentMojo;
+   private PmpMojo currentMojo;
    private MavenProject rootProject;
-   private ArrayList<DescartesProject> _Projects;
+   private ArrayList<PmpProject> _Projects;
    private int currentProjectIndex;
 }

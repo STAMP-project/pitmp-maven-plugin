@@ -30,19 +30,19 @@ import org.pitest.maven.MojoToReportOptionsConverter;
 import org.pitest.maven.SurefireConfigConverter;
 
 // **********************************************************************
-public class DescartesRun
+public class PmpRun
 {
    // **********************************************************************
    // public
    // **********************************************************************
    // ******** associations
-   public DescartesProject getParent()
+   public PmpProject getParent()
    {
       return(parentProject);
    }
 
    // **********************************************************************
-   public DescartesProject getClassToMutateProject()
+   public PmpProject getClassToMutateProject()
    {
       return(classToMutateProject);
    }
@@ -68,7 +68,7 @@ public class DescartesRun
    // **********************************************************************
    // ******** methods
    // constructor for the regular pitest run
-   public DescartesRun(DescartesProject theParent)
+   public PmpRun(PmpProject theParent)
    {
       parentProject = theParent;
       classToMutateProject = theParent;
@@ -76,7 +76,7 @@ public class DescartesRun
 
    // **********************************************************************
    // constructor for additionnal runs
-   public DescartesRun(DescartesRun testSuiteRun, DescartesProject targetClassProject)
+   public PmpRun(PmpRun testSuiteRun, PmpProject targetClassProject)
    {
       parentProject = testSuiteRun.parentProject;
       classToMutateProject = targetClassProject;
@@ -87,11 +87,10 @@ public class DescartesRun
    {
       EntryPoint pitEntryPoint = null;
       AnalysisResult execResult = null;
-      DescartesRunMojo testMojo = (DescartesRunMojo)getParent().getTheMojo();
-      DescartesRunMojo classMojo = (DescartesRunMojo)getClassToMutateProject()
-         .getTheMojo();
+      PmpMojo testMojo = getParent().getTheMojo();
+      PmpMojo classMojo = getClassToMutateProject().getTheMojo();
 
-      System.out.println("################################ DescartesRun.execute: IN");
+      System.out.println("################################ PmpRun.execute: IN");
       System.out.println("# testProject: " + getParent().getName());
       System.out.println("# classProject: " + getClassToMutateProject().getName());
       System.out.println("# classProject.outputDir: " +
@@ -145,15 +144,14 @@ public class DescartesRun
 
       System.out.println("################ results");
       System.out.println(results);
-      System.out.println("################################ DescartesRun.execute: OUT");
+      System.out.println("################################ PmpRun.execute: OUT");
    }
 
    // **********************************************************************
    public void modifyTestMojo()
    {
-      DescartesRunMojo testMojo = (DescartesRunMojo)getParent().getTheMojo();
-      DescartesRunMojo classMojo = (DescartesRunMojo)getClassToMutateProject()
-         .getTheMojo();
+      PmpMojo testMojo = getParent().getTheMojo();
+      PmpMojo classMojo = getClassToMutateProject().getTheMojo();
       ArrayList<String> classes = null;
 
       if (classMojo.getTargetClasses() == null || classMojo.getTargetClasses().isEmpty())
@@ -220,8 +218,8 @@ public class DescartesRun
    // private
    // **********************************************************************
    // ******** attributes
-   private DescartesProject parentProject = null;
-   private DescartesProject classToMutateProject = null;
+   private PmpProject parentProject = null;
+   private PmpProject classToMutateProject = null;
    private CombinedStatistics results = null;
    private ReportOptions _PitOptions = null;
 }

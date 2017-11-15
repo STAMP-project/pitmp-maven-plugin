@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>fr.inria.stamp.plugins</groupId>
-  <artifactId>descartes-maven-plugin</artifactId>
-  <version>0.2.0</version>
+  <artifactId>pitmp-maven-plugin</artifactId>
+  <version>0.3.0</version>
   <packaging>maven-plugin</packaging>
 
-  <name>Maven plugin to handle multimodule project for Pitest-Descartes</name>
+  <name>Maven plugin to handle multi-module project for Pitest</name>
 
   <url>https://github.com/STAMP-project</url>
 
@@ -80,7 +80,7 @@
         <artifactId>maven-plugin-plugin</artifactId>
         <version>3.2</version>
         <configuration>
-          <goalPrefix>descartes-maven-plugin</goalPrefix>
+          <goalPrefix>pitmp-maven-plugin</goalPrefix>
           <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
         </configuration>
         <executions>
