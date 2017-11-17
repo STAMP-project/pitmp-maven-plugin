@@ -16,15 +16,10 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.pitest.functional.Option;
 import org.pitest.functional.predicate.Predicate;
 import org.pitest.mutationtest.config.PluginServices;
-// import org.pitest.mutationtest.config.ReportOptions;
 import org.pitest.mutationtest.tooling.CombinedStatistics;
+import org.pitest.classpath.DirectoryClassPathRoot;
 
 import org.pitest.maven.AbstractPitMojo;
-import org.pitest.maven.GoalStrategy;
-import org.pitest.maven.DependencyFilter;
-import org.pitest.maven.NonEmptyProjectCheck;
-// import org.pitest.maven.MojoToReportOptionsConverter;
-// import org.pitest.maven.SurefireConfigConverter;
 
 // **********************************************************************
 @Mojo(name = "run", defaultPhase = LifecyclePhase.VERIFY,
@@ -41,18 +36,6 @@ public class PmpMojo extends AbstractPitMojo
    }
 
    // **********************************************************************
-   public Boolean isRegularMojo()
-   {
-      return(_IsRegularMojo);
-   }
-
-   // ***********
-   public void setIsRegularMojo(Boolean value)
-   {
-      _IsRegularMojo = value;
-   }
-
-   // **********************************************************************
    // ******** associations
    public Predicate<Artifact> getFilter()
    {
@@ -66,18 +49,8 @@ public class PmpMojo extends AbstractPitMojo
    }
 
    // **********************************************************************
-   public ArrayList<String> getModifiedTargetClasses()
-   {
-       return(_ModifiedTargetClasses);
-   }
-
-   // **********
-   public void setModifiedTargetClasses(ArrayList<String> classes)
-   {
-       _ModifiedTargetClasses = classes;
-   }
-
-   // **********************************************************************
+   // original targetClasses from the pom.xml
+   // if empty, replaced with the explicit class list of the module
    public ArrayList<String> getRegularTargetClasses()
    {
        return(_RegularTargetClasses);
@@ -93,18 +66,11 @@ public class PmpMojo extends AbstractPitMojo
    @Override
    public List<String> getTargetClasses()
    {
-      List<String> results = null;
-
-      if (isRegularMojo())
+      if (getProject() != null)
       {
-         results = targetClasses;
+         updateTargetClasses();
       }
-      else
-      {
-         results = _ModifiedTargetClasses;
-      }
-
-      return(results);
+      return(targetClasses);
    }
 
    // **********************************************************************
@@ -112,9 +78,54 @@ public class PmpMojo extends AbstractPitMojo
    public PmpMojo()
    {
       super();
-      _IsRegularMojo = true;
+      System.out.println("################################ PmpMojo: IN");
+
+      _OriginalTargetClasses = targetClasses;
       _RegularTargetClasses = targetClasses;
-      _ModifiedTargetClasses = targetClasses;
+
+      System.out.println("# targetClasses: " + targetClasses);
+      System.out.println("# OriginalTargetClasses: " + _OriginalTargetClasses);
+      System.out.println("# RegularTargetClasses: " + getRegularTargetClasses());
+      System.out.println("################################ PmpMojo: OUT");
+   }
+
+   // **********************************************************************
+   // ******** methods
+   public void updateTargetClasses()
+   {
+      // require(getProject() != null)
+      System.out.println("################################ PmpMojo.updateTargetClasses: IN");
+
+      if (targetClasses == null || targetClasses.isEmpty())
+      // we need to set the explicit package filter
+      {
+         System.out.println("# targetClasses: empty");
+         String outputDirName = getProject().getBuild().getOutputDirectory();
+         File outputDir = new File(outputDirName);
+         if (outputDir.exists())
+         {
+            System.out.println("# outputDir.exists");
+            DirectoryClassPathRoot classRoot = new DirectoryClassPathRoot(outputDir);
+            targetClasses = new ArrayList<String>(classRoot.classNames());
+            // setRegularTargetClasses(new ArrayList<String>(targetClasses));
+            setRegularTargetClasses(targetClasses);
+         }
+      }
+      // else just let the target classes specified in the pom.xml
+      {
+         System.out.println("# targetClasses: " + targetClasses);
+         setRegularTargetClasses(targetClasses);
+         System.out.println("# RegularTargetClasses: " + getRegularTargetClasses());
+      }
+
+      // <cael>: to do: add ExcludedClasses and ExcludedMethods
+      System.out.println("################################ PmpMojo.updateTargetClasses: OUT");
+   }
+
+   // **********************************************************************
+   public void replaceTargetClasses(ArrayList<String> classes)
+   {
+      targetClasses = classes;
    }
 
    // **********************************************************************
@@ -127,24 +138,13 @@ public class PmpMojo extends AbstractPitMojo
    {
       Option<CombinedStatistics> result;
 
-      // final ReportOptions data = new MojoToReportOptionsConverter(this,
-      //   new SurefireConfigConverter(), filter).convert();
-
       PmpContext.getInstance().updateData(this);
+      PmpContext.getInstance().appendProjects(new PmpProject(this));
 
-      // result = Option.some(this.goalStrategy.execute(detectBaseDir(), data,
-      // result = Option.some(this.goalStrategy.execute(detectBaseDir(),
-      //    this.plugins, this.getEnvironmentVariables()));
-      // result = Option.some(this.goalStrategy.execute());
-
-      PmpContext.getInstance().appendProjects(new PmpProject
-         (PmpContext.getInstance().getCurrentMojo()));
+      updateTargetClasses();
 
       result = Option.some(PmpContext.getInstance().getCurrentProject()
          .execute());
-
-      // restore mojo initial (regular) data for next runs
-      setModifiedTargetClasses(getRegularTargetClasses());
 
       return(result);
    }
@@ -153,7 +153,6 @@ public class PmpMojo extends AbstractPitMojo
    // private
    // **********************************************************************
    // ******** attributes
-   Boolean _IsRegularMojo;
-   ArrayList<String> _RegularTargetClasses;
-   ArrayList<String> _ModifiedTargetClasses;
+   protected List<String> _OriginalTargetClasses;
+   protected ArrayList<String> _RegularTargetClasses;
 }

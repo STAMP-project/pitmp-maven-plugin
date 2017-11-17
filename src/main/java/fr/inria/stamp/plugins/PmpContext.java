@@ -14,26 +14,20 @@ public class PmpContext
    // **********************************************************************
    // public
    // **********************************************************************
-   // ******** assoications
+   // ******** associations
    public static PmpContext getInstance()
    {
-      if (instance == null)
+      if (_Instance == null)
       {
-         instance = new PmpContext();
+         _Instance = new PmpContext();
       }
-      return(instance);
+      return(_Instance);
    }
 
    // **********************************************************************
    public MavenProject getRootProject()
    {
       return(rootProject);
-   }
-
-   // **********************************************************************
-   public PmpMojo getCurrentMojo()
-   {
-      return(currentMojo);
    }
 
    // **********************************************************************
@@ -126,7 +120,6 @@ public class PmpContext
             rootProject = mojo.getProject().getParent();
          }
       }
-      currentMojo = mojo;
    }
 
    // **********************************************************************
@@ -156,9 +149,8 @@ public class PmpContext
    // private
    // **********************************************************************
    // ******** attributes
-   private static PmpContext instance;
+   private static PmpContext _Instance = null;
 
-   private PmpMojo currentMojo;
    private MavenProject rootProject;
    private ArrayList<PmpProject> _Projects;
    private int currentProjectIndex;
