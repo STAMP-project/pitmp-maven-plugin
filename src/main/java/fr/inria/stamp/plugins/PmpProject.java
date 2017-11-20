@@ -3,7 +3,6 @@ package fr.inria.stamp.plugins;
 // **********************************************************************
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
 import java.io.File;
 
 import org.apache.maven.project.MavenProject;
@@ -118,19 +117,11 @@ public class PmpProject
       System.out.println("################################ PmpProject.execute: IN");
       printInfo();
 
-      generateRegularData();
+      // generateClassToMutateProjects();
 
-      System.out.println("######## regular mojo");
-      printMojoInfo();
-
-      generateClassToMutateProjects();
-
-      // update the test mojo with the target classes and relative data
-      // except for the regular run
-      modifyTheMojo();
-
-      System.out.println("######## modified mojo");
-      printMojoInfo();
+      // create the ReportOptions as PiTest does and save it for futur use
+      setRegularPitOptions(new MojoToReportOptionsConverter(getTheMojo(),
+        new SurefireConfigConverter(), getTheMojo().getFilter()).convert());
 
       // now you can create the final ReportOptions
       setModifiedPitOptions(new MojoToReportOptionsConverter(getTheMojo(),
@@ -139,13 +130,16 @@ public class PmpProject
       // and complete it to update codePaths:, sourceDirs and classPathElements
       modifyReportOptions();
 
+      System.out.println("######## mojo");
+      printMojoInfo();
+
       System.out.println("######## pitEntryPoint.execute");
       System.out.println("#");
       System.out.println("# (");
       System.out.println("# baseDir = " + getTheMojo().getBaseDir());
-      System.out.println("# options = ");
+      System.out.println("#");
+      System.out.println("# modified options = ");
       printOptionsInfo(getModifiedPitOptions());
-      System.out.println("# )");
 
       pitEntryPoint = new EntryPoint();
       execResult = pitEntryPoint.execute(getTheMojo().getBaseDir(),
@@ -163,22 +157,6 @@ public class PmpProject
    }
 
    // **********************************************************************
-   public void generateRegularData() throws MojoExecutionException
-   {
-      System.out.println("################ PmpProject.generateRegularData: IN");
-
-      printMojoInfo();
-
-      // create the ReportOptions as PiTest does and save it for futur use
-      setRegularPitOptions(new MojoToReportOptionsConverter(getTheMojo(),
-        new SurefireConfigConverter(), getTheMojo().getFilter()).convert());
-
-      printOptionsInfo(getRegularPitOptions());
-
-      System.out.println("################ PmpProject.generateRegularData: OUT");
-   }
-
-   // **********************************************************************
    public void generateClassToMutateProjects()
    {
       List<Dependency> myDependencies = getTheMojo().getProject().getDependencies();
@@ -186,37 +164,20 @@ public class PmpProject
       PmpProject targetClassModule;
       ArrayList<String> completeTargetClasses = null;
 
-      System.out.println("################ PmpProject.generateClassToMutateProjects: IN");
+      // System.out.println("################ PmpProject.generateClassToMutateProjects: IN");
 
       for (int i = 0; i < myDependencies.size(); i++)
       {
          projectName = myDependencies.get(i).getArtifactId();
          targetClassModule = PmpContext.getInstance().findInProjects(projectName);
-         System.out.println("# looking for: " + projectName);
+         // System.out.println("# looking for: " + projectName);
          if (targetClassModule != null)
          {
             appendClassToMutateProjects(targetClassModule);
-            System.out.println("# found: " + targetClassModule.getName());
+            // System.out.println("# found: " + targetClassModule.getName());
          }
       }
-      System.out.println("################ PmpProject.generateClassToMutateProjects: OUT");
-   }
-   // **********************************************************************
-   public void modifyTheMojo()
-   {
-      ArrayList<String> completeTargetClasses = new ArrayList<String>
-         (getTheMojo().getRegularTargetClasses());
-
-      System.out.println("################ PmpProject.modifyTheMojo: IN");
-
-      for (int i = 0; i < cardClassToMutateProjects(); i++)
-      {
-         completeTargetClasses.addAll
-            (getClassToMutateProjects(i).getTheMojo().getRegularTargetClasses());
-      }
-      getTheMojo().replaceTargetClasses(completeTargetClasses);
-
-      System.out.println("################ PmpProject.modifyTheMojo: OUT");
+      // System.out.println("################ PmpProject.generateClassToMutateProjects: OUT");
    }
 
    // **********************************************************************
@@ -227,6 +188,7 @@ public class PmpProject
 
       // merge test and class source directories
       // <cael>: check if the order impacts the execution
+      // <cael>: to do: mege avoiding duplication
       fileList = new ArrayList<File>(getRegularPitOptions().getSourceDirs());
       for (int i = 0; i < cardClassToMutateProjects(); i++)
       {
@@ -236,24 +198,27 @@ public class PmpProject
       getModifiedPitOptions().setSourceDirs(fileList);
 
       // merge test and class class paths
-      // <cael>: to do: merge checking conflicts and avoiding duplication
+      // <cael>: to do: checking conflicts
       // <cael>: to do: check merge order
       stringList = new ArrayList<String>(getRegularPitOptions().getClassPathElements());
       for (int i = 0; i < cardClassToMutateProjects(); i++)
       {
-         stringList.addAll(getClassToMutateProjects(i).getRegularPitOptions()
-            .getClassPathElements());
+         PmpContext.addNewStrings(stringList,
+            getClassToMutateProjects(i).getRegularPitOptions().getClassPathElements());
       }
       getModifiedPitOptions().setClassPathElements(stringList);
 
-      // merge test and class code paths
+      // merge class code paths
       stringList = new ArrayList<String>(getRegularPitOptions().getCodePaths());
       for (int i = 0; i < cardClassToMutateProjects(); i++)
       {
-         stringList.addAll(getClassToMutateProjects(i).getRegularPitOptions()
-            .getCodePaths());
+         PmpContext.addNewStrings(stringList,
+            getClassToMutateProjects(i).getRegularPitOptions().getCodePaths());
       }
       getModifiedPitOptions().setCodePaths(stringList);
+
+      // <cael>: to do: merge ExcludedClasses
+      // <cael>: to do: merge ExcludedMethods
    }
 
    // **********************************************************************
@@ -285,8 +250,6 @@ public class PmpProject
       System.out.println("# targetTests: " + getTheMojo().getTargetTests());
       System.out.println("# mutationEngine: " + getTheMojo().getMutationEngine());
       System.out.println("# targetClasses: " + getTheMojo().getTargetClasses());
-      System.out.println("# regular targetClasses: " + getTheMojo()
-         .getRegularTargetClasses());
       System.out.println("# modified targetClasses: " + getTheMojo()
          .getTargetClasses());
       // System.out.println("# excludedClasses: " + getTheMojo()
@@ -300,13 +263,12 @@ public class PmpProject
    // **********************************************************************
    public void printOptionsInfo(ReportOptions data)
    {
-      System.out.println("######## report options");
       System.out.println("#");
       System.out.println("# mutationEngine: " + data.getMutationEngine());
       System.out.println("# targetTests: " + data.getTargetTests());
       System.out.println("# targetClasses: " + data.getTargetClasses());
-      // System.out.println("# excludedClasses: " + data.getExcludedClasses());
-      // System.out.println("# excludedMethods: " + data.getExcludedMethods());
+      System.out.println("# excludedClasses: " + data.getExcludedClasses());
+      System.out.println("# excludedMethods: " + data.getExcludedMethods());
       System.out.println("# codePaths: " + data.getCodePaths());
       System.out.println("# sourceDirs: " + data.getSourceDirs());
       System.out.println("# classPathElements: " + data.getClassPathElements());
@@ -316,12 +278,12 @@ public class PmpProject
    // **********************************************************************
 
    // **********************************************************************
-   // private
+   // protected
    // **********************************************************************
    // ******** associations
-   private PmpMojo _TheMojo = null;
-   private ReportOptions _RegularPitOptions = null;
-   private ReportOptions _ModifiedPitOptions = null;
-   private CombinedStatistics _Results = null;
-   private ArrayList<PmpProject> _ClassToMutateProjects = null;
+   protected PmpMojo _TheMojo = null;
+   protected ReportOptions _RegularPitOptions = null;
+   protected ReportOptions _ModifiedPitOptions = null;
+   protected CombinedStatistics _Results = null;
+   protected ArrayList<PmpProject> _ClassToMutateProjects = null;
 }

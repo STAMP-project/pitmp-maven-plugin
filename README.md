@@ -17,12 +17,32 @@ Running PitMP
 -------------
 * Go to the project on which you want to apply PiTest
 
-* Add to your project pom.xml:
+* Add to your root project pom.xml:
+** in the <dependencies> section:
+```
+  <dependency>
+    <groupId>org.pitest</groupId>
+    <artifactId>pitest-maven</artifactId>
+    <version>1.2.0</version>
+  </dependency>
+```
+** in the <plugins> section:
 ```
   <plugin>
     <groupId>fr.inria.stamp.plugins</groupId>
     <artifactId>pitmp-maven-plugin</artifactId>
-    <version>0.1.0</version>
+    <version>version.you.want</version>
+    <!-- you have to list all the package of the project that contain
+    #### classes you want to mutate
+    #### sorry for that didn't find the way to workaround the behavior
+    #### for default values...for the moment ! :-)
+    -->
+    <configuration>
+      <targetClasses>
+        <param>a.package.of.classes.to.mutate*</param>
+        <param>another.package.of.classes.to.mutate*</param>
+      </targetClasses>
+    </configuration>
   </plugin>
 ```
 * Compile your project

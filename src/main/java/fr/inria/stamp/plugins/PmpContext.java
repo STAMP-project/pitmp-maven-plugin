@@ -1,8 +1,10 @@
 package fr.inria.stamp.plugins;
 
 // **********************************************************************
+import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.apache.maven.project.MavenProject;
 
@@ -103,6 +105,23 @@ public class PmpContext
 
    // **********************************************************************
    // ******** methods
+   public static void addNewStrings(ArrayList<String> targetList,
+      Collection<String> listToAdd)
+   {
+      Iterator<String> myIt = listToAdd.iterator();
+      String currentElt;
+
+      while (myIt.hasNext())
+      {  
+         currentElt = myIt.next();
+         if (! targetList.contains(currentElt))
+         {
+            targetList.add(currentElt);
+         }
+      }
+   }
+
+   // **********************************************************************
    public PmpContext()
    {
       _Projects = new ArrayList<PmpProject>();
@@ -146,12 +165,12 @@ public class PmpContext
    }
 
    // **********************************************************************
-   // private
+   // protected
    // **********************************************************************
    // ******** attributes
-   private static PmpContext _Instance = null;
+   protected static PmpContext _Instance = null;
 
-   private MavenProject rootProject;
-   private ArrayList<PmpProject> _Projects;
-   private int currentProjectIndex;
+   protected MavenProject rootProject;
+   protected ArrayList<PmpProject> _Projects;
+   protected int currentProjectIndex;
 }

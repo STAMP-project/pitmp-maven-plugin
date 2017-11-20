@@ -49,43 +49,14 @@ public class PmpMojo extends AbstractPitMojo
    }
 
    // **********************************************************************
-   // original targetClasses from the pom.xml
-   // if empty, replaced with the explicit class list of the module
-   public ArrayList<String> getRegularTargetClasses()
-   {
-       return(_RegularTargetClasses);
-   }
-
-   // **********
-   public void setRegularTargetClasses(ArrayList<String> classes)
-   {
-       _RegularTargetClasses = classes;
-   }
-
-   // **********************************************************************
-   @Override
-   public List<String> getTargetClasses()
-   {
-      if (getProject() != null)
-      {
-         updateTargetClasses();
-      }
-      return(targetClasses);
-   }
-
-   // **********************************************************************
    // ******** methods
    public PmpMojo()
    {
       super();
       System.out.println("################################ PmpMojo: IN");
 
-      _OriginalTargetClasses = targetClasses;
-      _RegularTargetClasses = targetClasses;
-
       System.out.println("# targetClasses: " + targetClasses);
-      System.out.println("# OriginalTargetClasses: " + _OriginalTargetClasses);
-      System.out.println("# RegularTargetClasses: " + getRegularTargetClasses());
+      System.out.println("# getProject(): " + getProject());
       System.out.println("################################ PmpMojo: OUT");
    }
 
@@ -93,39 +64,47 @@ public class PmpMojo extends AbstractPitMojo
    // ******** methods
    public void updateTargetClasses()
    {
+      PmpProject currentProject = PmpContext.getInstance().getCurrentProject();
+      ArrayList<String> localTargetClasses = new ArrayList<String>();
+      ArrayList<String> completeTargetClasses;
+
       // require(getProject() != null)
-      System.out.println("################################ PmpMojo.updateTargetClasses: IN");
+      // System.out.println("######################## PmpMojo.updateTargetClasses: IN");
 
       if (targetClasses == null || targetClasses.isEmpty())
-      // we need to set the explicit package filter
+      // we need to get the explicit class list of the current project
       {
-         System.out.println("# targetClasses: empty");
+         System.out.println("#### targetClasses: empty");
          String outputDirName = getProject().getBuild().getOutputDirectory();
          File outputDir = new File(outputDirName);
+         // <cael>: check id this could happen, and what does it mean, and decide what
+         // to do: value of targetClass or throw exception
          if (outputDir.exists())
          {
-            System.out.println("# outputDir.exists");
+            System.out.println("#### outputDir.exists");
             DirectoryClassPathRoot classRoot = new DirectoryClassPathRoot(outputDir);
-            targetClasses = new ArrayList<String>(classRoot.classNames());
-            // setRegularTargetClasses(new ArrayList<String>(targetClasses));
-            setRegularTargetClasses(targetClasses);
+            localTargetClasses.addAll(classRoot.classNames());
          }
       }
+      else
       // else just let the target classes specified in the pom.xml
       {
-         System.out.println("# targetClasses: " + targetClasses);
-         setRegularTargetClasses(targetClasses);
-         System.out.println("# RegularTargetClasses: " + getRegularTargetClasses());
+         localTargetClasses.addAll(targetClasses);
+      }
+      // initialize the targetClasses with the classes of the current module
+      targetClasses = localTargetClasses;
+
+      // complete the target classes with other (dependencies) modules classes
+      for (int i = 0; i < currentProject.cardClassToMutateProjects(); i++)
+      {
+         PmpContext.addNewStrings(targetClasses, currentProject
+               .getClassToMutateProjects(i).getTheMojo().getTargetClasses());
       }
 
-      // <cael>: to do: add ExcludedClasses and ExcludedMethods
-      System.out.println("################################ PmpMojo.updateTargetClasses: OUT");
-   }
+      System.out.println("# targetClasses: " + targetClasses);
 
-   // **********************************************************************
-   public void replaceTargetClasses(ArrayList<String> classes)
-   {
-      targetClasses = classes;
+      // <cael>: to do: add ExcludedClasses and ExcludedMethods
+      System.out.println("######################## PmpMojo.updateTargetClasses: OUT");
    }
 
    // **********************************************************************
@@ -138,21 +117,37 @@ public class PmpMojo extends AbstractPitMojo
    {
       Option<CombinedStatistics> result;
 
-      PmpContext.getInstance().updateData(this);
-      PmpContext.getInstance().appendProjects(new PmpProject(this));
+      System.out.println("################################ PmpMojo.analyse: IN");
 
-      updateTargetClasses();
+      // PmpContext.getInstance().updateData(this);
+      // PmpContext.getInstance().appendProjects(new PmpProject(this));
+
+      // PmpContext.getInstance().getCurrentProject().generateClassToMutateProjects();
+      // updateTargetClasses();
 
       result = Option.some(PmpContext.getInstance().getCurrentProject()
          .execute());
 
+      System.out.println("################################ PmpMojo.analyse: OUT");
       return(result);
    }
 
    // **********************************************************************
-   // private
-   // **********************************************************************
-   // ******** attributes
-   protected List<String> _OriginalTargetClasses;
-   protected ArrayList<String> _RegularTargetClasses;
+   // called at the beginning of execute
+   @Override
+   protected boolean shouldRun()
+   {
+      boolean pitShouldRun = super.shouldRun();
+
+      System.out.println("######## shouldRun: pitShouldRun = " + pitShouldRun +
+         " - getProject() = " + getProject());
+
+      PmpContext.getInstance().updateData(this);
+      PmpContext.getInstance().appendProjects(new PmpProject(this));
+
+      PmpContext.getInstance().getCurrentProject().generateClassToMutateProjects();
+      updateTargetClasses();
+
+      return(pitShouldRun);
+  }
 }
