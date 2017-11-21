@@ -49,6 +49,32 @@ public class PmpMojo extends AbstractPitMojo
    }
 
    // **********************************************************************
+   @Override
+   public List<String> getExcludedClasses()
+   {
+      return(PmpContext.getInstance().getCurrentProject().getExcludedClasses());
+   }
+
+   // **********************************************************************
+   public List<String> getLocalExcludedClasses()
+   {
+      return(super.getExcludedClasses());
+   }
+
+   // **********************************************************************
+   @Override
+   public List<String> getExcludedMethods()
+   {
+      return(PmpContext.getInstance().getCurrentProject().getExcludedMethods());
+   }
+
+   // **********************************************************************
+   public List<String> getLocalExcludedMethods()
+   {
+      return(super.getExcludedMethods());
+   }
+
+   // **********************************************************************
    // ******** methods
    public PmpMojo()
    {

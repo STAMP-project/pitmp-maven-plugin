@@ -35,7 +35,7 @@ Running PitMP
     <!-- you have to list all the package of the project that contain
     #### classes you want to mutate
     #### sorry for that didn't find the way to workaround the behavior
-    #### for default values...for the moment ! :-)
+    #### for default values...yet ! :-)
     -->
     <configuration>
       <targetClasses>

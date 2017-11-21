@@ -97,6 +97,48 @@ public class PmpProject
    }
 
    // **********************************************************************
+   public List<String> getExcludedClasses()
+   {
+      // System.out.println("######## PmpProject.getExcludedClasses: IN");
+      ArrayList<String> completeList = new ArrayList<String>
+         (getTheMojo().getLocalExcludedClasses());
+
+      // add other modules excluded methods
+      // System.out.print("# dependencies: ");
+      for (int i = 0; i < cardClassToMutateProjects(); i++)
+      {
+         // System.out.print(getClassToMutateProjects(i).getName() + ", ");
+         PmpContext.addNewStrings(completeList,
+            getClassToMutateProjects(i).getExcludedClasses());
+      }
+      // System.out.println("");
+
+      // System.out.println("######## PmpProject.getExcludedClasses: OUT");
+      return(completeList);
+   }
+
+   // **********************************************************************
+   public List<String> getExcludedMethods()
+   {
+      // System.out.println("######## PmpProject.getExcludedMethods: IN");
+      ArrayList<String> completeList = new ArrayList<String>
+         (getTheMojo().getLocalExcludedMethods());
+
+      // add other modules excluded methods
+      // System.out.print("# dependencies: ");
+      for (int i = 0; i < cardClassToMutateProjects(); i++)
+      {
+         // System.out.print(getClassToMutateProjects(i).getName() + ", ");
+         PmpContext.addNewStrings(completeList,
+            getClassToMutateProjects(i).getExcludedMethods());
+      }
+      // System.out.println("");
+
+      // System.out.println("######## PmpProject.getExcludedMethods: OUT");
+      return(completeList);
+   }
+
+   // **********************************************************************
    // ******** methods
    public PmpProject(PmpMojo mojo)
    {
