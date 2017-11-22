@@ -18,7 +18,8 @@ import org.pitest.functional.predicate.Predicate;
 import org.pitest.mutationtest.config.PluginServices;
 import org.pitest.mutationtest.tooling.CombinedStatistics;
 import org.pitest.classpath.DirectoryClassPathRoot;
-
+import org.pitest.maven.MojoToReportOptionsConverter;
+import org.pitest.maven.SurefireConfigConverter;
 import org.pitest.maven.AbstractPitMojo;
 
 // **********************************************************************
@@ -145,12 +146,6 @@ public class PmpMojo extends AbstractPitMojo
 
       System.out.println("################################ PmpMojo.analyse: IN");
 
-      // PmpContext.getInstance().updateData(this);
-      // PmpContext.getInstance().appendProjects(new PmpProject(this));
-
-      // PmpContext.getInstance().getCurrentProject().generateClassToMutateProjects();
-      // updateTargetClasses();
-
       result = Option.some(PmpContext.getInstance().getCurrentProject()
          .execute());
 
@@ -159,14 +154,14 @@ public class PmpMojo extends AbstractPitMojo
    }
 
    // **********************************************************************
-   // called at the beginning of execute
+   // called at the beginning of AbstractPitMojo.execute
    @Override
    protected boolean shouldRun()
    {
       boolean pitShouldRun = super.shouldRun();
 
-      System.out.println("######## shouldRun: pitShouldRun = " + pitShouldRun +
-         " - getProject() = " + getProject());
+      System.out.println("################ shouldRun: pitShouldRun = " + pitShouldRun +
+         " - getProject() = " + getProject().getArtifactId());
 
       PmpContext.getInstance().updateData(this);
       PmpContext.getInstance().appendProjects(new PmpProject(this));
@@ -174,6 +169,14 @@ public class PmpMojo extends AbstractPitMojo
       PmpContext.getInstance().getCurrentProject().generateClassToMutateProjects();
       updateTargetClasses();
 
+      // create the ReportOptions as PiTest does and save it for futur use
+      // do this here to ensure getRegularPitOprions() != null, even if pitest
+      // doesn't run on it
+      PmpContext.getInstance().getCurrentProject().setRegularPitOptions
+         (new MojoToReportOptionsConverter(this, new SurefireConfigConverter(),
+             getFilter())
+         .convert());
+
       return(pitShouldRun);
-  }
+   }
 }

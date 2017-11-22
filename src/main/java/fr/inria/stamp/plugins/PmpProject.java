@@ -159,17 +159,12 @@ public class PmpProject
       System.out.println("################################ PmpProject.execute: IN");
       printInfo();
 
-      // generateClassToMutateProjects();
-
-      // create the ReportOptions as PiTest does and save it for futur use
-      setRegularPitOptions(new MojoToReportOptionsConverter(getTheMojo(),
-        new SurefireConfigConverter(), getTheMojo().getFilter()).convert());
-
-      // now you can create the final ReportOptions
+      // create the final ReportOptions
       setModifiedPitOptions(new MojoToReportOptionsConverter(getTheMojo(),
-        new SurefireConfigConverter(), getTheMojo().getFilter()).convert());
+           new SurefireConfigConverter(), getTheMojo().getFilter())
+         .convert());
 
-      // and complete it to update codePaths:, sourceDirs and classPathElements
+      // and complete it to update codePaths, sourceDirs and classPathElements
       modifyReportOptions();
 
       System.out.println("######## mojo");
@@ -226,41 +221,29 @@ public class PmpProject
    public void modifyReportOptions()
    {
       ArrayList<File> fileList = null;
-      ArrayList<String> stringList = null;
+      ArrayList<String> classPathList = null;
+      ArrayList<String> codePathList = null;
+      ReportOptions theOptions;
 
       // merge test and class source directories
-      // <cael>: check if the order impacts the execution
-      // <cael>: to do: mege avoiding duplication
+      // <cael>: to do: check if the order impacts the execution
       fileList = new ArrayList<File>(getRegularPitOptions().getSourceDirs());
+      classPathList = new ArrayList<String>
+         (getRegularPitOptions().getClassPathElements());
+      codePathList = new ArrayList<String>(getRegularPitOptions().getCodePaths());
       for (int i = 0; i < cardClassToMutateProjects(); i++)
       {
-         fileList.addAll(getClassToMutateProjects(i).getRegularPitOptions()
-            .getSourceDirs());
+         theOptions = getClassToMutateProjects(i).getRegularPitOptions();
+         fileList.addAll(theOptions.getSourceDirs());
+         // merge test and class class paths
+         // <cael>: to do: checking conflicts
+         // <cael>: to do: check merge order
+         PmpContext.addNewStrings(classPathList, theOptions.getClassPathElements());
+         PmpContext.addNewStrings(codePathList, theOptions.getCodePaths());
       }
       getModifiedPitOptions().setSourceDirs(fileList);
-
-      // merge test and class class paths
-      // <cael>: to do: checking conflicts
-      // <cael>: to do: check merge order
-      stringList = new ArrayList<String>(getRegularPitOptions().getClassPathElements());
-      for (int i = 0; i < cardClassToMutateProjects(); i++)
-      {
-         PmpContext.addNewStrings(stringList,
-            getClassToMutateProjects(i).getRegularPitOptions().getClassPathElements());
-      }
-      getModifiedPitOptions().setClassPathElements(stringList);
-
-      // merge class code paths
-      stringList = new ArrayList<String>(getRegularPitOptions().getCodePaths());
-      for (int i = 0; i < cardClassToMutateProjects(); i++)
-      {
-         PmpContext.addNewStrings(stringList,
-            getClassToMutateProjects(i).getRegularPitOptions().getCodePaths());
-      }
-      getModifiedPitOptions().setCodePaths(stringList);
-
-      // <cael>: to do: merge ExcludedClasses
-      // <cael>: to do: merge ExcludedMethods
+      getModifiedPitOptions().setClassPathElements(classPathList);
+      getModifiedPitOptions().setCodePaths(codePathList);
    }
 
    // **********************************************************************
