@@ -17,11 +17,7 @@ Running PitMP
 -------------
 * Go to the project on which you want to apply PiTest
 
-* Add to your root project pom.xml:
-** in the <dependencies> section:
-```
-```
-** in the <plugins> section:
+* Add to your root project pom.xml, in the <plugins> section:
 ```
   <plugin>
     <groupId>fr.inria.stamp.plugins</groupId>
