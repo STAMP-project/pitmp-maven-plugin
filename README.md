@@ -17,7 +17,7 @@ Running PitMP
 -------------
 * Go to the project on which you want to apply PiTest
 
-* Add to your root project pom.xml, in the '<plugins>' section:
+* Add to your root project pom.xml, in the \<plugins\> section:
 ```
   <plugin>
     <groupId>fr.inria.stamp.plugins</groupId>
@@ -59,4 +59,4 @@ If you want to run Descartes, use the regular PiTest tag in the pom.xml file:
 <mutationEngine>descartes</mutationEngine>
 ```
 
-For complete instructions about Descartes see the Descartes github.
+For complete instructions about Descartes see the [Descartes github](https://github.com/STAMP-project/pitest-descartes).
