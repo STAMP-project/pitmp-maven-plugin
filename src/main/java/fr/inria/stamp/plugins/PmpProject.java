@@ -247,6 +247,23 @@ public class PmpProject
    }
 
    // **********************************************************************
+   public Boolean hasCompileSourceRoots()
+   // the module or one of the submodules has target classes
+   {
+      Boolean result = PmpContext.oneFileExists
+         (getTheMojo().getProject().getCompileSourceRoots());
+
+      for (int i = 0; i < cardClassToMutateProjects() && ! result; i++)
+      {
+         result = PmpContext.oneFileExists
+            (getClassToMutateProjects(i).getTheMojo().getProject()
+               .getCompileSourceRoots());
+      }
+
+      return(result);
+   }
+
+   // **********************************************************************
    public void printInfo()
    {
       List<Dependency> projectDependencies = getTheMojo().getProject().getDependencies();

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.io.File;
 
 import org.apache.maven.project.MavenProject;
 
@@ -89,11 +90,12 @@ public class PmpContext
       PmpProject theProject = null;
       String id;
 
-      // System.out.println("# findInProjects: " + aName + " - card = " + cardProjects());
+      // System.out.println("#### findNameInProjects: " + aName +
+      //    " - card = " + cardProjects());
       for (int i = 0; (i < cardProjects() && theProject == null); i++)
       {
          id = getProjects(i).getTheMojo().getProject().getArtifactId();
-         // System.out.println("# i: " + i + " - Id = " + id);
+         // System.out.println("#### i: " + i + " - Id = " + id);
          if (id.equals(aName))
          {
             theProject = getProjects(i);
@@ -119,6 +121,24 @@ public class PmpContext
             targetList.add(currentElt);
          }
       }
+   }
+
+   // **********************************************************************
+   public static Boolean oneFileExists(List<String> fileNameList)
+   {
+      Iterator<String> myIt = fileNameList.iterator();
+      String currentName;
+      Boolean result = false;
+      File theFile;
+
+      while (myIt.hasNext() && ! result)
+      {  
+         currentName = myIt.next();
+         theFile = new File(currentName);
+         result = theFile.exists();
+      }
+
+      return(result);
    }
 
    // **********************************************************************

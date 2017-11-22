@@ -21,6 +21,8 @@ import org.pitest.classpath.DirectoryClassPathRoot;
 import org.pitest.maven.MojoToReportOptionsConverter;
 import org.pitest.maven.SurefireConfigConverter;
 import org.pitest.maven.AbstractPitMojo;
+import org.pitest.maven.RunPitStrategy;
+import org.pitest.maven.DependencyFilter;
 
 // **********************************************************************
 @Mojo(name = "run", defaultPhase = LifecyclePhase.VERIFY,
@@ -79,7 +81,11 @@ public class PmpMojo extends AbstractPitMojo
    // ******** methods
    public PmpMojo()
    {
-      super();
+      super(new RunPitStrategy(),
+        new DependencyFilter(new PluginServices(AbstractPitMojo.class.getClassLoader())),
+        new PluginServices(AbstractPitMojo.class.getClassLoader()),
+        new PmpNonEmptyProjectCheck());
+
       System.out.println("################################ PmpMojo: IN");
 
       System.out.println("# targetClasses: " + targetClasses);
@@ -158,16 +164,16 @@ public class PmpMojo extends AbstractPitMojo
    @Override
    protected boolean shouldRun()
    {
-      boolean pitShouldRun = super.shouldRun();
-
-      System.out.println("################ shouldRun: pitShouldRun = " + pitShouldRun +
-         " - getProject() = " + getProject().getArtifactId());
-
       PmpContext.getInstance().updateData(this);
       PmpContext.getInstance().appendProjects(new PmpProject(this));
 
       PmpContext.getInstance().getCurrentProject().generateClassToMutateProjects();
       updateTargetClasses();
+
+      boolean pitShouldRun = super.shouldRun();
+
+      System.out.println("################ shouldRun: pitShouldRun = " + pitShouldRun +
+         " - getProject() = " + getProject().getArtifactId());
 
       // create the ReportOptions as PiTest does and save it for futur use
       // do this here to ensure getRegularPitOprions() != null, even if pitest
