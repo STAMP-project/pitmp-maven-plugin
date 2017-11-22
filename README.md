@@ -20,11 +20,6 @@ Running PitMP
 * Add to your root project pom.xml:
 ** in the <dependencies> section:
 ```
-  <dependency>
-    <groupId>org.pitest</groupId>
-    <artifactId>pitest-maven</artifactId>
-    <version>1.2.0</version>
-  </dependency>
 ```
 ** in the <plugins> section:
 ```
@@ -43,6 +38,13 @@ Running PitMP
         <param>another.package.of.classes.to.mutate*</param>
       </targetClasses>
     </configuration>
+    <dependencies>
+      <dependency>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.2.0</version>
+      </dependency>
+    </dependencies>
   </plugin>
 ```
 * Compile your project
