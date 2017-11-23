@@ -52,6 +52,19 @@ public class PmpMojo extends AbstractPitMojo
    }
 
    // **********************************************************************
+   public ArrayList<String> getLocalTargetClasses()
+   {
+      return(_LocalTargetClasses);
+   }
+
+   // **********************************************************************
+   public void setLocalTargetClasses(ArrayList<String> newClasses)
+   {
+      _LocalTargetClasses = newClasses;
+   }
+
+
+   // **********************************************************************
    @Override
    public List<String> getExcludedClasses()
    {
@@ -86,11 +99,12 @@ public class PmpMojo extends AbstractPitMojo
         new PluginServices(AbstractPitMojo.class.getClassLoader()),
         new PmpNonEmptyProjectCheck());
 
-      System.out.println("################################ PmpMojo: IN");
+      // System.out.println("################################ PmpMojo: IN");
+      _LocalTargetClasses = new ArrayList<String>();
 
-      System.out.println("# targetClasses: " + targetClasses);
-      System.out.println("# getProject(): " + getProject());
-      System.out.println("################################ PmpMojo: OUT");
+      // System.out.println("# targetClasses: " + targetClasses);
+      // System.out.println("# getProject(): " + getProject());
+      // System.out.println("################################ PmpMojo: OUT");
    }
 
    // **********************************************************************
@@ -98,7 +112,6 @@ public class PmpMojo extends AbstractPitMojo
    public void updateTargetClasses()
    {
       PmpProject currentProject = PmpContext.getInstance().getCurrentProject();
-      ArrayList<String> localTargetClasses = new ArrayList<String>();
       ArrayList<String> completeTargetClasses;
 
       // require(getProject() != null)
@@ -107,7 +120,7 @@ public class PmpMojo extends AbstractPitMojo
       if (targetClasses == null || targetClasses.isEmpty())
       // we need to get the explicit class list of the current project
       {
-         System.out.println("#### targetClasses: empty");
+         // System.out.println("#### targetClasses: empty");
          String outputDirName = getProject().getBuild().getOutputDirectory();
          File outputDir = new File(outputDirName);
          // <cael>: check id this could happen, and what does it mean, and decide what
@@ -116,16 +129,16 @@ public class PmpMojo extends AbstractPitMojo
          {
             System.out.println("#### outputDir.exists");
             DirectoryClassPathRoot classRoot = new DirectoryClassPathRoot(outputDir);
-            localTargetClasses.addAll(classRoot.classNames());
+            getLocalTargetClasses().addAll(classRoot.classNames());
          }
       }
       else
       // else just let the target classes specified in the pom.xml
       {
-         localTargetClasses.addAll(targetClasses);
+         getLocalTargetClasses().addAll(targetClasses);
       }
       // initialize the targetClasses with the classes of the current module
-      targetClasses = localTargetClasses;
+      targetClasses = new ArrayList(getLocalTargetClasses());
 
       // complete the target classes with other (dependencies) modules classes
       for (int i = 0; i < currentProject.cardClassToMutateProjects(); i++)
@@ -134,15 +147,18 @@ public class PmpMojo extends AbstractPitMojo
                .getClassToMutateProjects(i).getTheMojo().getTargetClasses());
       }
 
-      System.out.println("# targetClasses: " + targetClasses);
+      System.out.println("# updated targetClasses: " + targetClasses);
 
       // <cael>: to do: add ExcludedClasses and ExcludedMethods
-      System.out.println("######################## PmpMojo.updateTargetClasses: OUT");
+      // System.out.println("######################## PmpMojo.updateTargetClasses: OUT");
    }
 
    // **********************************************************************
    // protected
    // **********************************************************************
+   // ******** attributes
+   ArrayList<String> _LocalTargetClasses;
+
    // ******** methods
    @Override
    protected Option<CombinedStatistics> analyse()
@@ -164,16 +180,20 @@ public class PmpMojo extends AbstractPitMojo
    @Override
    protected boolean shouldRun()
    {
-      PmpContext.getInstance().updateData(this);
-      PmpContext.getInstance().appendProjects(new PmpProject(this));
+      // System.out.println("################ PmpMojo.shouldRun: IN");
 
-      PmpContext.getInstance().getCurrentProject().generateClassToMutateProjects();
+      boolean pitShouldRun;
+      PmpProject myPmpProject;
+
+      PmpContext.getInstance().updateData(this);
+      myPmpProject = new PmpProject(this);
+      PmpContext.getInstance().appendProjects(myPmpProject);
+
+      // PmpContext.getInstance().getCurrentProject().generateClassToMutateProjects();
+      myPmpProject.generateClassToMutateProjects();
       updateTargetClasses();
 
-      boolean pitShouldRun = super.shouldRun();
-
-      System.out.println("################ shouldRun: pitShouldRun = " + pitShouldRun +
-         " - getProject() = " + getProject().getArtifactId());
+      pitShouldRun = super.shouldRun();
 
       // create the ReportOptions as PiTest does and save it for futur use
       // do this here to ensure getRegularPitOprions() != null, even if pitest
@@ -182,6 +202,10 @@ public class PmpMojo extends AbstractPitMojo
          (new MojoToReportOptionsConverter(this, new SurefireConfigConverter(),
              getFilter())
          .convert());
+
+      System.out.print("# getProject() = " + getProject().getArtifactId());
+      System.out.println(" - shouldRun: pitShouldRun = " + pitShouldRun);
+      // System.out.println("################ PmpMojo.shouldRun: OUT");
 
       return(pitShouldRun);
    }

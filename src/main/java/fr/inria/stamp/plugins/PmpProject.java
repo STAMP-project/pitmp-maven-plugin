@@ -97,6 +97,27 @@ public class PmpProject
    }
 
    // **********************************************************************
+   public List<String> getTargetClasses()
+   {
+      // System.out.println("######## PmpProject.getTargetClasses: IN");
+      ArrayList<String> completeList = new ArrayList<String>
+         (getTheMojo().getLocalTargetClasses());
+
+      // add other modules excluded methods
+      // System.out.print("# dependencies: ");
+      for (int i = 0; i < cardClassToMutateProjects(); i++)
+      {
+         // System.out.print(getClassToMutateProjects(i).getName() + ", ");
+         PmpContext.addNewStrings(completeList,
+            getClassToMutateProjects(i).getTargetClasses());
+      }
+      // System.out.println("");
+
+      // System.out.println("######## PmpProject.getTargetClasses: OUT");
+      return(completeList);
+   }
+
+   // **********************************************************************
    public List<String> getExcludedClasses()
    {
       // System.out.println("######## PmpProject.getExcludedClasses: IN");
@@ -203,16 +224,21 @@ public class PmpProject
 
       // System.out.println("################ PmpProject.generateClassToMutateProjects: IN");
 
+      // System.out.println("# project: " + getName());
       for (int i = 0; i < myDependencies.size(); i++)
       {
          projectName = myDependencies.get(i).getArtifactId();
          targetClassModule = PmpContext.getInstance().findInProjects(projectName);
-         // System.out.println("# looking for: " + projectName);
+         // System.out.print("# looking for: " + projectName + ": ");
          if (targetClassModule != null)
          {
             appendClassToMutateProjects(targetClassModule);
-            // System.out.println("# found: " + targetClassModule.getName());
+            // System.out.println("found");
          }
+         // else
+         // {
+         //    System.out.println("ignored");
+         // }
       }
       // System.out.println("################ PmpProject.generateClassToMutateProjects: OUT");
    }
@@ -255,9 +281,7 @@ public class PmpProject
 
       for (int i = 0; i < cardClassToMutateProjects() && ! result; i++)
       {
-         result = PmpContext.oneFileExists
-            (getClassToMutateProjects(i).getTheMojo().getProject()
-               .getCompileSourceRoots());
+         result = getClassToMutateProjects(i).hasCompileSourceRoots();
       }
 
       return(result);
