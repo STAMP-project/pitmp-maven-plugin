@@ -6,7 +6,7 @@
 
   <groupId>fr.inria.stamp.plugins</groupId>
   <artifactId>pitmp-maven-plugin</artifactId>
-  <version>0.6.0</version>
+  <version>0.7.0</version>
   <packaging>maven-plugin</packaging>
 
   <name>Maven plugin to handle multi-module project for Pitest</name>
