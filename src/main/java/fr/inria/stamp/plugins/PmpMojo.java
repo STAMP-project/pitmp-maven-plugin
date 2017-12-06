@@ -30,6 +30,12 @@ import org.pitest.maven.DependencyFilter;
 public class PmpMojo extends AbstractPitMojo
 {
    // **********************************************************************
+   // properties
+   // **********************************************************************
+   @Parameter(property = "targetModules")
+   protected ArrayList<String> targetModules;
+
+   // **********************************************************************
    // public
    // **********************************************************************
    // ******** attributes
@@ -52,15 +58,28 @@ public class PmpMojo extends AbstractPitMojo
    }
 
    // **********************************************************************
-   public ArrayList<String> getLocalTargetClasses()
+   public ArrayList<String> getTargetModules()
    {
-      return(_LocalTargetClasses);
+      return(_TargetModules);
    }
 
    // **********************************************************************
-   public void setLocalTargetClasses(ArrayList<String> newClasses)
+   public void setTargetModules(ArrayList<String> newClasses)
    {
-      _LocalTargetClasses = newClasses;
+      _TargetModules = newClasses;
+   }
+
+   // **********************************************************************
+   public boolean findInTargetModules(String name)
+   {
+      boolean result = false;
+
+      for (int i = 0; i < getTargetModules().size() && ! result; i++)
+      {
+         result = getTargetModules().get(i).equals(name);
+      }
+
+      return(result);
    }
 
    // **********************************************************************
@@ -73,7 +92,6 @@ public class PmpMojo extends AbstractPitMojo
         new PmpNonEmptyProjectCheck());
 
       // System.out.println("################################ PmpMojo: IN");
-      _LocalTargetClasses = new ArrayList<String>();
 
       // System.out.println("# targetClasses: " + targetClasses);
       // System.out.println("# getProject(): " + getProject());
@@ -86,29 +104,28 @@ public class PmpMojo extends AbstractPitMojo
    {
       ArrayList<String> completeTargetClasses;
       ArrayList<String> classList;
-      ArrayList<MavenProject> moduleList;
+      ArrayList<MavenProject> moduleList = null;
       MavenProject mvnProject;
 
       // require(getProject() != null)
       // System.out.println("######################## PmpMojo.updateTargetClasses: IN");
 
-      if (targetClasses == null || targetClasses.isEmpty())
+      if (targetClasses == null)
+      {
+         targetClasses = new ArrayList<String>();
+      }
+      if (targetClasses.isEmpty())
       // we need to get the explicit class list of the current project
       {
          // System.out.println("#### targetClasses: empty");
          classList = PmpContext.getClasses(getProject());
          if (! classList.isEmpty())
          {
-            getLocalTargetClasses().addAll(classList);
+            targetClasses.addAll(classList);
          }
       }
       else
       // else just let the target classes specified in the pom.xml
-      {
-         getLocalTargetClasses().addAll(targetClasses);
-      }
-      // initialize the targetClasses with the classes of the current module
-      targetClasses = new ArrayList(getLocalTargetClasses());
 
       // complete the target classes with other (dependencies) modules classes
       // and add target classes of all getArtifacts which are a project module
@@ -132,7 +149,7 @@ public class PmpMojo extends AbstractPitMojo
    // protected
    // **********************************************************************
    // ******** attributes
-   ArrayList<String> _LocalTargetClasses;
+   ArrayList<String> _TargetModules;
 
    // ******** methods
    @Override
@@ -159,6 +176,12 @@ public class PmpMojo extends AbstractPitMojo
 
       boolean pitShouldRun;
       PmpProject myPmpProject;
+      boolean isTargetModule = (getTargetModules() == null ||
+         getTargetModules().isEmpty() ||
+         findInTargetModules(getProject().getArtifactId()));
+
+      // System.out.println("#### targetModules(" + getProject().getArtifactId() + "): "
+         // + getTargetModules());
 
       PmpContext.getInstance().updateData(this);
       myPmpProject = new PmpProject(this);
@@ -167,10 +190,11 @@ public class PmpMojo extends AbstractPitMojo
       // myPmpProject.generateClassToMutateProjects();
       updateTargetClasses();
 
-      pitShouldRun = super.shouldRun();
+      pitShouldRun = isTargetModule && super.shouldRun();
 
-      System.out.println("#### shouldRun: " + pitShouldRun + " - getProject() = " +
-         getProject().getArtifactId() + " - packaging = " + getProject().getPackaging());
+      // System.out.println("#### shouldRun(" + getProject().getArtifactId() + "): "
+         // + pitShouldRun + " - isTargetModule = " + isTargetModule
+         // + " - packaging = " + getProject().getPackaging());
 
       // System.out.println("################ PmpMojo.shouldRun: OUT");
       return(pitShouldRun);

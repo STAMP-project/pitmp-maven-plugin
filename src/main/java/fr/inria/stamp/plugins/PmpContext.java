@@ -193,16 +193,32 @@ public class PmpContext
    // **********************************************************************
    public void updateData(PmpMojo mojo)
    {
+      MavenProject rootProject = getRootProject(mojo);
+      List<MavenProject> moduleList = rootProject.getCollectedProjects();
+
       // build once at the beginning; the complete list of project modules
       if (getModules() == null)
       {
-         setModules(mojo.getProject().getCollectedProjects());
+         setModules(moduleList);
       }
 
-      printCollectedProjects(mojo.getProject());
-      printArtifacts(mojo.getProject());
+      // System.out.println("#### " + rootProject.getArtifactId() +
+         // " modules: " + rootProject.getModules());
+      // printCollectedProjects(rootProject);
+      // printArtifacts(mojo.getProject());
 
       // System.out.println("#### modules: " + getModules());
+   }
+
+   // **********************************************************************
+   public MavenProject getRootProject(PmpMojo mojo)
+   {
+      // <cael>: to do: decide where to stop, project physical tree or following
+      // all "parents" ?
+      // code this method according to the choice
+      MavenProject rootProject = mojo.getProject();
+
+      return(rootProject);
    }
 
    // **********************************************************************
@@ -239,7 +255,7 @@ public class PmpContext
          currentModule = myIt.next();
          result = currentModule.getArtifactId().equals(name);
       }
-      System.out.println("#### isProjectModule: (" + name + ") = " + result);
+      // System.out.println("#### isProjectModule: (" + name + ") = " + result);
 
       return(result);
    }
@@ -268,54 +284,61 @@ public class PmpContext
    public static void printCollectedProjects(MavenProject aProject)
    {
       List<MavenProject> collectedProjects = aProject.getCollectedProjects();
-      Iterator<MavenProject> myIt = collectedProjects.iterator();
+      Iterator<MavenProject> myIt;
       MavenProject currentModule;
-      MavenProject module = null;
 
-      System.out.print("#### collectedProjects(" + aProject.getArtifactId()
-         + "): ");
-      while (myIt.hasNext() && module == null)
-      {  
-         currentModule = myIt.next();
-         System.out.print(currentModule.getArtifactId() + ", ");
+      // System.out.print("#### collectedProjects(" + aProject.getArtifactId()
+         // + "): ");
+      if (collectedProjects != null)
+      {
+         myIt = collectedProjects.iterator();
+         while (myIt.hasNext())
+         {  
+            currentModule = myIt.next();
+            // System.out.print(currentModule.getArtifactId() + ", ");
+         }
       }
-      System.out.println("");
+      // System.out.println("");
    }
 
    // **********************************************************************
    public static void printArtifacts(MavenProject aProject)
    {
       Set<Artifact> dependProjects = aProject.getArtifacts();
-      Iterator<Artifact> myIt = dependProjects.iterator();
       Artifact currentModule;
-      Artifact module = null;
 
-      System.out.print("#### artifacts(" + aProject.getArtifactId()
-         + "): ");
-      while (myIt.hasNext() && module == null)
-      {  
-         currentModule = myIt.next();
-         System.out.print(currentModule.getArtifactId() + ", ");
+      // System.out.print("#### artifacts(" + aProject.getArtifactId()
+         // + "): ");
+      if (dependProjects != null)
+      {
+         Iterator<Artifact> myIt = dependProjects.iterator();
+         while (myIt.hasNext())
+         {  
+            currentModule = myIt.next();
+            // System.out.print(currentModule.getArtifactId() + ", ");
+         }
       }
-      System.out.println("");
+      // System.out.println("");
    }
 
    // **********************************************************************
    public static void printDependModules(MavenProject aProject,
       ArrayList<MavenProject> moduleList)
    {
-      Iterator<MavenProject> myIt = moduleList.iterator();
       MavenProject currentModule;
-      MavenProject module = null;
 
-      System.out.print("#### dependModules(" + aProject.getArtifactId()
-         + "): ");
-      while (myIt.hasNext() && module == null)
-      {  
-         currentModule = myIt.next();
-         System.out.print(currentModule.getArtifactId() + ", ");
+      // System.out.print("#### dependModules(" + aProject.getArtifactId()
+         // + "): ");
+      if (moduleList != null)
+      {
+         Iterator<MavenProject> myIt = moduleList.iterator();
+         while (myIt.hasNext())
+         {  
+            currentModule = myIt.next();
+            // System.out.print(currentModule.getArtifactId() + ", ");
+         }
       }
-      System.out.println("");
+      // System.out.println("");
    }
 
    // **********************************************************************

@@ -26,22 +26,19 @@ public class PmpNonEmptyProjectCheck implements Predicate<MavenProject>
       // assert(theProject != null)
       Boolean hasClasses = theProject.hasCompileSourceRoots();
  
-      System.out.print("#### PmpNonEmptyProjectCheck: project = " +
-         project.getArtifactId() + " - packaging = " + project.getPackaging());
-      System.out.println(" - hasTests = " + hasTests + " - hasClasses = " +
-         hasClasses);
+      // System.out.print("#### PmpNonEmptyProjectCheck(" +
+         // project.getArtifactId() + "): packaging = " + project.getPackaging() +
+         // " - hasTests = " + hasTests + " - hasClasses = " + hasClasses);
 
       if (! hasTests)
       {
          pitLogger.info("Project " + project.getArtifactId() +
-            " has no test to execute. testSrcRoots = " +
-            project.getTestCompileSourceRoots());
+            " has no test in " + project.getTestCompileSourceRoots());
       }
-      if (! hasClasses)
+      else if (! hasClasses)
       {
-         pitLogger.warning("Project " + project.getArtifactId() +
-            " has no class to mutate in the project. \nDependencies: " +
-            project.getDependencies());
+         pitLogger.info("Project " + project.getArtifactId() +
+            " has no class to mutate in : " + project.getDependencies());
       }
 
       return(hasTests && hasClasses);
