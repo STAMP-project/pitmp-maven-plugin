@@ -129,32 +129,22 @@ public class PmpProject
       Artifact currentDepend;
       String pathName;
 
-      // System.out.println("#### cpElts(" + getName() + "): ");
-      // and add paths of every dependencies which are project modules
+      // add paths of every dependencies which are project modules
       while (myIt.hasNext())
       {
          currentDepend = myIt.next();
-         // System.out.println("####     currentDepend: " + currentDepend.getArtifactId());
 
          dependProject = PmpContext.getInstance().getMavenProjectFromName
             (currentDepend.getArtifactId());
-         // System.out.println("####     dependProject: " + dependProject);
          if (dependProject != null)
          {
             completeList.add(dependProject.getBuild().getOutputDirectory());
             completeList.add(dependProject.getBuild().getTestOutputDirectory());
-            // System.out.println("####     " + currentDepend.getArtifactId() + " - od: "
-              // + dependProject.getBuild().getOutputDirectory());
-            // System.out.println("####     " + currentDepend.getArtifactId() + " - tod: "
-              // + dependProject.getBuild().getTestOutputDirectory());
          }
 
          if (! currentDepend.getType().equals("pom"))
          {
             pathName = currentDepend.getFile().getAbsolutePath();
-            // System.out.println("####     " + currentDepend.getArtifactId()
-               // + " - type: " + currentDepend.getType()
-               // + " - path: " + pathName);
             completeList.add(pathName);
          }
       }
@@ -167,8 +157,6 @@ public class PmpProject
    public PmpProject(PmpMojo mojo)
    {
       _TheMojo = mojo;
-
-      // System.out.println("# project Id: " + getName());
    }
 
    // **********************************************************************
@@ -177,27 +165,14 @@ public class PmpProject
       EntryPoint pitEntryPoint = null;
       AnalysisResult execResult = null;
 
-      // System.out.println("################################ PmpProject.execute: IN");
-      // printInfo();
-
-      // printMojoInfo();
-
       // create the final ReportOptions
       setPitOptions(new MojoToReportOptionsConverter(getTheMojo(),
            new SurefireConfigConverter(), getTheMojo().getFilter())
          .convert());
 
-      // System.out.println("######## pit options:");
-      // printOptionsInfo(getPitOptions());
-
       // and complete it to update codePaths, sourceDirs and classPathElements
       modifyReportOptions();
 
-      // System.out.println("######## modified options:");
-      // printOptionsInfo(getPitOptions());
-
-      // System.out.println("######## pitEntryPoint.execute(baseDir = " +
-         // getTheMojo().getBaseDir() + ")");
       pitEntryPoint = new EntryPoint();
       execResult = pitEntryPoint.execute(getTheMojo().getBaseDir(),
          getPitOptions(), getTheMojo().getPlugins(),
@@ -208,8 +183,8 @@ public class PmpProject
       }
       _Results = execResult.getStatistics().value();
 
-      // return results
-      // System.out.println("################ PmpProject.execute: OUT");
+      // <cael>: to do: combine results of test suites
+
       return(getResults());
    }
 
@@ -274,7 +249,7 @@ public class PmpProject
 
    // **********************************************************************
    public Boolean hasCompileSourceRoots()
-   // the module or one of the dependencies has target/classes
+   // the module or one of the dependencies has src/main/java
    {
       Boolean result = PmpContext.oneFileExists
          (getTheMojo().getProject().getCompileSourceRoots());
@@ -283,16 +258,22 @@ public class PmpProject
       Iterator<MavenProject> myIt = dependList.iterator();
       MavenProject currentModule;
 
-      // System.out.println("#### hasCompileSourceRoots(" + getName() + "): " +
-         // result + " - compSrcRoots: " + getTheMojo().getProject().getCompileSourceRoots());
       // check for dependencies
       while (myIt.hasNext() && ! result)
       {
          currentModule = myIt.next();
          result = PmpContext.oneFileExists(currentModule.getCompileSourceRoots());
-         // System.out.println("####     dep " + currentModule.getArtifactId() + ": " +
-            // result + " - compSrcRoots: " + currentModule.getCompileSourceRoots());
       }
+
+      return(result);
+   }
+
+   // **********************************************************************
+   public Boolean hasTestCompileSourceRoots()
+   // the module has src/test/java
+   {
+      Boolean result = PmpContext.oneFileExists
+         (getTheMojo().getProject().getTestCompileSourceRoots());
 
       return(result);
    }

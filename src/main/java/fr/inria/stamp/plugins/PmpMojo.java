@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
 import java.io.File;
+import java.util.logging.Logger;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.project.MavenProject;
@@ -23,6 +24,7 @@ import org.pitest.maven.SurefireConfigConverter;
 import org.pitest.maven.AbstractPitMojo;
 import org.pitest.maven.RunPitStrategy;
 import org.pitest.maven.DependencyFilter;
+import org.pitest.util.Log;
 
 // **********************************************************************
 @Mojo(name = "run", defaultPhase = LifecyclePhase.VERIFY,
@@ -33,7 +35,11 @@ public class PmpMojo extends AbstractPitMojo
    // properties
    // **********************************************************************
    @Parameter(property = "targetModules")
-   protected ArrayList<String> targetModules;
+   protected ArrayList<String> _TargetModules;
+
+   // if true: do not execute PIT, only display information about shouldRun or not
+   @Parameter(defaultValue = "false", property = "shouldRunOnly")
+   protected boolean _ShouldRunOnly;
 
    // **********************************************************************
    // public
@@ -42,6 +48,12 @@ public class PmpMojo extends AbstractPitMojo
    public File getBaseDir()
    {
       return(detectBaseDir());
+   }
+
+   // **********************************************************************
+   public boolean shouldRunOnly()
+   {
+      return(_ShouldRunOnly);
    }
 
    // **********************************************************************
@@ -90,25 +102,17 @@ public class PmpMojo extends AbstractPitMojo
         new DependencyFilter(new PluginServices(AbstractPitMojo.class.getClassLoader())),
         new PluginServices(AbstractPitMojo.class.getClassLoader()),
         new PmpNonEmptyProjectCheck());
-
-      // System.out.println("################################ PmpMojo: IN");
-
-      // System.out.println("# targetClasses: " + targetClasses);
-      // System.out.println("# getProject(): " + getProject());
-      // System.out.println("################################ PmpMojo: OUT");
    }
 
    // **********************************************************************
    // ******** methods
    public void updateTargetClasses()
    {
+      // require(getProject() != null)
       ArrayList<String> completeTargetClasses;
       ArrayList<String> classList;
       ArrayList<MavenProject> moduleList = null;
       MavenProject mvnProject;
-
-      // require(getProject() != null)
-      // System.out.println("######################## PmpMojo.updateTargetClasses: IN");
 
       if (targetClasses == null)
       {
@@ -117,7 +121,6 @@ public class PmpMojo extends AbstractPitMojo
       if (targetClasses.isEmpty())
       // we need to get the explicit class list of the current project
       {
-         // System.out.println("#### targetClasses: empty");
          classList = PmpContext.getClasses(getProject());
          if (! classList.isEmpty())
          {
@@ -130,7 +133,6 @@ public class PmpMojo extends AbstractPitMojo
       // complete the target classes with other (dependencies) modules classes
       // and add target classes of all getArtifacts which are a project module
       moduleList = PmpContext.getInstance().getDependingModules(getProject());
-      PmpContext.printDependModules(getProject(), moduleList);
       for (int i = 0; i < moduleList.size(); i++)
       {
          classList = PmpContext.getClasses(moduleList.get(i));
@@ -139,31 +141,21 @@ public class PmpMojo extends AbstractPitMojo
             PmpContext.addNewStrings(targetClasses, classList);
          }
       }
-
-      // System.out.println("#### updated targetClasses: " + targetClasses);
-
-      // System.out.println("######################## PmpMojo.updateTargetClasses: OUT");
    }
 
    // **********************************************************************
    // protected
    // **********************************************************************
-   // ******** attributes
-   ArrayList<String> _TargetModules;
-
    // ******** methods
    @Override
    protected Option<CombinedStatistics> analyse()
       throws MojoExecutionException
    {
-      Option<CombinedStatistics> result;
-
-      // System.out.println("################################ PmpMojo.analyse: IN");
+      Option<CombinedStatistics> result = null;
 
       result = Option.some(PmpContext.getInstance().getCurrentProject()
          .execute());
 
-      // System.out.println("################################ PmpMojo.analyse: OUT");
       return(result);
    }
 
@@ -172,31 +164,54 @@ public class PmpMojo extends AbstractPitMojo
    @Override
    protected boolean shouldRun()
    {
-      // System.out.println("################ PmpMojo.shouldRun: IN");
-
       boolean pitShouldRun;
+      boolean result = false;
       PmpProject myPmpProject;
+      // if no targetModules are specified, take all modules
       boolean isTargetModule = (getTargetModules() == null ||
          getTargetModules().isEmpty() ||
          findInTargetModules(getProject().getArtifactId()));
 
-      // System.out.println("#### targetModules(" + getProject().getArtifactId() + "): "
-         // + getTargetModules());
-
       PmpContext.getInstance().updateData(this);
+
       myPmpProject = new PmpProject(this);
       PmpContext.getInstance().setCurrentProject(myPmpProject);
 
-      // myPmpProject.generateClassToMutateProjects();
       updateTargetClasses();
 
-      pitShouldRun = isTargetModule && super.shouldRun();
+      pitShouldRun = super.shouldRun();
+      result = isTargetModule && pitShouldRun;
 
-      // System.out.println("#### shouldRun(" + getProject().getArtifactId() + "): "
-         // + pitShouldRun + " - isTargetModule = " + isTargetModule
-         // + " - packaging = " + getProject().getPackaging());
+      // displaying info about why we skip the project
+      if (isTargetModule)
+      {
+         if (getProject().getPackaging().equals("pom"))
+         {
+            Log.getLogger().info("Project packaging is 'pom'");
+         }
+         else
+         {
+            if (! myPmpProject.hasTestCompileSourceRoots())
+            {
+               Log.getLogger().info("Project has no test");
+            }
+            if (! myPmpProject.hasCompileSourceRoots())
+            {
+               Log.getLogger().info("Project has no class to mutate");
+            }
+         }
+      }
+      else
+      {
+         Log.getLogger().info("Project is not a target module");
+      }
 
-      // System.out.println("################ PmpMojo.shouldRun: OUT");
-      return(pitShouldRun);
+      if (result && shouldRunOnly())
+      {
+         Log.getLogger().info("Can apply PIT on " + getProject().getArtifactId());
+      }
+      result = result && (! shouldRunOnly());
+
+      return(result);
    }
 }

@@ -126,63 +126,6 @@ public class PmpContext
       return(classList);
    }
 
-/*
-   // **********************************************************************
-   public static ArrayList<String> getClassPathElts(MavenProject theProject)
-   {
-      Logger pitLogger = Log.getLogger();
-      ArrayList<String> pathList = new ArrayList<String>();
-      List<String> tmpList = null;
-
-      // should fit MojoToReportOptionsConverter.convert
-      // would be nice to have a separate method to compute ClassPath
-      try
-      {
-         tmpList = theProject.getTestClasspathElements();
-         pathList.addAll(tmpList);
-      }
-      catch (final DependencyResolutionRequiredException e1)
-      {
-         pitLogger.info(e1);
-      }
-
-      addOwnDependenciesToClassPath(pathList);
-
-      // <cael>: to do: how can we theProject.mojo.getAdditionalClasspathElements() ?
-      // and theProject.mojo.getClasspathDependencyExcludes() ?
-
-      for (Object artifact : getCurrentProject().getTheMojo().getProject().getArtifacts())
-      {
-         Artifact dependency = (Artifact)artifact;
-
-         if (getCurrentProject().getTheMojo().getClasspathDependencyExcludes().contains
-                (dependency.getGroupId() + ":" + dependency.getArtifactId()))
-         {
-            pathList.remove(dependency.getFile().getPath());
-         }
-      }
-
-      return(pathList);
-   }
-
-   // **********************************************************************
-   public void addOwnDependenciesToClassPath(ArrayList<String> classPath)
-   {
-      for (final Artifact dependency : filteredDependencies())
-      {
-        this.log.info("Adding " + dependency.getGroupId() + ":"
-            + dependency.getArtifactId() + " to SUT classpath");
-        classPath.add(dependency.getFile().getAbsolutePath());
-      }
-   }
-
-   // **********************************************************************
-   private Collection<Artifact> filteredDependencies()
-   {
-      return(FCollection.filter(getTheCurrentProject().getTheMojo()
-         .getPluginArtifactMap().values(), this.dependencyFilter));
-   }
-*/
    // **********************************************************************
    public PmpContext()
    {
@@ -193,32 +136,25 @@ public class PmpContext
    // **********************************************************************
    public void updateData(PmpMojo mojo)
    {
-      MavenProject rootProject = getRootProject(mojo);
-      List<MavenProject> moduleList = rootProject.getCollectedProjects();
+      List<MavenProject> moduleList = getProjectModules(mojo);
 
       // build once at the beginning; the complete list of project modules
       if (getModules() == null)
       {
          setModules(moduleList);
       }
-
-      // System.out.println("#### " + rootProject.getArtifactId() +
-         // " modules: " + rootProject.getModules());
-      // printCollectedProjects(rootProject);
-      // printArtifacts(mojo.getProject());
-
-      // System.out.println("#### modules: " + getModules());
    }
 
    // **********************************************************************
-   public MavenProject getRootProject(PmpMojo mojo)
+   public List<MavenProject> getProjectModules(PmpMojo mojo)
    {
-      // <cael>: to do: decide where to stop, project physical tree or following
-      // all "parents" ?
-      // code this method according to the choice
-      MavenProject rootProject = mojo.getProject();
+      // <cael>: we take only the modules of the current tree, if parent project
+      // <cael>  is located in another tree (i.e. mojo.getProject().getParent() != null),
+      // <cael>  we need to browse the whole project graph to build project module list
 
-      return(rootProject);
+      List<MavenProject> moduleList = mojo.getProject().getCollectedProjects();
+
+      return(moduleList);
    }
 
    // **********************************************************************
@@ -255,7 +191,6 @@ public class PmpContext
          currentModule = myIt.next();
          result = currentModule.getArtifactId().equals(name);
       }
-      // System.out.println("#### isProjectModule: (" + name + ") = " + result);
 
       return(result);
    }
@@ -275,7 +210,6 @@ public class PmpContext
             module = currentModule;
          }
       }
-      // System.out.println("#### getMavenProjectFromName(" + name + ") = " + module);
 
       return(module);
    }
@@ -287,18 +221,18 @@ public class PmpContext
       Iterator<MavenProject> myIt;
       MavenProject currentModule;
 
-      // System.out.print("#### collectedProjects(" + aProject.getArtifactId()
-         // + "): ");
+      System.out.print("#### collectedProjects(" + aProject.getArtifactId()
+         + "): ");
       if (collectedProjects != null)
       {
          myIt = collectedProjects.iterator();
          while (myIt.hasNext())
          {  
             currentModule = myIt.next();
-            // System.out.print(currentModule.getArtifactId() + ", ");
+            System.out.print(currentModule.getArtifactId() + ", ");
          }
       }
-      // System.out.println("");
+      System.out.println("");
    }
 
    // **********************************************************************
@@ -307,18 +241,18 @@ public class PmpContext
       Set<Artifact> dependProjects = aProject.getArtifacts();
       Artifact currentModule;
 
-      // System.out.print("#### artifacts(" + aProject.getArtifactId()
-         // + "): ");
+      System.out.print("#### artifacts(" + aProject.getArtifactId()
+         + "): ");
       if (dependProjects != null)
       {
          Iterator<Artifact> myIt = dependProjects.iterator();
          while (myIt.hasNext())
          {  
             currentModule = myIt.next();
-            // System.out.print(currentModule.getArtifactId() + ", ");
+            System.out.print(currentModule.getArtifactId() + ", ");
          }
       }
-      // System.out.println("");
+      System.out.println("");
    }
 
    // **********************************************************************
@@ -327,18 +261,18 @@ public class PmpContext
    {
       MavenProject currentModule;
 
-      // System.out.print("#### dependModules(" + aProject.getArtifactId()
-         // + "): ");
+      System.out.print("#### dependModules(" + aProject.getArtifactId()
+         + "): ");
       if (moduleList != null)
       {
          Iterator<MavenProject> myIt = moduleList.iterator();
          while (myIt.hasNext())
          {  
             currentModule = myIt.next();
-            // System.out.print(currentModule.getArtifactId() + ", ");
+            System.out.print(currentModule.getArtifactId() + ", ");
          }
       }
-      // System.out.println("");
+      System.out.println("");
    }
 
    // **********************************************************************

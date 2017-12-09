@@ -4,7 +4,6 @@ To handle multi-module project for PIT.
 
 It run a test suite, mutating classes of all dependencies which are a project module.
 Project modules are defined here as maven project located in the same tree.
-This is an open issue: is it of interest to extend the target classes to mutate to all project modules, even located in another tree ?
 
 Install the plugin
 ------------------
