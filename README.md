@@ -48,8 +48,8 @@ mvn install
 ```
 mvn pitmp:run
 ```
-* Run PIT on specified modules
-You can use the property "targetModules" to run PIT on one or several modules.
+* Run PIT on specified modules    
+You can use the property "targetModules" to run PIT on one or several modules.    
 On the command line, use:
 ```
 mvn "-DtargetModules=<module1>,<module2>" pitmp:run
