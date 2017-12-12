@@ -115,8 +115,10 @@ For complete instructions about Descartes see the [Descartes github](https://git
 
 For an example of multi module project using PitMP se the [dnoo github](https://github.com/STAMP-project/dnoo).
 
-Tested on
-----------
+Tested
+------
+With PiTest 1.2.0
+On:
 * [dhell project on github](https://github.com/STAMP-project/dhell)
 * [dnoo project on github](https://github.com/STAMP-project/dnoo)
 * [xwiki-rendering project on github](https://github.com/xwiki/xwiki-rendering)
