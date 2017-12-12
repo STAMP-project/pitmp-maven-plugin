@@ -122,3 +122,5 @@ On:
 * [dhell project on github](https://github.com/STAMP-project/dhell)
 * [dnoo project on github](https://github.com/STAMP-project/dnoo)
 * [xwiki-rendering project on github](https://github.com/xwiki/xwiki-rendering)
+
+Feedbacks are welcome ! :-)
