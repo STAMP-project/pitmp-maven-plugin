@@ -1,6 +1,6 @@
-PIT Multi-module Project Maven plugin
--------------------------------------
-To handle multi-module project for PIT.		
+Pit for Multi module Project
+----------------------------
+Maven plugin to run PiTest on multi module projects.		
 
 It run a test suite, mutating classes of all dependencies which are a project module.
 Project modules are defined here as maven project located in the same tree.
