@@ -38,8 +38,8 @@ public class PmpMojo extends AbstractPitMojo
    protected ArrayList<String> _TargetModules;
 
    // if true: do not execute PIT, only display information about shouldRun or not
-   @Parameter(defaultValue = "false", property = "shouldRunOnly")
-   protected boolean _ShouldRunOnly;
+   @Parameter(defaultValue = "false", property = "shouldDisplayOnly")
+   protected boolean _ShouldDisplayOnly;
 
    // **********************************************************************
    // public
@@ -51,9 +51,9 @@ public class PmpMojo extends AbstractPitMojo
    }
 
    // **********************************************************************
-   public boolean shouldRunOnly()
+   public boolean shouldDisplayOnly()
    {
-      return(_ShouldRunOnly);
+      return(_ShouldDisplayOnly);
    }
 
    // **********************************************************************
@@ -179,6 +179,13 @@ public class PmpMojo extends AbstractPitMojo
 
       updateTargetClasses();
 
+      if (getProject().getPackaging().equals("pom") &&
+          myPmpProject.hasTestCompileSourceRoots() &&
+          myPmpProject.hasCompileSourceRoots())
+      // force packaging to not pom before calling super.shouldRun
+      {
+         getProject().setPackaging("jar");
+      }
       pitShouldRun = super.shouldRun();
       result = isTargetModule && pitShouldRun;
 
@@ -206,11 +213,11 @@ public class PmpMojo extends AbstractPitMojo
          Log.getLogger().info("Project is not a target module");
       }
 
-      if (result && shouldRunOnly())
+      if (result && shouldDisplayOnly())
       {
          Log.getLogger().info("Can apply PIT on " + getProject().getArtifactId());
       }
-      result = result && (! shouldRunOnly());
+      result = result && (! shouldDisplayOnly());
 
       return(result);
    }
