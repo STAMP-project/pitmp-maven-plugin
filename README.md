@@ -13,15 +13,15 @@ How does PMP work?
 ==================
 
 PIT takes a test suite, a set of classes to be mutated and a set of mutation operators
-and computes a line coverage and a mutation coverage:
+and computes a line coverage and a mutation coverage:    
 ![PIT inputs and outputs](docs/pit_inputs_outputs.png)
 
 But PIT mutates only the classes defined in the same module (MavenProject) than the
-test suite:
+test suite:    
 ![PIT project](docs/pit_project.png)
 
 PMP runs a test suite, mutating classes of all dependencies of modules located in
-the same project tree:
+the same project tree:    
 ![PMP project](docs/pmp_project.png)
 
 PMP just extends PIT, it doesn't redefine PIT features.
