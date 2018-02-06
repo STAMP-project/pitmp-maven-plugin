@@ -14,6 +14,8 @@ import org.apache.maven.artifact.Artifact;
 import org.pitest.maven.AbstractPitMojo;
 import org.pitest.classpath.DirectoryClassPathRoot;
 
+import org.pitest.maven.PmpMojo;
+
 // **********************************************************************
 public class PmpContext
 {
@@ -148,9 +150,8 @@ public class PmpContext
    // **********************************************************************
    public List<MavenProject> getProjectModules(PmpMojo mojo)
    {
-      // <cael>: we take only the modules of the current tree, if parent project
-      // <cael>  is located in another tree (i.e. mojo.getProject().getParent() != null),
-      // <cael>  we need to browse the whole project graph to build project module list
+      // <cael>: getCollectedProjects() is filled in only once at the first call
+      // <cael>  of the Mojo
 
       List<MavenProject> moduleList = mojo.getProject().getCollectedProjects();
 
@@ -158,6 +159,8 @@ public class PmpContext
    }
 
    // **********************************************************************
+   // returns the list of dependencies of aProject that are a module of the
+   // project
    public ArrayList<MavenProject> getDependingModules(MavenProject aProject)
    {
       ArrayList<MavenProject> moduleList = new ArrayList<MavenProject>();

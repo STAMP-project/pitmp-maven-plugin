@@ -1,9 +1,47 @@
-PIT Multi-module Project Maven plugin
--------------------------------------
-To handle multi-module project for PIT.		
+What is PMP?
+===========
+PMP stands for PIT Multi-module Project Maven plugin
 
-It run a test suite, mutating classes of all dependencies which are a project module.
-Project modules are defined here as maven project located in the same tree.
+It's a Maven plugin which is able to run PIT on multi-module projects.
+PIT is a mutation testing system for Java applications, which allow to evaluate the quality of your test suite.
+
+To know more about PIT: http://pitest.org
+
+
+How does PMP work?
+==================
+
+PIT takes a test suite, a set of classes to mutate and a set of mutation operators
+![PIT inputd and outputs](docs/pit_inputs_outpus.png)
+
+But PIT mutate only the classes defined in the same module (MavenProject) than the
+test suite:
+![PIT project](docs/pit_project.png)
+
+PMP runs a test suite, mutating classes of all dependencies of modules located in
+the same project tree:
+![PMP project](docs/pit_project.png)
+
+PMP just extends PIT, it doesn't redefine PIT features, it uses PIT classes. PMP runs
+test suite as PIT does, just extending the list of classes to mutate the whole
+project tree, instead of mutating only the classes of the test suite module.
+
+
+Output of PMP
+=============
+
+PIT produces a report which includes:
+* a summary of line coverage and mutation coverage scores:
+![PIT summary](docs/pit_summary_dnoo.png)
+* a detail report for each class combining line coverage and mutation coverage
+information:
+![PIT detail](docs/pit_detail_dnoo.png)
+Light green shows line coverage, dark green shows mutation coverage.
+Light pink show lack of line coverage, dark pink shows lack of mutation coverage.
+
+
+Running PMP on your project
+===========================
 
 Install the plugin
 ------------------
@@ -13,8 +51,8 @@ cd pitmp-maven-plugin
 mvn install
 ```
 
-Running PitMP
--------------
+Run PMP
+-------
 * Go to the project on which you want to apply PIT
 
 * Add to your root project pom.xml, in the \<plugins\> section:
@@ -35,7 +73,7 @@ Running PitMP
       <dependency>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
-        <version>1.2.0</version>
+        <version>pitest.version</version>
       </dependency>
     </dependencies>
   </plugin>
@@ -48,16 +86,38 @@ mvn install
 ```
 mvn pitmp:run
 ```
-* Run PIT on specified modules
-You can use the property "targetModules" to run PIT on one or several modules.
-On the command line, use:
+Running PMP from a module directory will NOT work.
+
+PMP properties
+--------------
+* targetModules: to run PIT only on specified modules
+You can use the property "targetModules" in the pom.xml:
 ```
-mvn "-DtargetModules=<module1>,<module2>" pitmp:run
+          <targetModules>
+            <param>yourFirstModule</param>
+            <param>anotherModule</param>
+          </targetModules>
 ```
-Running PitMP from a module directory will NOT work.
+or on the command line, use:
+```
+mvn "-DtargetModules=yourFirstModule,anotherModule" pitmp:run
+```
+* skippedModules: to run PIT only on specified modules
+You can use the property "skippedModules" in the pom.xml:
+```
+          <skippedModules>
+            <param>aModuleToSkip</param>
+            <param>anotherModuleToSkip</param>
+          </skippedModules>
+```
+or on the command line, use:
+```
+mvn "-DtargetModules=aModuleToSkip,anotherModuleToSkip" pitmp:run
+```
 
 Running Descartes
 -----------------
+If you want to run Descartes, use the v1.0.1. Descartes supports only PiTest v1.2.0 for now.
 If you want to run Descartes, add to your root project pom.xml, in the \<plugins\> section:
 ```
   <plugin>
@@ -113,10 +173,20 @@ If you want to run Descartes, add to your root project pom.xml, in the \<plugins
 
 For complete instructions about Descartes see the [Descartes github](https://github.com/STAMP-project/pitest-descartes).
 
-For an example of multi module project using PitMP se the [dnoo github](https://github.com/STAMP-project/dnoo).
+For an example of multi module project using PMP see the [dnoo github](https://github.com/STAMP-project/dnoo).
+
+Releases
+--------
+* v1.0.1
+** tested for PiTest v1.2.0 and Descartes v0.2-SNAPSHOT
+** tested with PiTest v1.2.3
+* v1.1.0
+** tested with PiTest v1.3.1
 
 Tested on
-----------
+---------
 * [dhell project on github](https://github.com/STAMP-project/dhell)
 * [dnoo project on github](https://github.com/STAMP-project/dnoo)
+* [xwiki-commons project on github](https://github.com/xwiki/xwiki-commons)
 * [xwiki-rendering project on github](https://github.com/xwiki/xwiki-rendering)
+  (v1.0.1 only)

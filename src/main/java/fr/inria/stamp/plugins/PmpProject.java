@@ -25,6 +25,8 @@ import org.pitest.classpath.DirectoryClassPathRoot;
 
 import org.pitest.maven.AbstractPitMojo;
 
+import org.pitest.maven.PmpMojo;
+
 // **********************************************************************
 public class PmpProject
 {
@@ -172,6 +174,7 @@ public class PmpProject
 
       // and complete it to update codePaths, sourceDirs and classPathElements
       modifyReportOptions();
+      // printOptionsInfo(getPitOptions());
 
       pitEntryPoint = new EntryPoint();
       execResult = pitEntryPoint.execute(getTheMojo().getBaseDir(),
@@ -331,6 +334,7 @@ public class PmpProject
    public void printOptionsInfo(ReportOptions data)
    {
       System.out.println("####");
+      System.out.println("#### BaseDir: " + getTheMojo().getBaseDir());
       System.out.println("#### mutationEngine: " + data.getMutationEngine());
       System.out.println("#### targetTests: " + data.getTargetTests());
       System.out.println("#### excludedClasses: " + data.getExcludedClasses());

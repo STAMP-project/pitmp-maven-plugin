@@ -1,4 +1,4 @@
-package fr.inria.stamp.plugins;
+package org.pitest.maven;
 
 // **********************************************************************
 import java.util.List;
@@ -26,6 +26,8 @@ import org.pitest.maven.RunPitStrategy;
 import org.pitest.maven.DependencyFilter;
 import org.pitest.util.Log;
 
+import fr.inria.stamp.plugins.*;
+
 // **********************************************************************
 @Mojo(name = "run", defaultPhase = LifecyclePhase.VERIFY,
    requiresDependencyResolution = ResolutionScope.TEST)
@@ -35,11 +37,14 @@ public class PmpMojo extends AbstractPitMojo
    // properties
    // **********************************************************************
    @Parameter(property = "targetModules")
-   protected ArrayList<String> _TargetModules;
+   protected ArrayList<String> targetModules;
+
+   @Parameter(property = "skippedModules")
+   protected ArrayList<String> skippedModules;
 
    // if true: do not execute PIT, only display information about shouldRun or not
-   @Parameter(defaultValue = "false", property = "shouldRunOnly")
-   protected boolean _ShouldRunOnly;
+   @Parameter(defaultValue = "false", property = "shouldDisplayOnly")
+   protected boolean _ShouldDisplayOnly;
 
    // **********************************************************************
    // public
@@ -51,9 +56,59 @@ public class PmpMojo extends AbstractPitMojo
    }
 
    // **********************************************************************
-   public boolean shouldRunOnly()
+   public boolean shouldDisplayOnly()
    {
-      return(_ShouldRunOnly);
+      return(_ShouldDisplayOnly);
+   }
+
+   // **********************************************************************
+   public ArrayList<String> getTargetModules()
+   {
+      return(targetModules);
+   }
+
+   // **********
+   public void setTargetModules(ArrayList<String> newClasses)
+   {
+      targetModules = newClasses;
+   }
+
+   // **********
+   public boolean isInTargetModules(String name)
+   {
+      boolean result = false;
+
+      for (int i = 0; i < getTargetModules().size() && ! result; i++)
+      {
+         result = getTargetModules().get(i).equals(name);
+      }
+
+      return(result);
+   }
+
+   // **********************************************************************
+   public ArrayList<String> getSkippedModules()
+   {
+      return(skippedModules);
+   }
+
+   // **********
+   public void setSkippedModules(ArrayList<String> newClasses)
+   {
+      skippedModules = newClasses;
+   }
+
+   // **********
+   public boolean isInSkippedModules(String name)
+   {
+      boolean result = false;
+
+      for (int i = 0; i < getSkippedModules().size() && ! result; i++)
+      {
+         result = getSkippedModules().get(i).equals(name);
+      }
+
+      return(result);
    }
 
    // **********************************************************************
@@ -67,31 +122,6 @@ public class PmpMojo extends AbstractPitMojo
    public PluginServices getPlugins()
    {
       return(plugins);
-   }
-
-   // **********************************************************************
-   public ArrayList<String> getTargetModules()
-   {
-      return(_TargetModules);
-   }
-
-   // **********************************************************************
-   public void setTargetModules(ArrayList<String> newClasses)
-   {
-      _TargetModules = newClasses;
-   }
-
-   // **********************************************************************
-   public boolean findInTargetModules(String name)
-   {
-      boolean result = false;
-
-      for (int i = 0; i < getTargetModules().size() && ! result; i++)
-      {
-         result = getTargetModules().get(i).equals(name);
-      }
-
-      return(result);
    }
 
    // **********************************************************************
@@ -162,15 +192,15 @@ public class PmpMojo extends AbstractPitMojo
    // **********************************************************************
    // called at the beginning of AbstractPitMojo.execute
    @Override
-   protected boolean shouldRun()
+   protected RunDecision shouldRun()
    {
-      boolean pitShouldRun;
-      boolean result = false;
+      RunDecision theDecision;
       PmpProject myPmpProject;
+      String projectName = getProject().getArtifactId();
       // if no targetModules are specified, take all modules
       boolean isTargetModule = (getTargetModules() == null ||
-         getTargetModules().isEmpty() ||
-         findInTargetModules(getProject().getArtifactId()));
+         getTargetModules().isEmpty() || isInTargetModules(projectName));
+      String message;
 
       PmpContext.getInstance().updateData(this);
 
@@ -179,39 +209,35 @@ public class PmpMojo extends AbstractPitMojo
 
       updateTargetClasses();
 
-      pitShouldRun = super.shouldRun();
-      result = isTargetModule && pitShouldRun;
-
-      // displaying info about why we skip the project
-      if (isTargetModule)
+      if (getProject().getPackaging().equals("pom") &&
+          myPmpProject.hasTestCompileSourceRoots() &&
+          myPmpProject.hasCompileSourceRoots())
+      // force packaging to not pom before calling super.shouldRun
       {
-         if (getProject().getPackaging().equals("pom"))
-         {
-            Log.getLogger().info("Project packaging is 'pom'");
-         }
-         else
-         {
-            if (! myPmpProject.hasTestCompileSourceRoots())
-            {
-               Log.getLogger().info("Project has no test");
-            }
-            if (! myPmpProject.hasCompileSourceRoots())
-            {
-               Log.getLogger().info("Project has no class to mutate");
-            }
-         }
+         getProject().setPackaging("jar");
       }
-      else
+      theDecision = super.shouldRun();
+
+      if (! isTargetModule)
       {
-         Log.getLogger().info("Project is not a target module");
+         message = projectName + " is not a target module";
+         theDecision.addReason(message);
       }
 
-      if (result && shouldRunOnly())
+      if (isInSkippedModules(projectName))
       {
-         Log.getLogger().info("Can apply PIT on " + getProject().getArtifactId());
+         message = projectName + " is a skipped module";
+         theDecision.addReason(message);
       }
-      result = result && (! shouldRunOnly());
 
-      return(result);
+      if (shouldDisplayOnly())
+      {
+         message = "Display only option is true";
+         theDecision.addReason(message);
+      }
+
+      // PitMojo displays the reasons about why we skip the project
+
+      return(theDecision);
    }
 }
