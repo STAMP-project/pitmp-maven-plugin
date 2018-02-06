@@ -21,7 +21,7 @@ test suite:
 
 PMP runs a test suite, mutating classes of all dependencies of modules located in
 the same project tree:
-![PMP project](docs/pit_project.png)
+![PMP project](docs/pmp_project.png)
 
 PMP just extends PIT, it doesn't redefine PIT features, it uses PIT classes. PMP runs
 test suite as PIT does, just extending the list of classes to be mutated the whole
