@@ -38,9 +38,9 @@ PIT produces a report that includes:
 ![PIT summary](docs/pit_summary_dnoo.png)
 * a detail report for each class combining line coverage and mutation coverage
 information:
-![PIT detail](docs/pit_detail_dnoo.png)
-Light green shows line coverage, dark green shows mutation coverage.
-Light pink show lack of line coverage, dark pink shows lack of mutation coverage.
+![PIT detail](docs/pit_detail_dnoo.png)  
+*Light green shows line coverage, dark green shows mutation coverage.*
+*Light pink show lack of line coverage, dark pink shows lack of mutation coverage.*
 
 
 Run PMP on your project
@@ -91,36 +91,36 @@ mvn pitmp:run
 
 PMP properties
 --------------
-* targetModules: to run PIT only on specified modules
-You can use the property "targetModules" in the pom.xml:
-```
+* targetModules: to run PIT only on specified modules    
+  You can use the property "targetModules" in the pom.xml:
+  ```
           <targetModules>
             <param>yourFirstModule</param>
             <param>anotherModule</param>
           </targetModules>
-```
-or on the command line, use:
-```
-mvn "-DtargetModules=yourFirstModule,anotherModule" pitmp:run
-```
-Running PMP from a module directory will NOT work.
-* skippedModules: to run PIT only on specified modules
-You can use the property "skippedModules" in the pom.xml:
-```
+  ```
+  or on the command line, use:
+  ```
+  mvn "-DtargetModules=yourFirstModule,anotherModule" pitmp:run
+  ```
+  Running PMP from a module directory will NOT work.
+* skippedModules: to run PIT only on specified modules    
+  You can use the property "skippedModules" in the pom.xml:
+  ```
           <skippedModules>
             <param>aModuleToSkip</param>
             <param>anotherModuleToSkip</param>
           </skippedModules>
-```
-or on the command line, use:
-```
-mvn "-DtargetModules=aModuleToSkip,anotherModuleToSkip" pitmp:run
-```
+  ```
+  or on the command line, use:
+  ```
+  mvn "-DtargetModules=aModuleToSkip,anotherModuleToSkip" pitmp:run
+  ```
 
 Running Descartes
 -----------------
-If you want to run Descartes, use the v1.0.1. Descartes supports only PiTest v1.2.0 for now.
-If you want to run Descartes, add to your root project pom.xml, in the \<plugins\> section:
+If you want to run Descartes, use the v1.0.1. Descartes supports only PiTest v1.2.0 for now.  
+To run Descartes, add to your root project pom.xml, in the \<plugins\> section:
 ```
   <plugin>
     <groupId>fr.inria.stamp.plugins</groupId>
