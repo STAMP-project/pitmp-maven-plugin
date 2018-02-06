@@ -12,7 +12,7 @@ How does PMP work?
 ==================
 
 PIT takes a test suite, a set of classes to mutate and a set of mutation operators
-![PIT inputd and outputs](docs/pit_inputs_outpus.png)
+![PIT inputs and outputs](docs/pit_inputs_outputs.png)
 
 But PIT mutate only the classes defined in the same module (MavenProject) than the
 test suite:
