@@ -2,8 +2,9 @@ What is PMP?
 ===========
 PMP stands for PIT Multi-module Project Maven plugin
 
-It's a Maven plugin which is able to run PIT on multi-module projects.
-PIT is a mutation testing system for Java applications, which allow to evaluate the quality of your test suite.
+It's a Maven plugin able to run PIT on multi-module projects.
+PIT is a mutation testing system for Java applications, which allows you to evaluate
+the quality of your test suites.
 
 To know more about PIT: http://pitest.org
 
@@ -30,7 +31,7 @@ project tree, instead of mutating only the classes of the test suite module.
 Output of PMP
 =============
 
-PIT produces a report which includes:
+PIT produces a report that includes:
 * a summary of line coverage and mutation coverage scores:
 ![PIT summary](docs/pit_summary_dnoo.png)
 * a detail report for each class combining line coverage and mutation coverage
