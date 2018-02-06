@@ -178,10 +178,10 @@ For an example of multi module project using PMP see the [dnoo github](https://g
 Releases
 --------
 * v1.0.1
-** tested for PiTest v1.2.0 and Descartes v0.2-SNAPSHOT
-** tested with PiTest v1.2.3
+** tested with PIT v1.2.0 and Descartes v0.2-SNAPSHOT
+** tested with PIT v1.2.3
 * v1.1.0
-** tested with PiTest v1.3.1
+** tested with PIT v1.3.1
 
 Tested on
 ---------
@@ -189,4 +189,5 @@ Tested on
 * [dnoo project on github](https://github.com/STAMP-project/dnoo)
 * [xwiki-commons project on github](https://github.com/xwiki/xwiki-commons)
 * [xwiki-rendering project on github](https://github.com/xwiki/xwiki-rendering)
-  (v1.0.1 only)
+
+Feedbacks are welcome ! :-)
