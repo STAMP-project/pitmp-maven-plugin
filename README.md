@@ -43,7 +43,7 @@ Light green shows line coverage, dark green shows mutation coverage.
 Light pink show lack of line coverage, dark pink shows lack of mutation coverage.
 
 
-Running PMP on your project
+Run PMP on your project
 ===========================
 
 Install the plugin
@@ -88,7 +88,6 @@ mvn install
 ```
 mvn pitmp:run
 ```
-Running PMP from a module directory will NOT work.
 
 PMP properties
 --------------
@@ -104,6 +103,7 @@ or on the command line, use:
 ```
 mvn "-DtargetModules=yourFirstModule,anotherModule" pitmp:run
 ```
+Running PMP from a module directory will NOT work.
 * skippedModules: to run PIT only on specified modules
 You can use the property "skippedModules" in the pom.xml:
 ```
