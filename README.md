@@ -179,10 +179,10 @@ For an example of multi module project using PMP see the [dnoo github](https://g
 Releases
 --------
 * v1.0.1
-- tested with PIT v1.2.0 and Descartes v0.2-SNAPSHOT
-- tested with PIT v1.2.3
+  - tested with PIT v1.2.0 and Descartes v0.2-SNAPSHOT
+  - tested with PIT v1.2.3
 * v1.1.0
-- tested with PIT v1.3.1
+  - tested with PIT v1.3.1
 
 Tested on
 ---------
