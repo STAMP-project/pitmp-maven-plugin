@@ -12,10 +12,10 @@ To know more about PIT: http://pitest.org
 How does PMP work?
 ==================
 
-PIT takes a test suite, a set of classes to mutate and a set of mutation operators
+PIT takes a test suite, a set of classes to be mutated and a set of mutation operators
 ![PIT inputs and outputs](docs/pit_inputs_outputs.png)
 
-But PIT mutate only the classes defined in the same module (MavenProject) than the
+But PIT mutates only the classes defined in the same module (MavenProject) than the
 test suite:
 ![PIT project](docs/pit_project.png)
 
@@ -24,7 +24,7 @@ the same project tree:
 ![PMP project](docs/pit_project.png)
 
 PMP just extends PIT, it doesn't redefine PIT features, it uses PIT classes. PMP runs
-test suite as PIT does, just extending the list of classes to mutate the whole
+test suite as PIT does, just extending the list of classes to be mutated the whole
 project tree, instead of mutating only the classes of the test suite module.
 
 
@@ -62,12 +62,11 @@ Run PMP
     <groupId>fr.inria.stamp.plugins</groupId>
     <artifactId>pitmp-maven-plugin</artifactId>
     <version>version.you.want</version>
-    <!-- list all the packages of the project that contain classes you want to mutate
-    -->
+    <!-- list all the packages of the project that contain classes you want to be mutated    -->
     <configuration>
       <targetClasses>
-        <param>a.package.of.classes.to.mutate*</param>
-        <param>another.package.of.classes.to.mutate*</param>
+        <param>a.package.of.classes*</param>
+        <param>another.package.of.classes*</param>
       </targetClasses>
     </configuration>
     <dependencies>
@@ -125,12 +124,11 @@ If you want to run Descartes, add to your root project pom.xml, in the \<plugins
     <groupId>fr.inria.stamp.plugins</groupId>
     <artifactId>pitmp-maven-plugin</artifactId>
     <version>version.you.want</version>
-    <!-- list all the packages of the project that contain classes you want to mutate
-    -->
+    <!-- list all the packages of the project that contain classes you want to be mutated    -->
     <configuration>
       <targetClasses>
-        <param>a.package.of.classes.to.mutate*</param>
-        <param>another.package.of.classes.to.mutate*</param>
+        <param>a.package.of.classes*</param>
+        <param>another.package.of.classes*</param>
       </targetClasses>
       <mutationEngine>descartes</mutationEngine>
       <mutators>
