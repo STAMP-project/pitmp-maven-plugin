@@ -39,7 +39,7 @@ PIT produces a report that includes:
 * a detail report for each class combining line coverage and mutation coverage
 information:
 ![PIT detail](docs/pit_detail_dnoo.png)  
-*Light green shows line coverage, dark green shows mutation coverage.*    
+*Light green shows line coverage, dark green shows mutation coverage.*  
 *Light pink show lack of line coverage, dark pink shows lack of mutation coverage.*
 
 
