@@ -61,7 +61,7 @@ Run PMP
 * Add to your root project pom.xml, in the \<plugins\> section:
 ```
   <plugin>
-    <groupId>fr.inria.stamp.plugins</groupId>
+    <groupId>eu.stamp</groupId>
     <artifactId>pitmp-maven-plugin</artifactId>
     <version>version.you.want</version>
     <!-- list all the packages of the project that contain classes you want to be mutated    -->
@@ -123,7 +123,7 @@ If you want to run Descartes, use the v1.0.1. Descartes supports only PiTest v1.
 To run Descartes, add to your root project pom.xml, in the \<plugins\> section:
 ```
   <plugin>
-    <groupId>fr.inria.stamp.plugins</groupId>
+    <groupId>eu.stamp</groupId>
     <artifactId>pitmp-maven-plugin</artifactId>
     <version>version.you.want</version>
     <!-- list all the packages of the project that contain classes you want to be mutated    -->

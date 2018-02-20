@@ -1,4 +1,4 @@
-package fr.inria.stamp.plugins;
+package eu.stamp.plugins;
 
 // **********************************************************************
 import java.util.Collection;

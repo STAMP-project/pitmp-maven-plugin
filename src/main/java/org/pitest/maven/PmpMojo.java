@@ -26,7 +26,7 @@ import org.pitest.maven.RunPitStrategy;
 import org.pitest.maven.DependencyFilter;
 import org.pitest.util.Log;
 
-import fr.inria.stamp.plugins.*;
+import eu.stamp.plugins.*;
 
 // **********************************************************************
 @Mojo(name = "run", defaultPhase = LifecyclePhase.VERIFY,
