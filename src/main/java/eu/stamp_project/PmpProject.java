@@ -1,4 +1,4 @@
-package eu.stamp.plugins;
+package eu.stamp_project.plugins;
 
 // **********************************************************************
 import java.util.List;
