@@ -1,6 +1,16 @@
-What is PMP?
-===========
-PMP stands for PIT Multi-module Project Maven plugin
+# PitMP: Maven plugin to handle multi module projects for PiTest
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/eu.stamp-project/pitmp-maven-plugin/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/eu.stamp-project/pitmp-maven-plugin)
+
+## Table of contents
+  - [What is PitMP?](#what-is-pitmp)
+  - [How does PitMP work?](#how-does-pitmp-work)
+  - [PitMP Output](#pitmp-output)
+  - [Running PitMP on your project](#running-pitmp-on-your-project)
+  - [Releases](#releases)
+  - [Tested on](#tested-on)
+
+## What is PitMP?
+PitMP stands for PIT Multi-module Project Maven plugin
 
 It's a Maven plugin able to run PIT on multi-module projects.
 PIT is a mutation testing system for Java applications, which allows you to evaluate
@@ -8,9 +18,7 @@ the quality of your test suites.
 
 To know more about PIT: http://pitest.org
 
-
-How does PMP work?
-==================
+## How does PitMP work?
 
 PIT takes a test suite, a set of classes to be mutated and a set of mutation operators
 and computes a line coverage and a mutation coverage:    
@@ -20,18 +28,17 @@ But PIT mutates only the classes defined in the same module (MavenProject) than 
 test suite:    
 ![PIT project](docs/pit_project.png)
 
-PMP runs a test suite, mutating classes of all dependencies of modules located in
+PitMP runs a test suite, mutating classes of all dependencies of modules located in
 the same project tree:    
-![PMP project](docs/pmp_project.png)
+![PitMP project](docs/pmp_project.png)
 
-PMP just extends PIT, it doesn't redefine PIT features.
-PMP runs test suite as PIT does, just extending the list of classes to be
+PitMP just extends PIT, it doesn't redefine PIT features.
+PitMP runs test suite as PIT does, just extending the list of classes to be
 mutated to the whole project tree, instead of mutating only the classes of
 the test suite module.
 
 
-Output of PMP
-=============
+## PitMP Output
 
 PIT produces a report that includes:
 * a summary of line coverage and mutation coverage scores:
@@ -43,22 +50,22 @@ information:
 *Light pink show lack of line coverage, dark pink shows lack of mutation coverage.*
 
 
-Run PMP on your project
-===========================
+## Running PitMP on your project
 
-Install the plugin
-------------------
+### Install the plugin
+Since 1.1.4 PitMP is available on Maven Central, so this step is required only
+for versions before 1.1.4.
 ```
 git clone https://github.com/STAMP-project/pitmp-maven-plugin.git
 cd pitmp-maven-plugin
 mvn install
 ```
 
-Run PMP
--------
+### Run PitMP
+
 * Go to the project on which you want to apply PIT
 
-* Add to your root project pom.xml, in the \<plugins\> section:
+* Add to your root project pom.xml, in the section \<plugins\>:
 ```
   <plugin>
     <groupId>eu.stamp</groupId>
@@ -84,13 +91,13 @@ Run PMP
 ```
 mvn install
 ```
-* Run PIT on your multimodule project :-)
+* Run PIT on your multi module project :-)
 ```
 mvn pitmp:run
 ```
 
-PMP properties
---------------
+### PitMP properties
+
 * targetModules: to run PIT only on specified modules    
   You can use the property "targetModules" in the pom.xml:
   ```
@@ -103,7 +110,7 @@ PMP properties
   ```
   mvn "-DtargetModules=yourFirstModule,anotherModule" pitmp:run
   ```
-  Running PMP from a module directory will NOT work.
+  Running PitMP from a module directory will NOT work.
 * skippedModules: to run PIT only on specified modules    
   You can use the property "skippedModules" in the pom.xml:
   ```
@@ -117,10 +124,10 @@ PMP properties
   mvn "-DtargetModules=aModuleToSkip,anotherModuleToSkip" pitmp:run
   ```
 
-Running Descartes
------------------
+## Running Descartes
+
 If you want to run Descartes, use the v1.0.1. Descartes supports only PiTest v1.2.0 for now.  
-To run Descartes, add to your root project pom.xml, in the \<plugins\> section:
+To run Descartes, add to your root project pom.xml, in the section \<plugins\>:
 ```
   <plugin>
     <groupId>eu.stamp</groupId>
@@ -174,21 +181,23 @@ To run Descartes, add to your root project pom.xml, in the \<plugins\> section:
 
 For complete instructions about Descartes see the [Descartes github](https://github.com/STAMP-project/pitest-descartes).
 
-For an example of multi module project using PMP see the [dnoo github](https://github.com/STAMP-project/dnoo).
+For an example of multi module project using PitMP see the [dnoo github](https://github.com/STAMP-project/dnoo).
 
-Releases
---------
+## Releases
+
 * v1.0.1
   - tested with PIT v1.2.0 and Descartes v0.2-SNAPSHOT
   - tested with PIT v1.2.3
-* v1.1.0
+* v1.1.0, pitmp-maven-plugin-1.1.4
   - tested with PIT v1.3.1
 
-Tested on
----------
+## Tested on
+
 * [dhell project on github](https://github.com/STAMP-project/dhell)
 * [dnoo project on github](https://github.com/STAMP-project/dnoo)
 * [xwiki-commons project on github](https://github.com/xwiki/xwiki-commons)
 * [xwiki-rendering project on github](https://github.com/xwiki/xwiki-rendering)
+
+* Ubuntu 16.04.4 LTS
 
 Feedbacks are welcome ! :-)
