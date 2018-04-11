@@ -30,7 +30,10 @@ test suite:
 
 PitMP runs PIT on every test suite, mutating classes of all dependencies of modules
 located in the same project tree:    
-![PitMP project](docs/pmp_project_1.png) ![PitMP project](docs/pmp_project_2.png)
+![PitMP project](docs/pmp_project_1.png)  
+then:  
+![PitMP project](docs/pmp_project_2.png)  
+etc...
 
 PitMP just extends PIT, it doesn't rewrite PIT features, so all PIT properties can
 be used.
