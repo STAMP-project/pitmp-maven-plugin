@@ -24,15 +24,16 @@ PIT takes a test suite, a set of classes to be mutated and a set of mutation ope
 and computes a line coverage and a mutation coverage:    
 ![PIT inputs and outputs](docs/pit_inputs_outputs.png)
 
-But PIT mutates only the classes defined in the same module (MavenProject) than the
+By default PIT mutates only the classes defined in the same module than the
 test suite:    
 ![PIT project](docs/pit_project.png)
 
-PitMP runs a test suite, mutating classes of all dependencies of modules located in
-the same project tree:    
-![PitMP project](docs/pmp_project.png)
+PitMP runs PIT on every test suite, mutating classes of all dependencies of modules
+located in the same project tree:    
+![PitMP project](docs/pmp_project_1.png) ![PitMP project](docs/pmp_project_2.png)
 
-PitMP just extends PIT, it doesn't redefine PIT features.
+PitMP just extends PIT, it doesn't rewrite PIT features, so all PIT properties can
+be used.
 PitMP runs test suite as PIT does, just extending the list of classes to be
 mutated to the whole project tree, instead of mutating only the classes of
 the test suite module.
