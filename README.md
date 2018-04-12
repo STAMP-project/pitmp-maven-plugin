@@ -10,9 +10,7 @@
   - [Tested on](#tested-on)
 
 ## What is PitMP?
-PitMP stands for PIT Multi-module Project Maven plugin
-
-It's a Maven plugin able to run PIT on multi-module projects.
+PitMP (PIT for Multi-module Project) is a Maven plugin able to run PIT on multi-module projects.
 PIT is a mutation testing system for Java applications, which allows you to evaluate
 the quality of your test suites.
 
