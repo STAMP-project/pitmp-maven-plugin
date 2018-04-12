@@ -22,7 +22,7 @@ PIT takes a test suite, a set of classes to be mutated and a set of mutation ope
 and computes a line coverage and a mutation coverage:    
 ![PIT inputs and outputs](docs/pit_inputs_outputs.png)
 
-By default PIT mutates only the classes defined in the same module than the
+PIT mutates only the classes defined in the same module than the
 test suite:    
 ![PIT project](docs/pit_project.png)
 
