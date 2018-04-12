@@ -33,7 +33,7 @@ then:
 ![PitMP project](docs/pmp_project_2.png)  
 etc...
 
-PitMP just extends PIT, it doesn't rewrite PIT features, so all PIT properties can
+PitMP just extends PIT, it doesn't rewrite any feature, so all PIT's properties can
 be used.
 PitMP runs test suite as PIT does, just extending the list of classes to be
 mutated to the whole project tree, instead of mutating only the classes of
