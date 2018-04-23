@@ -56,7 +56,7 @@ information:
 
 ### Install the plugin
 Since 1.1.4 PitMP is available on Maven Central, so this step is required only
-for versions before 1.1.4.
+for releases before 1.1.4.
 ```
 git clone https://github.com/STAMP-project/pitmp-maven-plugin.git
 cd pitmp-maven-plugin
@@ -68,6 +68,32 @@ mvn install
 * Go to the project on which you want to apply PIT
 
 * Add to your root project pom.xml, in the section \<plugins\>:
+```
+  <plugin>
+    <groupId>eu.stamp</groupId>
+    <artifactId>pitmp-maven-plugin</artifactId>
+    <version>version.you.want</version>
+    <dependencies>
+      <dependency>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>pitest.version</version>
+      </dependency>
+    </dependencies>
+  </plugin>
+```
+* Compile your project
+```
+mvn install
+```
+* Run PIT on your multi module project :-)
+```
+mvn pitmp:run
+```
+
+### Configure PitMP
+
+You can configure your project in the root pom.xml, in the section \<plugins\>:
 ```
   <plugin>
     <groupId>eu.stamp</groupId>
@@ -89,14 +115,7 @@ mvn install
     </dependencies>
   </plugin>
 ```
-* Compile your project
-```
-mvn install
-```
-* Run PIT on your multi module project :-)
-```
-mvn pitmp:run
-```
+All PIT's properties can be used.
 
 ### PitMP properties
 
@@ -187,19 +206,28 @@ For an example of multi module project using PitMP see the [dnoo github](https:/
 
 ## Releases
 
-* v1.0.1
-  - tested with PIT v1.2.0 and Descartes v0.2-SNAPSHOT
-  - tested with PIT v1.2.3
+* pitmp-maven-plugin-1.1.5
+  - tested with PIT v1.3.2
+  - Corrected issues:
+    - [#6](https://github.com/STAMP-project/pitmp-maven-plugin/issues/6)
+    - [#9](https://github.com/STAMP-project/pitmp-maven-plugin/issues/9)
+      (Duplicate [#6](https://github.com/STAMP-project/pitmp-maven-plugin/issues/6))
+    - Add automatic tests (verify_pitmp.sh)
+
 * v1.1.0, pitmp-maven-plugin-1.1.4
   - tested with PIT v1.3.1
 
+* v1.0.1
+  - tested with PIT v1.2.0 and Descartes v0.2-SNAPSHOT
+  - tested with PIT v1.2.3
+
 ## Tested on
+
+* Ubuntu 16.04.4 LTS
 
 * [dhell project on github](https://github.com/STAMP-project/dhell)
 * [dnoo project on github](https://github.com/STAMP-project/dnoo)
 * [xwiki-commons project on github](https://github.com/xwiki/xwiki-commons)
 * [xwiki-rendering project on github](https://github.com/xwiki/xwiki-rendering)
-
-* Ubuntu 16.04.4 LTS
 
 Feedbacks are welcome ! :-)

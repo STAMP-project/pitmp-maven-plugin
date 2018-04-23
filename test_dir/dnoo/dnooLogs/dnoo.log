@@ -1,0 +1,38 @@
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLogger initLogs
+WARNING: Cannot create log file, redirecting logs to the console
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel1
+INFO: testMyLoggerSetLevel1: FINE
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel1
+INFO: testMyLoggerSetLevel1: FINE
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel1
+INFO: testMyLoggerSetLevel1: FINE
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel1
+INFO: testMyLoggerSetLevel1: FINE
+Apr 23, 2018 7:36:54 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL

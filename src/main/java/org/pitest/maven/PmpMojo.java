@@ -157,7 +157,6 @@ public class PmpMojo extends AbstractPitMojo
             targetClasses.addAll(classList);
          }
       }
-      else
       // else just let the target classes specified in the pom.xml
 
       // complete the target classes with other (dependencies) modules classes
