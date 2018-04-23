@@ -219,8 +219,8 @@ For an example of multi module project using PitMP see the [dnoo github](https:/
     - [#6](https://github.com/STAMP-project/pitmp-maven-plugin/issues/6)
     - [#9](https://github.com/STAMP-project/pitmp-maven-plugin/issues/9)
       (Duplicate [#6](https://github.com/STAMP-project/pitmp-maven-plugin/issues/6))
-    - Add automatic tests (verify_pitmp.sh)
-    - Limitation: [#10](https://github.com/STAMP-project/pitmp-maven-plugin/issues/10)
+  - Add automatic tests (verify_pitmp.sh)
+  - Limitation: [#10](https://github.com/STAMP-project/pitmp-maven-plugin/issues/10)
 
 * v1.1.0, pitmp-maven-plugin-1.1.4
   - tested with PIT v1.3.1
