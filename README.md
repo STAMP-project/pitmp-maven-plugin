@@ -215,7 +215,7 @@ For an example of multi module project using PitMP see the [dnoo github](https:/
 
 * pitmp-maven-plugin-1.1.5
   - tested with PIT v1.3.2
-  - Corrected issues:
+  - Fixed issues:
     - [#6](https://github.com/STAMP-project/pitmp-maven-plugin/issues/6)
     - [#9](https://github.com/STAMP-project/pitmp-maven-plugin/issues/9)
       (Duplicate [#6](https://github.com/STAMP-project/pitmp-maven-plugin/issues/6))
