@@ -73,6 +73,13 @@ mvn install
     <groupId>eu.stamp</groupId>
     <artifactId>pitmp-maven-plugin</artifactId>
     <version>version.you.want</version>
+    <configuration>
+      <!-- targetClasses is required for the moment
+           need to workaround the default behavior of PIT -->
+      <targetClasses>
+        <param>your.package*</param>
+      </targetClasses>
+    </configuration>
     <dependencies>
       <dependency>
         <groupId>org.pitest</groupId>
