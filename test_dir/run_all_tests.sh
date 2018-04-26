@@ -1,6 +1,7 @@
 #!/bin/sh
 ################################################################################
 currentDir=`pwd`
+options="$*"
 testScript="$currentDir/run_tests.sh"
 
 dirList="dhell dnoo"
@@ -10,5 +11,5 @@ do
    cd $currentDir
    cd $theDir
    echo "################ $theDir"
-   $testScript
+   $testScript $options
 done

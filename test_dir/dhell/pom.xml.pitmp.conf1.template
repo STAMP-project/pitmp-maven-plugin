@@ -32,7 +32,7 @@
       <plugin>
         <groupId>eu.stamp-project</groupId>
         <artifactId>pitmp-maven-plugin</artifactId>
-        <version>1.1.5-SNAPSHOT</version>
+        <version>##PITMP_VERSION##</version>
         <!--
         -->
         <configuration>
