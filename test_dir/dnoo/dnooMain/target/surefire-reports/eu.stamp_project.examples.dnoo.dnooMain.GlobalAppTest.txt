@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: eu.stamp_project.examples.dnoo.dnooMain.GlobalAppTest
--------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 sec - in eu.stamp_project.examples.dnoo.dnooMain.GlobalAppTest

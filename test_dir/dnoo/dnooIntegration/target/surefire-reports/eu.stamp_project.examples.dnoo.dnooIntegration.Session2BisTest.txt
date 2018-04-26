@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: eu.stamp_project.examples.dnoo.dnooIntegration.Session2BisTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 sec - in eu.stamp_project.examples.dnoo.dnooIntegration.Session2BisTest
