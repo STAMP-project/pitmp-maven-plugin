@@ -5,7 +5,7 @@
   <groupId>eu.stamp-project</groupId>
   <artifactId>pitmp-maven-plugin</artifactId>
   <!-- dont move it, first occurence of version shall be PitMP version -->
-  <version>1.1.6-SNAPSHOT</version>
+  <version>1.1.6</version>
   <packaging>maven-plugin</packaging>
 
   <name>${project.groupId}:${project.artifactId}</name>
@@ -46,7 +46,7 @@
     <connection>scm:git:git://github.com:STAMP-project/pitmp-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:STAMP-project/pitmp-maven-plugin.git</developerConnection>
     <url>https://github.com/STAMP-project/pitmp-maven-plugin</url>
-    <tag>HEAD</tag>
+    <tag>pitmp-maven-plugin-1.1.6</tag>
   </scm>
 
   <distributionManagement>
