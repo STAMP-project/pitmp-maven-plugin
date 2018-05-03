@@ -13,6 +13,7 @@ import org.apache.maven.artifact.Artifact;
 
 import org.pitest.maven.AbstractPitMojo;
 import org.pitest.classpath.DirectoryClassPathRoot;
+import org.pitest.classinfo.ClassName;
 
 import org.pitest.maven.PmpMojo;
 
@@ -114,18 +115,29 @@ public class PmpContext
    public static ArrayList<String> getClasses(MavenProject theProject)
    {
       ArrayList<String> classList = new ArrayList<String>();
+      ArrayList<String> classFilterList = new ArrayList<String>();
       String outputDirName = theProject.getBuild().getOutputDirectory();
+      String aFilter;
       File outputDir = new File(outputDirName);
 
       if (outputDir.exists())
       {
          DirectoryClassPathRoot classRoot = new DirectoryClassPathRoot(outputDir);
          classList.addAll(classRoot.classNames());
+         Iterator<String> myIt = classList.iterator();
+         while (myIt.hasNext())
+         {
+            aFilter = ClassName.fromString(myIt.next()).getPackage().asJavaName() + ".*";
+            if (! classFilterList.contains(aFilter))
+            {
+               classFilterList.add(aFilter);
+            }
+         }
       }
       // else
       // <cael>: check if this could happen, and what does it mean
 
-      return(classList);
+      return(classFilterList);
    }
 
    // **********************************************************************
