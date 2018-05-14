@@ -151,3 +151,4 @@ else
    mvn clean
    rm -f run_tests_*.* pom.xml
 fi
+exit 0

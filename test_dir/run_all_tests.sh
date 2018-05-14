@@ -78,3 +78,5 @@ do
    echo "################ $theDir"
    $testScript $runTestOptions
 done
+
+exit 0

@@ -54,15 +54,6 @@ information:
 
 ## Running PitMP on your project
 
-### Install the plugin
-Since 1.1.4 PitMP is available on Maven Central, so this step is required only
-for releases before 1.1.4.
-```
-git clone https://github.com/STAMP-project/pitmp-maven-plugin.git
-cd pitmp-maven-plugin
-mvn install
-```
-
 ### Run PitMP
 
 * Go to the project on which you want to apply PIT
@@ -72,23 +63,24 @@ mvn install
   <plugin>
     <groupId>eu.stamp</groupId>
     <artifactId>pitmp-maven-plugin</artifactId>
-    <version>version.you.want</version>
+    <version>release.you.want</version>
+    <!-- targetClasses is required only for releases earlier then 1.1.6
     <configuration>
-      <!-- targetClasses is required for the moment, if missing no mutation is made
-        -->
       <targetClasses>
         <param>your.package*</param>
       </targetClasses>
     </configuration>
+    -->
     <dependencies>
       <dependency>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
-        <version>pitest.version</version>
+        <version>pitest.release</version>
       </dependency>
     </dependencies>
   </plugin>
 ```
+  See section [Releases](#releases) for compatibility between PITest and PitMP releases.
 * Compile your project
 ```
 mvn install
@@ -98,6 +90,15 @@ mvn install
 mvn pitmp:run
 ```
 
+### Install the plugin for releases earlier than 1.1.4
+Since 1.1.4 PitMP is available on Maven Central, so this step is required only
+for releases before 1.1.4.
+```
+git clone https://github.com/STAMP-project/pitmp-maven-plugin.git
+cd pitmp-maven-plugin
+mvn install
+```
+
 ### Configure PitMP
 
 You can configure your project in the root pom.xml, in the section \<plugins\>:
@@ -105,7 +106,7 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
   <plugin>
     <groupId>eu.stamp</groupId>
     <artifactId>pitmp-maven-plugin</artifactId>
-    <version>version.you.want</version>
+    <version>release.you.want</version>
     <!-- list all the packages of the project that contain classes you want to be mutated    -->
     <configuration>
       <targetClasses>
@@ -117,7 +118,7 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
       <dependency>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
-        <version>pitest.version</version>
+        <version>pitest.release</version>
       </dependency>
     </dependencies>
   </plugin>
@@ -160,7 +161,7 @@ To run Descartes, add to your root project pom.xml, in the section \<plugins\>:
   <plugin>
     <groupId>eu.stamp</groupId>
     <artifactId>pitmp-maven-plugin</artifactId>
-    <version>version.you.want</version>
+    <version>release.you.want</version>
     <!-- list all the packages of the project that contain classes you want to be mutated    -->
     <configuration>
       <targetClasses>
@@ -212,6 +213,9 @@ For complete instructions about Descartes see the [Descartes github](https://git
 For an example of multi module project using PitMP see the [dnoo github](https://github.com/STAMP-project/dnoo).
 
 ## Releases
+
+* pitmp-maven-plugin-1.2.0
+  - tested with PIT v1.4.0
 
 * pitmp-maven-plugin-1.1.6
   - tested with PIT v1.3.2

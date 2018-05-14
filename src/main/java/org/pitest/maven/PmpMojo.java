@@ -15,8 +15,8 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 
-import org.pitest.functional.Option;
-import org.pitest.functional.predicate.Predicate;
+import java.util.Optional;
+import java.util.function.Predicate;
 import org.pitest.mutationtest.config.PluginServices;
 import org.pitest.mutationtest.tooling.CombinedStatistics;
 import org.pitest.maven.MojoToReportOptionsConverter;
@@ -177,12 +177,12 @@ public class PmpMojo extends AbstractPitMojo
    // **********************************************************************
    // ******** methods
    @Override
-   protected Option<CombinedStatistics> analyse()
+   protected Optional<CombinedStatistics> analyse()
       throws MojoExecutionException
    {
-      Option<CombinedStatistics> result = null;
+      Optional<CombinedStatistics> result = null;
 
-      result = Option.some(PmpContext.getInstance().getCurrentProject()
+      result = Optional.ofNullable(PmpContext.getInstance().getCurrentProject()
          .execute());
 
       return(result);

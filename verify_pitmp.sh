@@ -62,6 +62,9 @@ do
    elif test "$1" = "-clean"
    then
       execOption="clean"
+   elif test "$1" = "-runfrompom"
+   then
+      execOption="runfrompom"
    else
       scriptOptions="$scriptOptions $1"
    fi
@@ -73,16 +76,32 @@ done
 # clean previous trace files
 rm -f $traceFile $compileFile $runResFile $testDir/$testName"_diff".* $testDir/$testName"_res".*
 
-if test "$execOption" = "run"
+if test "$execOption" = "run" || test "$execOption" = "runfrompom"
 then
-   echo "------------------------------------------------------------" 2>&1 | tee -a $traceFile
-   echo "- compile and install locally" 2>&1 | tee -a $traceFile
-   echo "------------------------------------------------------------" 2>&1 | tee -a $traceFile
-   if mvn clean install >> $compileFile 2>&1
+   mvnInstallOk="false"
+   if test "$execOption" = "run"
    then
-      echo "OK" 2>&1 | tee -a $traceFile
       echo "------------------------------------------------------------" 2>&1 | tee -a $traceFile
-      echo "- run tests" 2>&1 | tee -a $traceFile
+      echo "- compile and install locally" 2>&1 | tee -a $traceFile
+      echo "------------------------------------------------------------" 2>&1 | tee -a $traceFile
+      if mvn clean install >> $compileFile 2>&1
+      then
+         echo "OK" 2>&1 | tee -a $traceFile
+         mvnInstallOk="true"
+      else
+         echo "FAILED" 2>&1 | tee -a $traceFile
+         echo "-------- traces" 2>&1 | tee -a $traceFile
+         cat "$compileFile" 2>&1 | tee -a $traceFile
+      fi
+   elif test -d "target"
+   then
+      mvnInstallOk="true"
+   fi
+
+   if "$mvnInstallOk" = "true"
+   then
+      echo "------------------------------------------------------------" 2>&1 | tee -a $traceFile
+      echo "- running tests" 2>&1 | tee -a $traceFile
       echo "------------------------------------------------------------" 2>&1 | tee -a $traceFile
       cd $testDir
       ./run_all_tests.sh $scriptOptions >$runResFile 2>&1
@@ -106,9 +125,6 @@ then
          exit 1
       fi
    else
-      echo "FAILED" 2>&1 | tee -a $traceFile
-      echo "-------- traces" 2>&1 | tee -a $traceFile
-      cat "$compileFile" 2>&1 | tee -a $traceFile
       # remove trace files except the main one
       rm -f $compileFile $runResFile $testDir/$testName"_diff".* $testDir/$testName"_res".*
       exit 1
@@ -117,3 +133,4 @@ else
    cd $testDir
    ./run_all_tests.sh -clean $scriptOptions
 fi
+exit 0

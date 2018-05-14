@@ -13,7 +13,6 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.MojoExecutionException;
 
-import org.pitest.functional.Option;
 import org.pitest.mutationtest.config.ReportOptions;
 import org.pitest.mutationtest.config.PluginServices;
 import org.pitest.mutationtest.tooling.CombinedStatistics;
@@ -180,11 +179,11 @@ public class PmpProject
       execResult = pitEntryPoint.execute(getTheMojo().getBaseDir(),
          getPitOptions(), getTheMojo().getPlugins(),
          getTheMojo().getEnvironmentVariables());
-      if (execResult.getError().hasSome())
+      if (execResult.getError().isPresent())
       {
-         throw new MojoExecutionException("fail", execResult.getError().value());
+         throw new MojoExecutionException("fail", execResult.getError().get());
       }
-      _Results = execResult.getStatistics().value();
+      _Results = execResult.getStatistics().get();
 
       // <cael>: to do: combine results of test suites
 
