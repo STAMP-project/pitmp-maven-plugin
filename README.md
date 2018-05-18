@@ -213,13 +213,13 @@ For complete instructions about Descartes see the [Descartes github](https://git
 For an example of multi module project using PitMP see the [dnoo github](https://github.com/STAMP-project/dnoo).
 
 ## Releases
-For PIT release...         | use PitMP release...
--------------------------- | ---------------------
-1.4.0                      | 1.2.0
-1.3.2                      | 1.1.6
-1.3.1                      | 1.1.4
-1.2.1, 1.2.2, 1.2.4, 1.2.5, 1.3.0  | not tested
-1.2.0, 1.2.3               | 1.0.1
+For PIT release...         | use PitMP release... | how to use PitMP
+-------------------------- | -------------------- | ----------------
+1.4.0                      | 1.2.0                | Maven Central
+1.3.2                      | 1.1.6                | Maven Central
+1.3.1                      | 1.1.4                | Maven Central
+1.2.1, 1.2.2, 1.2.4, 1.2.5, 1.3.0  | not tested   |
+1.2.0, 1.2.3               | 1.0.1                | git clone & mvn install
 
 * pitmp-maven-plugin-1.2.0
   - tested with PIT v1.4.0
