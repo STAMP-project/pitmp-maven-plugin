@@ -6,7 +6,7 @@ jdk:
 install: true
 
 script:
-  - mvn -e -X clean install
+  - mvn clean install
 
 after_success:
   - mvn test jacoco:report coveralls:report
