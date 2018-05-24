@@ -1,5 +1,7 @@
 # PitMP: Maven plugin to handle multi module projects for PiTest
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/eu.stamp-project/pitmp-maven-plugin/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/eu.stamp-project/pitmp-maven-plugin)
+[![Build Status](https://travis-ci.org/STAMP-project/pitmp-maven-plugin.svg?branch=master)](https://travis-ci.org/STAMP-project/pitmp-maven-plugin)
+[![Coverage Status](https://coveralls.io/repos/github/STAMP-project/pitmp-maven-plugin/badge.svg?branch=master)](https://coveralls.io/github/STAMP-project/pitmp-maven-plugin?branch=master)
 
 ## Table of contents
   - [What is PitMP?](#what-is-pitmp)
