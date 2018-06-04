@@ -30,213 +30,214 @@ import eu.stamp_project.plugins.*;
 
 // **********************************************************************
 @Mojo(name = "run", defaultPhase = LifecyclePhase.VERIFY,
-   requiresDependencyResolution = ResolutionScope.TEST)
+    requiresDependencyResolution = ResolutionScope.TEST, threadSafe
+    = true)
 public class PmpMojo extends AbstractPitMojo
 {
-   // **********************************************************************
-   // properties
-   // **********************************************************************
-   @Parameter(property = "targetModules")
-   protected ArrayList<String> targetModules;
+    // **********************************************************************
+    // properties
+    // **********************************************************************
+    @Parameter(property = "targetModules")
+    protected ArrayList<String> targetModules;
 
-   @Parameter(property = "skippedModules")
-   protected ArrayList<String> skippedModules;
+    @Parameter(property = "skippedModules")
+    protected ArrayList<String> skippedModules;
 
-   // if true: do not execute PIT, only display information about shouldRun or not
-   @Parameter(defaultValue = "false", property = "shouldDisplayOnly")
-   protected boolean _ShouldDisplayOnly;
+    // if true: do not execute PIT, only display information about shouldRun or not
+    @Parameter(defaultValue = "false", property = "shouldDisplayOnly")
+    protected boolean _ShouldDisplayOnly;
 
-   // **********************************************************************
-   // public
-   // **********************************************************************
-   // ******** attributes
-   public File getBaseDir()
-   {
-      return(detectBaseDir());
-   }
+    // **********************************************************************
+    // public
+    // **********************************************************************
+    // ******** attributes
+    public File getBaseDir()
+    {
+        return(detectBaseDir());
+    }
 
-   // **********************************************************************
-   public boolean shouldDisplayOnly()
-   {
-      return(_ShouldDisplayOnly);
-   }
+    // **********************************************************************
+    public boolean shouldDisplayOnly()
+    {
+        return(_ShouldDisplayOnly);
+    }
 
-   // **********************************************************************
-   public ArrayList<String> getTargetModules()
-   {
-      return(targetModules);
-   }
+    // **********************************************************************
+    public ArrayList<String> getTargetModules()
+    {
+        return(targetModules);
+    }
 
-   // **********
-   public void setTargetModules(ArrayList<String> newClasses)
-   {
-      targetModules = newClasses;
-   }
+    // **********
+    public void setTargetModules(ArrayList<String> newClasses)
+    {
+        targetModules = newClasses;
+    }
 
-   // **********
-   public boolean isInTargetModules(String name)
-   {
-      boolean result = false;
+    // **********
+    public boolean isInTargetModules(String name)
+    {
+        boolean result = false;
 
-      for (int i = 0; i < getTargetModules().size() && ! result; i++)
-      {
-         result = getTargetModules().get(i).equals(name);
-      }
+        for (int i = 0; i < getTargetModules().size() && ! result; i++)
+        {
+            result = getTargetModules().get(i).equals(name);
+        }
 
-      return(result);
-   }
+        return(result);
+    }
 
-   // **********************************************************************
-   public ArrayList<String> getSkippedModules()
-   {
-      return(skippedModules);
-   }
+    // **********************************************************************
+    public ArrayList<String> getSkippedModules()
+    {
+        return(skippedModules);
+    }
 
-   // **********
-   public void setSkippedModules(ArrayList<String> newClasses)
-   {
-      skippedModules = newClasses;
-   }
+    // **********
+    public void setSkippedModules(ArrayList<String> newClasses)
+    {
+        skippedModules = newClasses;
+    }
 
-   // **********
-   public boolean isInSkippedModules(String name)
-   {
-      boolean result = false;
+    // **********
+    public boolean isInSkippedModules(String name)
+    {
+        boolean result = false;
 
-      for (int i = 0; i < getSkippedModules().size() && ! result; i++)
-      {
-         result = getSkippedModules().get(i).equals(name);
-      }
+        for (int i = 0; i < getSkippedModules().size() && ! result; i++)
+        {
+            result = getSkippedModules().get(i).equals(name);
+        }
 
-      return(result);
-   }
+        return(result);
+    }
 
-   // **********************************************************************
-   // ******** associations
-   public Predicate<Artifact> getFilter()
-   {
-      return(filter);
-   }
+    // **********************************************************************
+    // ******** associations
+    public Predicate<Artifact> getFilter()
+    {
+        return(filter);
+    }
 
-   // **********************************************************************
-   public PluginServices getPlugins()
-   {
-      return(plugins);
-   }
+    // **********************************************************************
+    public PluginServices getPlugins()
+    {
+        return(plugins);
+    }
 
-   // **********************************************************************
-   // ******** methods
-   public PmpMojo()
-   {
-      super(new RunPitStrategy(),
-        new DependencyFilter(new PluginServices(AbstractPitMojo.class.getClassLoader())),
-        new PluginServices(AbstractPitMojo.class.getClassLoader()),
-        new PmpNonEmptyProjectCheck());
-   }
+    // **********************************************************************
+    // ******** methods
+    public PmpMojo()
+    {
+        super(new RunPitStrategy(),
+          new DependencyFilter(new PluginServices(AbstractPitMojo.class.getClassLoader())),
+          new PluginServices(AbstractPitMojo.class.getClassLoader()),
+          new PmpNonEmptyProjectCheck());
+    }
 
-   // **********************************************************************
-   // ******** methods
-   public void updateTargetClasses()
-   {
-      // require(getProject() != null)
-      ArrayList<String> completeTargetClasses;
-      ArrayList<String> classList;
-      ArrayList<MavenProject> moduleList = null;
-      MavenProject mvnProject;
+    // **********************************************************************
+    // ******** methods
+    public void updateTargetClasses()
+    {
+        // require(getProject() != null)
+        ArrayList<String> completeTargetClasses;
+        ArrayList<String> classList;
+        ArrayList<MavenProject> moduleList = null;
+        MavenProject mvnProject;
 
-      if (targetClasses == null)
-      {
-         targetClasses = new ArrayList<String>();
-      }
-      if (targetClasses.isEmpty())
-      // we need to get the explicit class list of the current project
-      {
-         classList = PmpContext.getClasses(getProject());
-         if (! classList.isEmpty())
-         {
-            targetClasses.addAll(classList);
-         }
-      }
-      // else just let the target classes specified in the pom.xml
+        if (targetClasses == null)
+        {
+            targetClasses = new ArrayList<String>();
+        }
+        if (targetClasses.isEmpty())
+        // we need to get the explicit class list of the current project
+        {
+            classList = PmpContext.getClasses(getProject());
+            if (! classList.isEmpty())
+            {
+                targetClasses.addAll(classList);
+            }
+        }
+        // else just let the target classes specified in the pom.xml
 
-      // complete the target classes with other (dependencies) modules classes
-      // and add target classes of all getArtifacts which are a project module
-      moduleList = PmpContext.getInstance().getDependingModules(getProject());
-      for (int i = 0; i < moduleList.size(); i++)
-      {
-         classList = PmpContext.getClasses(moduleList.get(i));
-         if (! classList.isEmpty())
-         {
-            PmpContext.addNewStrings(targetClasses, classList);
-         }
-      }
-   }
+        // complete the target classes with other (dependencies) modules classes
+        // and add target classes of all getArtifacts which are a project module
+        moduleList = PmpContext.getInstance().getDependingModules(getProject());
+        for (int i = 0; i < moduleList.size(); i++)
+        {
+            classList = PmpContext.getClasses(moduleList.get(i));
+            if (! classList.isEmpty())
+            {
+                PmpContext.addNewStrings(targetClasses, classList);
+            }
+        }
+    }
 
-   // **********************************************************************
-   // protected
-   // **********************************************************************
-   // ******** methods
-   @Override
-   protected Optional<CombinedStatistics> analyse()
-      throws MojoExecutionException
-   {
-      Optional<CombinedStatistics> result = null;
+    // **********************************************************************
+    // protected
+    // **********************************************************************
+    // ******** methods
+    @Override
+    protected Optional<CombinedStatistics> analyse()
+        throws MojoExecutionException
+    {
+        Optional<CombinedStatistics> result = null;
 
-      result = Optional.ofNullable(PmpContext.getInstance().getCurrentProject()
-         .execute());
+        result = Optional.ofNullable(PmpContext.getInstance().getCurrentProject()
+            .execute());
 
-      return(result);
-   }
+        return(result);
+    }
 
-   // **********************************************************************
-   // called at the beginning of AbstractPitMojo.execute
-   @Override
-   protected RunDecision shouldRun()
-   {
-      RunDecision theDecision;
-      PmpProject myPmpProject;
-      String projectName = getProject().getArtifactId();
-      // if no targetModules are specified, take all modules
-      boolean isTargetModule = (getTargetModules() == null ||
-         getTargetModules().isEmpty() || isInTargetModules(projectName));
-      String message;
+    // **********************************************************************
+    // called at the beginning of AbstractPitMojo.execute
+    @Override
+    protected RunDecision shouldRun()
+    {
+        RunDecision theDecision;
+        PmpProject myPmpProject;
+        String projectName = getProject().getArtifactId();
+        // if no targetModules are specified, take all modules
+        boolean isTargetModule = (getTargetModules() == null ||
+            getTargetModules().isEmpty() || isInTargetModules(projectName));
+        String message;
 
-      PmpContext.getInstance().updateData(this);
+        PmpContext.getInstance().updateData(this);
 
-      myPmpProject = new PmpProject(this);
-      PmpContext.getInstance().setCurrentProject(myPmpProject);
+        myPmpProject = new PmpProject(this);
+        PmpContext.getInstance().setCurrentProject(myPmpProject);
 
-      updateTargetClasses();
+        updateTargetClasses();
 
-      if (getProject().getPackaging().equals("pom") &&
-          myPmpProject.hasTestCompileSourceRoots() &&
-          myPmpProject.hasCompileSourceRoots())
-      // force packaging to not pom before calling super.shouldRun
-      {
-         getProject().setPackaging("jar");
-      }
-      theDecision = super.shouldRun();
+        if (getProject().getPackaging().equals("pom") &&
+             myPmpProject.hasTestCompileSourceRoots() &&
+             myPmpProject.hasCompileSourceRoots())
+        // force packaging to not pom before calling super.shouldRun
+        {
+            getProject().setPackaging("jar");
+        }
+        theDecision = super.shouldRun();
 
-      if (! isTargetModule)
-      {
-         message = projectName + " is not a target module";
-         theDecision.addReason(message);
-      }
+        if (! isTargetModule)
+        {
+            message = projectName + " is not a target module";
+            theDecision.addReason(message);
+        }
 
-      if (isInSkippedModules(projectName))
-      {
-         message = projectName + " is a skipped module";
-         theDecision.addReason(message);
-      }
+        if (isInSkippedModules(projectName))
+        {
+            message = projectName + " is a skipped module";
+            theDecision.addReason(message);
+        }
 
-      if (shouldDisplayOnly())
-      {
-         message = "Display only option is true";
-         theDecision.addReason(message);
-      }
+        if (shouldDisplayOnly())
+        {
+            message = "Display only option is true";
+            theDecision.addReason(message);
+        }
 
-      // PitMojo displays the reasons about why we skip the project
+        // PitMojo displays the reasons about why we skip the project
 
-      return(theDecision);
-   }
+        return(theDecision);
+    }
 }

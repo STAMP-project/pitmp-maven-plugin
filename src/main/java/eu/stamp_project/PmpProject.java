@@ -29,329 +29,345 @@ import org.pitest.maven.PmpMojo;
 // **********************************************************************
 public class PmpProject
 {
-   // **********************************************************************
-   // public
-   // **********************************************************************
-   // ******** attributes
-   public String getName()
-   {
-      return(getTheMojo().getProject().getArtifactId());
-   }
+    // **********************************************************************
+    // public
+    // **********************************************************************
+    // ******** attributes
+    public String getName()
+    {
+        return(getTheMojo().getProject().getArtifactId());
+    }
 
-   // **********************************************************************
-   // ******** associations
-   public PmpMojo getTheMojo()
-   {
-      return(_TheMojo);
-   }
+    public String getPmpMutationEngine()
+    {
+        return(_PmpMutationEngine);
+    }
+    public void setPmpMutationEngine(String value)
+    {
+        _PmpMutationEngine = value;
+    }
 
-   // **********************************************************************
-   public MavenProject getTheMavenProject()
-   {
-      return(getTheMojo().getProject());
-   }
+    // **********************************************************************
+    // ******** associations
+    public PmpMojo getTheMojo()
+    {
+        return(_TheMojo);
+    }
 
-   // **********************************************************************
-   public ReportOptions getPitOptions()
-   {
-      return(_PitOptions);
-   }
+    // **********************************************************************
+    public MavenProject getTheMavenProject()
+    {
+        return(getTheMojo().getProject());
+    }
 
-   // **********
-   public void setPitOptions(ReportOptions options)
-   {
-      _PitOptions = options;
-   }
+    // **********************************************************************
+    public ReportOptions getPitOptions()
+    {
+        return(_PitOptions);
+    }
 
-   // **********************************************************************
-   public CombinedStatistics getResults()
-   {
-      return(_Results);
-   }
+    // **********
+    public void setPitOptions(ReportOptions options)
+    {
+        _PitOptions = options;
+    }
 
-   // **********************************************************************
-   public ArrayList<String> getSourceDirs()
-   // merge the source and test source dirs for all dependencies
-   {
-      ArrayList<String> completeList = new ArrayList<String>();
-      Set<Artifact> dependList = getTheMavenProject().getArtifacts();
-      Iterator<Artifact> myIt = dependList.iterator();
-      Artifact currentDepend;
-      MavenProject theProject;
+    // **********************************************************************
+    public CombinedStatistics getResults()
+    {
+        return(_Results);
+    }
 
-      addSourceDirs(completeList, getTheMavenProject());
+    // **********************************************************************
+    public ArrayList<String> getSourceDirs()
+    // merge the source and test source dirs for all dependencies
+    {
+        ArrayList<String> completeList = new ArrayList<String>();
+        Set<Artifact> dependList = getTheMavenProject().getArtifacts();
+        Iterator<Artifact> myIt = dependList.iterator();
+        Artifact currentDepend;
+        MavenProject theProject;
 
-      // and add classes of every dependencies which are project modules
-      while (myIt.hasNext())
-      {
-         currentDepend = myIt.next();
-         theProject = PmpContext.getInstance().getMavenProjectFromName
-            (currentDepend.getArtifactId());
-         if (theProject != null)
-         {
-            addSourceDirs(completeList, theProject);
-         }
-      }
+        addSourceDirs(completeList, getTheMavenProject());
 
-      return(completeList);
-   }
+        // and add classes of every dependencies which are project modules
+        while (myIt.hasNext())
+        {
+            currentDepend = myIt.next();
+            theProject = PmpContext.getInstance().getMavenProjectFromName
+                (currentDepend.getArtifactId());
+            if (theProject != null)
+            {
+                addSourceDirs(completeList, theProject);
+            }
+        }
 
-   // **********************************************************************
-   public ArrayList<String> getDependsCodePaths()
-   {
-      ArrayList<String> codePaths = new ArrayList<String>();
-      Set<Artifact> dependList = getTheMavenProject().getArtifacts();
-      Iterator<Artifact> myIt = dependList.iterator();
-      Artifact currentDepend;
-      MavenProject theProject;
+        return(completeList);
+    }
 
-      // and add paths of every dependencies which are project modules
-      while (myIt.hasNext())
-      {
-         currentDepend = myIt.next();
-         theProject = PmpContext.getInstance().getMavenProjectFromName
-            (currentDepend.getArtifactId());
-         if (theProject != null)
-         {
-            codePaths.add(theProject.getBuild().getOutputDirectory());
-         }
-      }
+    // **********************************************************************
+    public ArrayList<String> getDependsCodePaths()
+    {
+        ArrayList<String> codePaths = new ArrayList<String>();
+        Set<Artifact> dependList = getTheMavenProject().getArtifacts();
+        Iterator<Artifact> myIt = dependList.iterator();
+        Artifact currentDepend;
+        MavenProject theProject;
 
-      return(codePaths);
-   }
+        // and add paths of every dependencies which are project modules
+        while (myIt.hasNext())
+        {
+            currentDepend = myIt.next();
+            theProject = PmpContext.getInstance().getMavenProjectFromName
+                (currentDepend.getArtifactId());
+            if (theProject != null)
+            {
+                codePaths.add(theProject.getBuild().getOutputDirectory());
+            }
+        }
 
-   // **********************************************************************
-   public ArrayList<String> getDependsClassPathElements()
-   {
-      ArrayList<String> completeList = new ArrayList<String>();
-      Set<Artifact> dependList = getTheMavenProject().getArtifacts();
-      MavenProject dependProject;
-      Iterator<Artifact> myIt = dependList.iterator();
-      Artifact currentDepend;
-      String pathName;
+        return(codePaths);
+    }
 
-      // add paths of every dependencies which are project modules
-      while (myIt.hasNext())
-      {
-         currentDepend = myIt.next();
+    // **********************************************************************
+    public ArrayList<String> getDependsClassPathElements()
+    {
+        ArrayList<String> completeList = new ArrayList<String>();
+        Set<Artifact> dependList = getTheMavenProject().getArtifacts();
+        MavenProject dependProject;
+        Iterator<Artifact> myIt = dependList.iterator();
+        Artifact currentDepend;
+        String pathName;
 
-         dependProject = PmpContext.getInstance().getMavenProjectFromName
-            (currentDepend.getArtifactId());
-         if (dependProject != null)
-         {
-            completeList.add(dependProject.getBuild().getOutputDirectory());
-            completeList.add(dependProject.getBuild().getTestOutputDirectory());
-         }
+        // add paths of every dependencies which are project modules
+        while (myIt.hasNext())
+        {
+            currentDepend = myIt.next();
 
-         if (! currentDepend.getType().equals("pom"))
-         {
-            pathName = currentDepend.getFile().getAbsolutePath();
-            completeList.add(pathName);
-         }
-      }
+            dependProject = PmpContext.getInstance().getMavenProjectFromName
+                (currentDepend.getArtifactId());
+            if (dependProject != null)
+            {
+                completeList.add(dependProject.getBuild().getOutputDirectory());
+                completeList.add(dependProject.getBuild().getTestOutputDirectory());
+            }
 
-      return(completeList);
-   }
+            if (! currentDepend.getType().equals("pom"))
+            {
+                pathName = currentDepend.getFile().getAbsolutePath();
+                completeList.add(pathName);
+            }
+        }
 
-   // **********************************************************************
-   // ******** methods
-   public PmpProject(PmpMojo mojo)
-   {
-      _TheMojo = mojo;
-   }
+        return(completeList);
+    }
 
-   // **********************************************************************
-   public CombinedStatistics execute() throws MojoExecutionException
-   {
-      EntryPoint pitEntryPoint = null;
-      AnalysisResult execResult = null;
+    // **********************************************************************
+    // ******** methods
+    public PmpProject(PmpMojo mojo)
+    {
+        _TheMojo = mojo;
+        // initialize the mutationEngine with the one from PIT
+        _PmpMutationEngine = mojo.getMutationEngine();
+    }
 
-      // create the final ReportOptions
-      setPitOptions(new MojoToReportOptionsConverter(getTheMojo(),
-           new SurefireConfigConverter(), getTheMojo().getFilter())
-         .convert());
+    // **********************************************************************
+    public CombinedStatistics execute() throws MojoExecutionException
+    {
+        EntryPoint pitEntryPoint = null;
+        AnalysisResult execResult = null;
 
-      // and complete it to update codePaths, sourceDirs and classPathElements
-      modifyReportOptions();
-      // printOptionsInfo(getPitOptions());
+        // create the final ReportOptions
+        setPitOptions(new MojoToReportOptionsConverter(getTheMojo(),
+              new SurefireConfigConverter(), getTheMojo().getFilter())
+            .convert());
 
-      pitEntryPoint = new EntryPoint();
-      execResult = pitEntryPoint.execute(getTheMojo().getBaseDir(),
-         getPitOptions(), getTheMojo().getPlugins(),
-         getTheMojo().getEnvironmentVariables());
-      if (execResult.getError().isPresent())
-      {
-         throw new MojoExecutionException("fail", execResult.getError().get());
-      }
-      _Results = execResult.getStatistics().get();
+        // and complete it to update codePaths, sourceDirs and classPathElements
+        modifyReportOptions();
+        // printOptionsInfo(getPitOptions());
 
-      // <cael>: to do: combine results of test suites
+        pitEntryPoint = new EntryPoint();
+        execResult = pitEntryPoint.execute(getTheMojo().getBaseDir(),
+            getPitOptions(), getTheMojo().getPlugins(),
+            getTheMojo().getEnvironmentVariables());
+        if (execResult.getError().isPresent())
+        {
+            throw new MojoExecutionException("fail", execResult.getError().get());
+        }
+        _Results = execResult.getStatistics().get();
 
-      return(getResults());
-   }
+        // <cael>: to do: combine results of test suites
 
-   // **********************************************************************
-   public void modifyReportOptions()
-   {
-      // require(getPitOptions() != null)
-      ArrayList<File> fileList = null;
-      ArrayList<String> sourceDirList = null;
-      ArrayList<String> codePaths = null;
-      ArrayList<String> dependsCodePaths = null;
-      ArrayList<String> classPathElts = null;
-      ArrayList<String> dependsClassPathElts = null;
+        return(getResults());
+    }
 
-      // merge test and class source directories
-      // <cael>: to do: check if the order impacts the execution
-      sourceDirList = getSourceDirs();
-      if (sourceDirList != null && ! sourceDirList.isEmpty())
-      {
-         fileList = PmpContext.stringsToFiles(sourceDirList);
-         getPitOptions().setSourceDirs(fileList);
-      }
+    // **********************************************************************
+    public void modifyReportOptions()
+    {
+        // require(getPitOptions() != null)
+        ArrayList<File> fileList = null;
+        ArrayList<String> sourceDirList = null;
+        ArrayList<String> codePaths = null;
+        ArrayList<String> dependsCodePaths = null;
+        ArrayList<String> classPathElts = null;
+        ArrayList<String> dependsClassPathElts = null;
 
-      dependsCodePaths = getDependsCodePaths();
-      if (getPitOptions().getCodePaths() != null &&
-          ! getPitOptions().getCodePaths().isEmpty())
-      {
-         codePaths = new ArrayList<String>(getPitOptions().getCodePaths());
-         if (dependsCodePaths != null && ! dependsCodePaths.isEmpty())
-         {
-            PmpContext.addNewStrings(codePaths, dependsCodePaths);
-         }
-      }
-      else
-      {
-         codePaths = dependsCodePaths;
-      }
-      if (codePaths != null && ! codePaths.isEmpty())
-      {
-         getPitOptions().setCodePaths(codePaths);
-      }
+        // merge test and class source directories
+        // <cael>: to do: check if the order impacts the execution
+        sourceDirList = getSourceDirs();
+        if (sourceDirList != null && ! sourceDirList.isEmpty())
+        {
+            fileList = PmpContext.stringsToFiles(sourceDirList);
+            getPitOptions().setSourceDirs(fileList);
+        }
 
-      dependsClassPathElts = getDependsClassPathElements();
-      if (getPitOptions().getClassPathElements() != null &&
-          ! getPitOptions().getClassPathElements().isEmpty())
-      {
-         classPathElts = new ArrayList<String>(getPitOptions().getClassPathElements());
-         if (dependsClassPathElts != null && ! dependsClassPathElts.isEmpty())
-         {
-            PmpContext.addNewStrings(classPathElts, dependsClassPathElts);
-         }
-      }
-      else
-      {
-         classPathElts = dependsClassPathElts;
-      }
-      if (classPathElts != null && ! classPathElts.isEmpty())
-      {
-         getPitOptions().setClassPathElements(classPathElts);
-      }
-   }
+        dependsCodePaths = getDependsCodePaths();
+        if (getPitOptions().getCodePaths() != null &&
+             ! getPitOptions().getCodePaths().isEmpty())
+        {
+            codePaths = new ArrayList<String>(getPitOptions().getCodePaths());
+            if (dependsCodePaths != null && ! dependsCodePaths.isEmpty())
+            {
+                PmpContext.addNewStrings(codePaths, dependsCodePaths);
+            }
+        }
+        else
+        {
+            codePaths = dependsCodePaths;
+        }
+        if (codePaths != null && ! codePaths.isEmpty())
+        {
+            getPitOptions().setCodePaths(codePaths);
+        }
 
-   // **********************************************************************
-   public Boolean hasCompileSourceRoots()
-   // the module or one of the dependencies has src/main/java
-   {
-      Boolean result = PmpContext.oneFileExists
-         (getTheMojo().getProject().getCompileSourceRoots());
-      ArrayList<MavenProject> dependList = PmpContext.getInstance()
-         .getDependingModules(getTheMojo().getProject());
-      Iterator<MavenProject> myIt = dependList.iterator();
-      MavenProject currentModule;
+        dependsClassPathElts = getDependsClassPathElements();
+        if (getPitOptions().getClassPathElements() != null &&
+             ! getPitOptions().getClassPathElements().isEmpty())
+        {
+            classPathElts = new ArrayList<String>(getPitOptions().getClassPathElements());
+            if (dependsClassPathElts != null && ! dependsClassPathElts.isEmpty())
+            {
+                PmpContext.addNewStrings(classPathElts, dependsClassPathElts);
+            }
+        }
+        else
+        {
+            classPathElts = dependsClassPathElts;
+        }
+        if (classPathElts != null && ! classPathElts.isEmpty())
+        {
+            getPitOptions().setClassPathElements(classPathElts);
+        }
+        getPitOptions().setClassPathElements(classPathElts);
 
-      // check for dependencies
-      while (myIt.hasNext() && ! result)
-      {
-         currentModule = myIt.next();
-         result = PmpContext.oneFileExists(currentModule.getCompileSourceRoots());
-      }
+        // set the mutation engine
+        getPitOptions().setMutationEngine(getPmpMutationEngine());
+    }
 
-      return(result);
-   }
+    // **********************************************************************
+    public Boolean hasCompileSourceRoots()
+    // the module or one of the dependencies has src/main/java
+    {
+        Boolean result = PmpContext.oneFileExists
+            (getTheMojo().getProject().getCompileSourceRoots());
+        ArrayList<MavenProject> dependList = PmpContext.getInstance()
+            .getDependingModules(getTheMojo().getProject());
+        Iterator<MavenProject> myIt = dependList.iterator();
+        MavenProject currentModule;
 
-   // **********************************************************************
-   public Boolean hasTestCompileSourceRoots()
-   // the module has src/test/java
-   {
-      Boolean result = PmpContext.oneFileExists
-         (getTheMojo().getProject().getTestCompileSourceRoots());
+        // check for dependencies
+        while (myIt.hasNext() && ! result)
+        {
+            currentModule = myIt.next();
+            result = PmpContext.oneFileExists(currentModule.getCompileSourceRoots());
+        }
 
-      return(result);
-   }
+        return(result);
+    }
 
-   // **********************************************************************
-   public void addSourceDirs(List<String> listToComplete,
-      MavenProject theProject)
-   {
-      // require(getPitOptions() != null)
-      List<String> nameList;
+    // **********************************************************************
+    public Boolean hasTestCompileSourceRoots()
+    // the module has src/test/java
+    {
+        Boolean result = PmpContext.oneFileExists
+            (getTheMojo().getProject().getTestCompileSourceRoots());
 
-      nameList = theProject.getCompileSourceRoots();
-      if (nameList != null && ! nameList.isEmpty())
-      {
-         listToComplete.addAll(nameList);
-      }
-      nameList = theProject.getTestCompileSourceRoots();
-      if (nameList != null && ! nameList.isEmpty())
-      {
-         listToComplete.addAll(nameList);
-      }
-   }
+        return(result);
+    }
 
-   // **********************************************************************
-   public void printInfo()
-   {
-      System.out.println("#### project: " + getName());
-      System.out.println("#");
-      if (getTheMojo().getProject().getParent() != null)
-      {
-         System.out.println("# Mvn Parent: " + getTheMojo().getProject().getParent()
-            .getArtifactId());
-      }
-      System.out.println("# Mvn all dependencies: " +
-         getTheMojo().getProject().getArtifacts());
-      System.out.println("");
-      System.out.println("####");
-   }
+    // **********************************************************************
+    public void addSourceDirs(List<String> listToComplete,
+        MavenProject theProject)
+    {
+        // require(getPitOptions() != null)
+        List<String> nameList;
 
-   // **********************************************************************
-   public void printMojoInfo()
-   {
-      System.out.println("######## mojo attributes");
-      System.out.println("#");
-      System.out.println("# targetTests: " + getTheMojo().getTargetTests());
-      System.out.println("# mutationEngine: " + getTheMojo().getMutationEngine());
-      System.out.println("# targetClasses: " + getTheMojo().getTargetClasses());
-      System.out.println("# modified targetClasses: " + getTheMojo()
-         .getTargetClasses());
-      System.out.println("#");
-      System.out.println("########");
-   }
+        nameList = theProject.getCompileSourceRoots();
+        if (nameList != null && ! nameList.isEmpty())
+        {
+            listToComplete.addAll(nameList);
+        }
+        nameList = theProject.getTestCompileSourceRoots();
+        if (nameList != null && ! nameList.isEmpty())
+        {
+            listToComplete.addAll(nameList);
+        }
+    }
 
-   // **********************************************************************
-   public void printOptionsInfo(ReportOptions data)
-   {
-      System.out.println("####");
-      System.out.println("#### BaseDir: " + getTheMojo().getBaseDir());
-      System.out.println("#### mutationEngine: " + data.getMutationEngine());
-      System.out.println("#### targetTests: " + data.getTargetTests());
-      System.out.println("#### excludedClasses: " + data.getExcludedClasses());
-      System.out.println("#### excludedMethods: " + data.getExcludedMethods());
-      System.out.println("#### targetClasses: " + data.getTargetClasses());
-      System.out.println("#### codePaths: " + data.getCodePaths());
-      System.out.println("#### sourceDirs: " + data.getSourceDirs());
-      System.out.println("#### classPathElements: " + data.getClassPathElements());
-      System.out.println("####");
-   }
+    // **********************************************************************
+    public void printInfo()
+    {
+        System.out.println("#### project: " + getName());
+        System.out.println("#");
+        if (getTheMojo().getProject().getParent() != null)
+        {
+            System.out.println("# Mvn Parent: " + getTheMojo().getProject().getParent()
+                .getArtifactId());
+        }
+        System.out.println("# Mvn all dependencies: " +
+            getTheMojo().getProject().getArtifacts());
+        System.out.println("");
+        System.out.println("####");
+    }
 
-   // **********************************************************************
+    // **********************************************************************
+    public void printMojoInfo()
+    {
+        System.out.println("######## mojo attributes");
+        System.out.println("#");
+        System.out.println("# targetTests: " + getTheMojo().getTargetTests());
+        System.out.println("# mutationEngine: " + getTheMojo().getMutationEngine());
+        System.out.println("# targetClasses: " + getTheMojo().getTargetClasses());
+        System.out.println("# modified targetClasses: " + getTheMojo()
+            .getTargetClasses());
+        System.out.println("#");
+        System.out.println("########");
+    }
 
-   // **********************************************************************
-   // protected
-   // **********************************************************************
-   // ******** associations
-   protected PmpMojo _TheMojo = null;
-   protected ReportOptions _PitOptions = null;
-   protected CombinedStatistics _Results = null;
+    // **********************************************************************
+    public void printOptionsInfo(ReportOptions data)
+    {
+        System.out.println("####");
+        System.out.println("#### BaseDir: " + getTheMojo().getBaseDir());
+        System.out.println("#### mutationEngine: " + data.getMutationEngine());
+        System.out.println("#### targetTests: " + data.getTargetTests());
+        System.out.println("#### excludedClasses: " + data.getExcludedClasses());
+        System.out.println("#### excludedMethods: " + data.getExcludedMethods());
+        System.out.println("#### targetClasses: " + data.getTargetClasses());
+        System.out.println("#### codePaths: " + data.getCodePaths());
+        System.out.println("#### sourceDirs: " + data.getSourceDirs());
+        System.out.println("#### classPathElements: " + data.getClassPathElements());
+        System.out.println("####");
+    }
+
+    // **********************************************************************
+
+    // **********************************************************************
+    // protected
+    // **********************************************************************
+    // ******** associations
+    protected PmpMojo _TheMojo = null;
+    protected ReportOptions _PitOptions = null;
+    protected CombinedStatistics _Results = null;
+    protected String _PmpMutationEngine = null;
 }

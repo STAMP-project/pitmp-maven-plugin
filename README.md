@@ -1,7 +1,7 @@
 # PitMP: Maven plugin to handle multi module projects for PiTest
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/eu.stamp-project/pitmp-maven-plugin/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/eu.stamp-project/pitmp-maven-plugin)
 [![Build Status](https://travis-ci.org/STAMP-project/pitmp-maven-plugin.svg?branch=master)](https://travis-ci.org/STAMP-project/pitmp-maven-plugin)
 [![Coverage Status](https://coveralls.io/repos/github/STAMP-project/pitmp-maven-plugin/badge.svg?branch=master)](https://coveralls.io/github/STAMP-project/pitmp-maven-plugin?branch=master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/eu.stamp-project/pitmp-maven-plugin/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/eu.stamp-project/pitmp-maven-plugin)
 
 ## Table of contents
   - [What is PitMP?](#what-is-pitmp)
@@ -60,36 +60,13 @@ information:
 
 * Go to the project on which you want to apply PIT
 
-* Add to your root project pom.xml, in the section \<plugins\>:
-```
-  <plugin>
-    <groupId>eu.stamp</groupId>
-    <artifactId>pitmp-maven-plugin</artifactId>
-    <version>release.you.want</version>
-    <!-- targetClasses is required only for releases earlier then 1.1.6
-    <configuration>
-      <targetClasses>
-        <param>your.package*</param>
-      </targetClasses>
-    </configuration>
-    -->
-    <dependencies>
-      <dependency>
-        <groupId>org.pitest</groupId>
-        <artifactId>pitest-maven</artifactId>
-        <version>pitest.release</version>
-      </dependency>
-    </dependencies>
-  </plugin>
-```
-  See section [Releases](#releases) for compatibility between PITest and PitMP releases.
 * Compile your project
 ```
 mvn install
 ```
 * Run PIT on your multi module project :-)
 ```
-mvn pitmp:run
+mvn eu.stamp-project:pitmp-maven-plugin:run
 ```
 
 ### Install the plugin for releases earlier than 1.1.4
@@ -157,8 +134,11 @@ All PIT's properties can be used.
 
 ## Running Descartes
 
-If you want to run Descartes, use the v1.0.1. Descartes supports only PiTest v1.2.0 for now.  
-To run Descartes, add to your root project pom.xml, in the section \<plugins\>:
+If you want to run Descartes:
+```
+mvn eu.stamp-project:pitmp-maven-plugin:run
+```
+If you want to configure Descartes, add to your root project pom.xml, in the section \<plugins\>:
 ```
   <plugin>
     <groupId>eu.stamp</groupId>
@@ -204,7 +184,7 @@ To run Descartes, add to your root project pom.xml, in the section \<plugins\>:
       <dependency>
         <groupId>fr.inria.stamp</groupId>
         <artifactId>descartes</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>1.2</version>
       </dependency>
     </dependencies>
   </plugin>
@@ -217,13 +197,17 @@ For an example of multi module project using PitMP see the [dnoo github](https:/
 ## Releases
 For PIT release...         | use PitMP release... | how to use PitMP
 -------------------------- | -------------------- | ----------------
-1.4.0                      | 1.2.0                | Maven Central
+1.4.0                      | 1.3.0                | Maven Central
 1.3.2                      | 1.1.6                | Maven Central
 1.3.1                      | 1.1.4                | Maven Central
 1.2.1, 1.2.2, 1.2.4, 1.2.5, 1.3.0  | not tested   |
 1.2.0, 1.2.3               | 1.0.1                | git clone & mvn install
 
-* pitmp-maven-plugin-1.2.0
+* pitmp-maven-plugin-1.3.0
+  - Adding a goal 'descartes'
+  - tested with PIT v1.4.0 and Descartes v1.2
+
+* pitmp-maven-plugin-1.2.0 and Descartes v1.2
   - tested with PIT v1.4.0
 
 * pitmp-maven-plugin-1.1.6
