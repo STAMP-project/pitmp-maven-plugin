@@ -86,7 +86,10 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
     <groupId>eu.stamp</groupId>
     <artifactId>pitmp-maven-plugin</artifactId>
     <version>release.you.want</version>
-    <!-- list all the packages of the project that contain classes you want to be mutated    -->
+    <!-- List all the packages of the project that contain classes you want
+         to be mutated.
+         All PIT's properties can be used.
+    -->
     <configuration>
       <targetClasses>
         <param>a.package.of.classes*</param>
@@ -102,7 +105,6 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
     </dependencies>
   </plugin>
 ```
-All PIT's properties can be used.
 
 ### PitMP properties
 
@@ -205,18 +207,18 @@ For PIT release...         | use PitMP release... | how to use PitMP
 
 * pitmp-maven-plugin-1.3.0
   - Adding a goal 'descartes'
-  - tested with PIT v1.4.0 and Descartes v1.2
+  - Tested with PIT v1.4.0 and Descartes v1.2
 
-* pitmp-maven-plugin-1.2.0 and Descartes v1.2
-  - tested with PIT v1.4.0
+* pitmp-maven-plugin-1.2.0
+  - Tested with PIT v1.4.0 and Descartes v1.2
 
 * pitmp-maven-plugin-1.1.6
-  - tested with PIT v1.3.2
+  - Tested with PIT v1.3.2
   - Fixed issues:
     - [#10](https://github.com/STAMP-project/pitmp-maven-plugin/issues/10)
 
 * pitmp-maven-plugin-1.1.5
-  - tested with PIT v1.3.2
+  - Tested with PIT v1.3.2
   - Fixed issues:
     - [#6](https://github.com/STAMP-project/pitmp-maven-plugin/issues/6)
     - [#9](https://github.com/STAMP-project/pitmp-maven-plugin/issues/9)
@@ -225,11 +227,11 @@ For PIT release...         | use PitMP release... | how to use PitMP
   - Limitation: [#10](https://github.com/STAMP-project/pitmp-maven-plugin/issues/10)
 
 * v1.1.0, pitmp-maven-plugin-1.1.4
-  - tested with PIT v1.3.1
+  - Tested with PIT v1.3.1
 
 * v1.0.1
-  - tested with PIT v1.2.0 and Descartes v0.2-SNAPSHOT
-  - tested with PIT v1.2.3
+  - Tested with PIT v1.2.0 and Descartes v0.2-SNAPSHOT
+  - Tested with PIT v1.2.3
 
 ## Tested on
 
