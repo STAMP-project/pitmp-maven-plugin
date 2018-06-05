@@ -56,8 +56,6 @@ information:
 
 ## Running PitMP on your project
 
-### Run PitMP
-
 * Go to the project on which you want to apply PIT
 
 * Compile your project
@@ -69,7 +67,7 @@ mvn install
 mvn eu.stamp-project:pitmp-maven-plugin:run
 ```
 
-### Install the plugin for releases earlier than 1.1.4
+##### Install the plugin for releases earlier than 1.1.4
 Since 1.1.4 PitMP is available on Maven Central, so this step is required only
 for releases before 1.1.4.
 ```
@@ -138,7 +136,7 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
 
 If you want to run Descartes:
 ```
-mvn eu.stamp-project:pitmp-maven-plugin:run
+mvn eu.stamp-project:pitmp-maven-plugin:descartes
 ```
 If you want to configure Descartes, add to your root project pom.xml, in the section \<plugins\>:
 ```
