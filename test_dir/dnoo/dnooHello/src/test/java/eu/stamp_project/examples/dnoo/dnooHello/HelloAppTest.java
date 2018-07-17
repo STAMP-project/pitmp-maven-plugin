@@ -1,6 +1,8 @@
 package eu.stamp_project.examples.dnoo.dnooHello;
 
 import static org.junit.Assert.assertEquals;
+import org.junit.BeforeClass;
+import org.junit.AfterClass;
 import org.junit.Test;
 import java.io.File;
 
@@ -12,6 +14,18 @@ public class HelloAppTest
    // **********************************************************************
    // public
    // **********************************************************************
+   @BeforeClass
+   public static void runOnceAtTheBeginning()
+   {
+       System.out.println("dnoo.HelloAppTest: @BeforeClass - runOnceAtTheBeginning");
+   }
+
+   @AfterClass
+   public static void runOnceAtTheEnd()
+   {
+       System.out.println("dnoo.HelloAppTest: @AfterClass - runOnceAtTheEnd");
+   }
+
    @Test
    public void testHelloAppDefault() throws Exception
    {

@@ -1,6 +1,8 @@
 package eu.stamp_project.examples.dhell;
 
 import static org.junit.Assert.assertEquals;
+import org.junit.BeforeClass;
+import org.junit.AfterClass;
 import org.junit.Test;
 import java.io.File;
 import java.util.*;
@@ -12,6 +14,18 @@ public class MyStorageTest
    // **********************************************************************
    // public
    // **********************************************************************
+   @BeforeClass
+   public static void runOnceAtTheBeginning()
+   {
+       System.out.println("dhell.MyStorageTest: @BeforeClass - runOnceAtTheBeginning");
+   }
+
+   @AfterClass
+   public static void runOnceAtTheEnd()
+   {
+       System.out.println("dhell.MyStorageTest: @AfterClass - runOnceAtTheEnd");
+   }
+
    @Test
    public void testMyStorageDefault() throws Exception
    {

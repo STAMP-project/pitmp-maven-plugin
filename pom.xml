@@ -77,14 +77,12 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
-      <!-- <version>3.5.0</version> -->
       <version>2.2.1</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-project</artifactId>
-      <!-- <version>2.0.11</version> -->
       <version>2.2.1</version>
     </dependency>
  
@@ -104,10 +102,29 @@
 
     <!-- test dependencies -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <version>1.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-engine</artifactId>
+      <version>1.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <version>5.2.0</version>
     </dependency>
 
     <!-- future used: add JUnit test
@@ -122,7 +139,7 @@
     <dependency>
       <groupId>eu.stamp-project</groupId>
       <artifactId>descartes</artifactId>
-      <version>1.2.1</version>
+      <version>1.2.2</version>
     </dependency>
 
   </dependencies>

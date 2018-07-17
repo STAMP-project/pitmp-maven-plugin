@@ -38,7 +38,7 @@ currentDir=`pwd`
 
 testScriptName="run_tests.sh"
 testScript="$currentDir/$testScriptName"
-dirList="dhell dnoo"
+dirList="dhell dnoo dhell5 dnoo5"
 
 execOption="run"
 runTestOptions=

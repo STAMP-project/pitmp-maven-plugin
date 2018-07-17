@@ -197,18 +197,23 @@ For an example of multi module project using PitMP see the [dnoo github](https:/
 ## Releases
 For PIT release...         | use PitMP release... | how to use PitMP
 -------------------------- | -------------------- | ----------------
-1.4.0                      | 1.3.1                | Maven Central
+1.4.0                      | 1.3.2                | Maven Central
 1.3.2                      | 1.1.6                | Maven Central
 1.3.1                      | 1.1.4                | Maven Central
 1.2.1, 1.2.2, 1.2.4, 1.2.5, 1.3.0  | not tested   |
 1.2.0, 1.2.3               | 1.0.1                | git clone & mvn install
 
+* pitmp-maven-plugin-1.3.2
+  - Dependency on Descartes v1.2.2
+  - Tested with PIT v1.4.0, Descartes v1.2.2, JUnit4 and JUnit5
+
 * pitmp-maven-plugin-1.3.1
-  - Supporting Descartes v1.2.1
+  - Dependency on Descartes v1.2.1
   - Tested with PIT v1.4.0 and Descartes v1.2.1
 
 * pitmp-maven-plugin-1.3.0
   - Adding a goal 'descartes'
+  - Dependency on Descartes v1.2
   - Tested with PIT v1.4.0 and Descartes v1.2
 
 * pitmp-maven-plugin-1.2.0
