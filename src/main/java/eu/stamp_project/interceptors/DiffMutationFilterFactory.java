@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class DiffMutationFilterFactory implements MutationInterceptorFactory {
 
-    private String defaultPath = "target/descartes_changes.txt";
+    private String defaultPath = "target/descartes-changes.txt";
     private FeatureParameter fileParameter = FeatureParameter.named("file");
 
 
