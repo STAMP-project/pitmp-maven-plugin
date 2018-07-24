@@ -4,12 +4,48 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/eu.stamp-project/pitmp-maven-plugin/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/eu.stamp-project/pitmp-maven-plugin)
 
 ## Table of contents
+  - [Quick start](#quick-start)
   - [What is PitMP?](#what-is-pitmp)
   - [How does PitMP work?](#how-does-pitmp-work)
   - [PitMP Output](#pitmp-output)
   - [Running PitMP on your project](#running-pitmp-on-your-project)
   - [Releases](#releases)
   - [Tested on](#tested-on)
+
+
+## Quick start
+* on command line
+Compile your project using 'mvn install',
+  - and run PIT
+```
+mvn eu.stamp-project:pitmp-maven-plugin:run
+```
+  - or run Descartes
+```
+mvn eu.stamp-project:pitmp-maven-plugin:run
+```
+
+* with Maven `pom.xml`
+  - For PIT include:
+```
+      <plugin>
+        <groupId>eu.stamp-project</groupId>
+        <artifactId>pitmp-maven-plugin</artifactId>
+        <version>1.3.3</version>
+      </plugin>
+```
+  - and for Descartes include:
+```
+      <plugin>
+        <groupId>eu.stamp-project</groupId>
+        <artifactId>pitmp-maven-plugin</artifactId>
+        <version>1.3.3</version>
+        <configuration>
+          <mutationEngine>descartes</mutationEngine>
+        </configuration>
+      </plugin>
+```
+
 
 ## What is PitMP?
 PitMP (PIT for Multi-module Project) is a Maven plugin able to run PIT on multi-module projects.
@@ -94,13 +130,6 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
         <param>another.package.of.classes*</param>
       </targetClasses>
     </configuration>
-    <dependencies>
-      <dependency>
-        <groupId>org.pitest</groupId>
-        <artifactId>pitest-maven</artifactId>
-        <version>pitest.release</version>
-      </dependency>
-    </dependencies>
   </plugin>
 ```
 
@@ -151,42 +180,7 @@ If you want to configure Descartes, add to your root project pom.xml, in the sec
         <param>another.package.of.classes*</param>
       </targetClasses>
       <mutationEngine>descartes</mutationEngine>
-      <mutators>
-        <mutator>void</mutator>
-        <mutator>null</mutator>
-        <mutator>true</mutator>
-        <mutator>false</mutator>
-        <mutator>empty</mutator>
-        <mutator>0</mutator>
-        <mutator>1</mutator>
-        <mutator>(byte)0</mutator>
-        <mutator>(byte)1</mutator>
-        <mutator>(short)1</mutator>
-        <mutator>(short)2</mutator>
-        <mutator>0L</mutator>
-        <mutator>1L</mutator>
-        <mutator>0.0</mutator>
-        <mutator>1.0</mutator>
-        <mutator>0.0f</mutator>
-        <mutator>1.0f</mutator>
-        <mutator>'\40'</mutator>
-        <mutator>'A'</mutator>
-        <mutator>""</mutator>
-        <mutator>"A"</mutator>
-      </mutators>
     </configuration>
-    <dependencies>
-      <dependency>
-        <groupId>org.pitest</groupId>
-        <artifactId>pitest-maven</artifactId>
-        <version>1.2.0</version>
-      </dependency>
-      <dependency>
-        <groupId>fr.inria.stamp</groupId>
-        <artifactId>descartes</artifactId>
-        <version>1.2</version>
-      </dependency>
-    </dependencies>
   </plugin>
 ```
 
@@ -198,7 +192,7 @@ For an example of multi module project using PitMP see the [dnoo github](https:/
 For PIT release...         | use PitMP release... | how to use PitMP
 -------------------------- | -------------------- | ----------------
 1.4.0                      | 1.3.3, 1.3.2, 1.3.1, 1.3.0, 1.2.0 | Maven Central
-1.3.2                      | 1.1.6                | Maven Central
+1.3.2                      | 1.1.6, 1.1.5         | Maven Central
 1.3.1                      | 1.1.4                | Maven Central
 1.2.1, 1.2.2, 1.2.4, 1.2.5, 1.3.0  | not tested   |
 1.2.0, 1.2.3               | 1.0.1                | git clone & mvn install
