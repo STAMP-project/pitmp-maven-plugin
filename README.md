@@ -14,19 +14,23 @@
 
 
 ## Quick start
-* on command line
-Compile your project using 'mvn install',
+* on command line  
+  - Compile your project
+ ```
+ mvn install
+ ```
   - and run PIT
 ```
 mvn eu.stamp-project:pitmp-maven-plugin:run
 ```
   - or run Descartes
 ```
-mvn eu.stamp-project:pitmp-maven-plugin:run
+mvn eu.stamp-project:pitmp-maven-plugin:descartes
 ```
 
-* with Maven `pom.xml`
-  - For PIT include:
+* with Maven  
+Modify your `pom.xml`,
+  - for PIT include:
 ```
       <plugin>
         <groupId>eu.stamp-project</groupId>
