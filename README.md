@@ -31,7 +31,7 @@ mvn eu.stamp-project:pitmp-maven-plugin:run
       <plugin>
         <groupId>eu.stamp-project</groupId>
         <artifactId>pitmp-maven-plugin</artifactId>
-        <version>1.3.3</version>
+        <version>1.3.4</version>
       </plugin>
 ```
   - and for Descartes include:
@@ -39,7 +39,7 @@ mvn eu.stamp-project:pitmp-maven-plugin:run
       <plugin>
         <groupId>eu.stamp-project</groupId>
         <artifactId>pitmp-maven-plugin</artifactId>
-        <version>1.3.3</version>
+        <version>1.3.4</version>
         <configuration>
           <mutationEngine>descartes</mutationEngine>
         </configuration>
@@ -191,11 +191,15 @@ For an example of multi module project using PitMP see the [dnoo github](https:/
 ## Releases
 For PIT release...         | use PitMP release... | how to use PitMP
 -------------------------- | -------------------- | ----------------
-1.4.0                      | 1.3.3, 1.3.2, 1.3.1, 1.3.0, 1.2.0 | Maven Central
+1.4.0                      | 1.3.4, 1.3.3, 1.3.2, 1.3.1, 1.3.0, 1.2.0 | Maven Central
 1.3.2                      | 1.1.6, 1.1.5         | Maven Central
 1.3.1                      | 1.1.4                | Maven Central
 1.2.1, 1.2.2, 1.2.4, 1.2.5, 1.3.0  | not tested   |
 1.2.0, 1.2.3               | 1.0.1                | git clone & mvn install
+
+* pitmp-maven-plugin-1.3.4
+  - Dependency on Descartes v1.2.4 (hotfix for a regression in 1.3.3)
+  - Tested with PIT v1.4.0, Descartes v1.2.4, JUnit4 and JUnit5
 
 * pitmp-maven-plugin-1.3.3
   - Dependency on Descartes v1.2.3
