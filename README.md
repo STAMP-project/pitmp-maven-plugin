@@ -16,30 +16,30 @@
 ## Quick start
 * on command line  
   - Compile your project
- ```
- mvn install
- ```
+  ```
+  mvn install
+  ```
   - and run PIT
-```
-mvn eu.stamp-project:pitmp-maven-plugin:run
-```
+  ```
+  mvn eu.stamp-project:pitmp-maven-plugin:run
+  ```
   - or run Descartes
-```
-mvn eu.stamp-project:pitmp-maven-plugin:descartes
-```
+  ```
+  mvn eu.stamp-project:pitmp-maven-plugin:descartes
+  ```
 
 * with Maven  
-Modify your `pom.xml`,
+ Modify your `pom.xml`,
   - for PIT include:
-```
+  ```
       <plugin>
         <groupId>eu.stamp-project</groupId>
         <artifactId>pitmp-maven-plugin</artifactId>
         <version>1.3.4</version>
       </plugin>
-```
+  ```
   - and for Descartes include:
-```
+  ```
       <plugin>
         <groupId>eu.stamp-project</groupId>
         <artifactId>pitmp-maven-plugin</artifactId>
@@ -48,7 +48,7 @@ Modify your `pom.xml`,
           <mutationEngine>descartes</mutationEngine>
         </configuration>
       </plugin>
-```
+  ```
 
 
 ## What is PitMP?
