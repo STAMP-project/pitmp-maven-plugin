@@ -1,37 +1,30 @@
 package org.pitest.maven;
 
-// **********************************************************************
-import java.util.List;
-import java.util.Set;
-import java.util.ArrayList;
 import java.io.File;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.project.MavenProject;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-
-import java.util.Optional;
-import java.util.function.Predicate;
+import org.apache.maven.project.MavenProject;
 import org.pitest.mutationtest.config.PluginServices;
 import org.pitest.mutationtest.tooling.CombinedStatistics;
-import org.pitest.maven.MojoToReportOptionsConverter;
-import org.pitest.maven.SurefireConfigConverter;
-import org.pitest.maven.AbstractPitMojo;
-import org.pitest.maven.RunPitStrategy;
-import org.pitest.maven.DependencyFilter;
-import org.pitest.util.Log;
 
-import eu.stamp_project.plugins.*;
+import eu.stamp_project.PmpContext;
+import eu.stamp_project.plugins.PmpNonEmptyProjectCheck;
+import eu.stamp_project.plugins.PmpProject;
+import eu.stamp_project.report.MethodThresholds;
 
 // **********************************************************************
 @Mojo(name = "run", defaultPhase = LifecyclePhase.VERIFY,
     requiresDependencyResolution = ResolutionScope.TEST, threadSafe
     = true)
+
 public class PmpMojo extends AbstractPitMojo
 {
     // **********************************************************************
@@ -47,6 +40,18 @@ public class PmpMojo extends AbstractPitMojo
     @Parameter(defaultValue = "false", property = "shouldDisplayOnly")
     protected boolean _ShouldDisplayOnly;
 
+	/**
+	 * Pseudo Tested threshold at which to fail build
+	 */
+	@Parameter(defaultValue = "0", property = "pseudoTestedThreshold")
+	private int pseudoTestedThreshold;
+
+	/**
+	 * Partially Tested threshold at which to fail build
+	 */
+	@Parameter(defaultValue = "0", property = "partiallyTestedThreshold")
+	private int partiallyTestedThreshold;
+    
     // **********************************************************************
     // public
     // **********************************************************************
@@ -194,6 +199,9 @@ public class PmpMojo extends AbstractPitMojo
     @Override
     protected RunDecision shouldRun()
     {
+    	MethodThresholds.getInstance().setPartialyTestedThresold(partiallyTestedThreshold);
+    	MethodThresholds.getInstance().setPseudoTestedThresold(pseudoTestedThreshold);
+
         RunDecision theDecision;
         PmpProject myPmpProject;
         String projectName = getProject().getArtifactId();

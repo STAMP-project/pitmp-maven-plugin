@@ -1,30 +1,24 @@
 package eu.stamp_project.plugins;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
 // **********************************************************************
 import java.util.List;
 import java.util.Set;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.io.File;
 
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.project.MavenProject;
-// import org.apache.maven.model.Model;
-import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.MojoExecutionException;
-
+import org.apache.maven.project.MavenProject;
+import org.pitest.maven.MojoToReportOptionsConverter;
+import org.pitest.maven.PmpMojo;
+import org.pitest.maven.SurefireConfigConverter;
 import org.pitest.mutationtest.config.ReportOptions;
-import org.pitest.mutationtest.config.PluginServices;
+import org.pitest.mutationtest.tooling.AnalysisResult;
 import org.pitest.mutationtest.tooling.CombinedStatistics;
 import org.pitest.mutationtest.tooling.EntryPoint;
-import org.pitest.mutationtest.tooling.AnalysisResult;
-import org.pitest.maven.MojoToReportOptionsConverter;
-import org.pitest.maven.SurefireConfigConverter;
-import org.pitest.classpath.DirectoryClassPathRoot;
 
-import org.pitest.maven.AbstractPitMojo;
-
-import org.pitest.maven.PmpMojo;
+import eu.stamp_project.PmpContext;
 
 // **********************************************************************
 public class PmpProject
