@@ -1,21 +1,18 @@
-package eu.stamp_project.plugins;
+package eu.stamp_project;
 
-// **********************************************************************
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.io.File;
+import java.util.List;
+import java.util.Set;
 
-import org.apache.maven.project.MavenProject;
 import org.apache.maven.artifact.Artifact;
-
-import org.pitest.maven.AbstractPitMojo;
-import org.pitest.classpath.DirectoryClassPathRoot;
+import org.apache.maven.project.MavenProject;
 import org.pitest.classinfo.ClassName;
-
+import org.pitest.classpath.DirectoryClassPathRoot;
 import org.pitest.maven.PmpMojo;
+
+import eu.stamp_project.plugins.PmpProject;
 
 // **********************************************************************
 public class PmpContext

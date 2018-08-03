@@ -1,10 +1,10 @@
 package eu.stamp_project.plugins;
 
-// **********************************************************************
-import java.io.File;
+import java.util.function.Predicate;
 
 import org.apache.maven.project.MavenProject;
-import java.util.function.Predicate;
+
+import eu.stamp_project.PmpContext;
 
 // **********************************************************************
 public class PmpNonEmptyProjectCheck implements Predicate<MavenProject>
