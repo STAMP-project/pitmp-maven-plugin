@@ -193,7 +193,7 @@ For complete instructions about Descartes see the [Descartes github](https://git
 For an example of multi module project using PitMP see the [dnoo github](https://github.com/STAMP-project/dnoo).
 
 ### Check Pseudo/Partially Tested Methods number
-If you want to check the number of Pseudo Tested Methods and/or Partially Tested Methods are below a specific thresholds add **pseudoTestedThreshold** and **partiallyTesteThresold** in the configuration:
+If you want to check the number of Pseudo Tested Methods and/or Partially Tested Methods are below a specific thresholds add **pseudoTestedThreshold** and **partiallyTestedThreshold** in the configuration:
 ```
   <plugin>
     <groupId>eu.stamp</groupId>
