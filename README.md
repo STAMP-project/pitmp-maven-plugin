@@ -192,6 +192,26 @@ For complete instructions about Descartes see the [Descartes github](https://git
 
 For an example of multi module project using PitMP see the [dnoo github](https://github.com/STAMP-project/dnoo).
 
+### Check Pseudo/Partialy Tested Methods number
+If you want to check the number of Pseudo Tested Methods and/or Partially Tested Methods are below a specific thresholds add **pseudoTestedThreshold** and **partiallyTesteThresold** in the configuration:
+```
+  <plugin>
+    <groupId>eu.stamp</groupId>
+    <artifactId>pitmp-maven-plugin</artifactId>
+    <version>release.you.want</version>
+    <!-- list all the packages of the project that contain classes you want to be mutated    -->
+    <configuration>
+      <pseudoTestedThreshold>1</pseudoTestedThreshold>
+      <partiallyTestedThreshold>1</partiallyTestedThreshold>
+      <targetClasses>
+        <param>a.package.of.classes*</param>
+        <param>another.package.of.classes*</param>
+      </targetClasses>
+      <mutationEngine>descartes</mutationEngine>
+    </configuration>
+  </plugin>
+```
+
 ## Releases
 For PIT release...         | use PitMP release... | how to use PitMP
 -------------------------- | -------------------- | ----------------
