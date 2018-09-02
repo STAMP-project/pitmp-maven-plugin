@@ -105,6 +105,11 @@ public class PmpMojo extends AbstractPitMojo
     }
 
     // **********
+    public boolean isInSkippedModules(MavenProject module)
+    {
+    	return isInSkippedModules(module.getArtifactId());
+    }
+    
     public boolean isInSkippedModules(String name)
     {
         boolean result = false;
@@ -170,7 +175,13 @@ public class PmpMojo extends AbstractPitMojo
         moduleList = PmpContext.getInstance().getDependingModules(getProject());
         for (int i = 0; i < moduleList.size(); i++)
         {
-            classList = PmpContext.getClasses(moduleList.get(i));
+            MavenProject module = moduleList.get(i);
+            
+            if (isInSkippedModules(module)) {
+            	continue;
+            }
+            
+			classList = PmpContext.getClasses(module);
             if (! classList.isEmpty())
             {
                 PmpContext.addNewStrings(targetClasses, classList);
