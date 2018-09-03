@@ -9,7 +9,7 @@ import eu.stamp_project.mutationtest.descartes.reporting.models.MethodRecord;
 public class PseudoPartialyTestingListener implements MutationResultListener {
 	private Integer tested = 0;
 	private Integer notCovered = 0;
-	private Integer psedudoTested = 0;
+	private Integer pseudoTested = 0;
 	private Integer partiallyTested = 0;
 
 	private ListenerArguments args;
@@ -33,7 +33,7 @@ public class PseudoPartialyTestingListener implements MutationResultListener {
 
 	@Override
 	public void runEnd() {
-		throwErrorIfPseudoTestedAboveThreshold(psedudoTested);
+		throwErrorIfPseudoTestedAboveThreshold(pseudoTested);
 		throwErrorIfPartiallyTestedAboveThreshold(partiallyTested);
 	}
 
@@ -46,7 +46,7 @@ public class PseudoPartialyTestingListener implements MutationResultListener {
 	}
 
 	private void throwErrorIfPseudoTestedAboveThreshold(Integer psedudoTested) {
-		if ((MethodThresholds.getInstance().getPartialyTestedThresold() != 0)
+		if ((MethodThresholds.getInstance().getPseudoTestedThresold() != 0)
 				&& (psedudoTested > MethodThresholds.getInstance().getPseudoTestedThresold())) {
 			throw new RuntimeException("Pseudo Tested score of " + psedudoTested + " is above threshold of "
 					+ MethodThresholds.getInstance().getPseudoTestedThresold());
@@ -62,7 +62,7 @@ public class PseudoPartialyTestingListener implements MutationResultListener {
 			notCovered++;
 			break;
 		case PSEUDO_TESTED:
-			psedudoTested++;
+			pseudoTested++;
 			break;
 		case PARTIALLY_TESTED:
 			partiallyTested++;
