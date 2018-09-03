@@ -195,30 +195,6 @@
         </configuration>
       </plugin>
 
-      <!-- Testing : run verify_pitmp.sh after mvn install -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.6.0</version>
-        <executions>
-          <execution>
-            <id>verify-pitmp</id>
-            <phase>install</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <executable>verify_pitmp.sh</executable>
-          <arguments>
-            <argument>-runfrompom</argument>
-          </arguments>
-        </configuration>
-      </plugin>
-      <!-- 
-      -->
-
     <!-- Testing reporting and coverage -->
     <plugin>
       <groupId>org.jacoco</groupId>
@@ -244,6 +220,37 @@
   </build>
 
   <profiles>
+
+    <profile>
+      <id>verify</id>
+
+      <build>
+        <plugins>
+          <!-- Testing : run verify_pitmp.sh after mvn install -->
+          <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.6.0</version>
+          <executions>
+            <execution>
+              <id>verify-pitmp</id>
+              <phase>install</phase>
+              <goals>
+                <goal>exec</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <executable>verify_pitmp.sh</executable>
+            <arguments>
+              <argument>-runfrompom</argument>
+            </arguments>
+          </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
     <profile>
       <id>deploy-release</id>
       <!-- This profile should be used for deploy and release actions
