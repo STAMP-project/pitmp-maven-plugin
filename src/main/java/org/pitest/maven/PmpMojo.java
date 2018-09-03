@@ -188,6 +188,13 @@ public class PmpMojo extends AbstractPitMojo
             }
         }
     }
+    
+    public void updateTargetTests() {
+    	if (targetTests == null || targetTests.isEmpty()) {
+    		targetTests = new ArrayList<>();
+    		targetTests.addAll(PmpContext.getTestClasses(getProject()));
+    	}
+    }
 
     // **********************************************************************
     // protected
@@ -227,6 +234,7 @@ public class PmpMojo extends AbstractPitMojo
         PmpContext.getInstance().setCurrentProject(myPmpProject);
 
         updateTargetClasses();
+        updateTargetTests();
 
         if (getProject().getPackaging().equals("pom") &&
              myPmpProject.hasTestCompileSourceRoots() &&

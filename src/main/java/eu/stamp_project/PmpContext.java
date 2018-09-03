@@ -111,11 +111,20 @@ public class PmpContext
     // **********************************************************************
     public static ArrayList<String> getClasses(MavenProject theProject)
     {
+        return getClassesInternal(theProject.getBuild().getOutputDirectory());
+    }
+
+    public static ArrayList<String> getTestClasses(MavenProject theProject)
+    {
+        return getClassesInternal(theProject.getBuild().getTestOutputDirectory());
+    }
+
+    private static ArrayList<String> getClassesInternal(String buildOutputDirectory)
+    {
         ArrayList<String> classList = new ArrayList<String>();
         ArrayList<String> classFilterList = new ArrayList<String>();
-        String outputDirName = theProject.getBuild().getOutputDirectory();
         String aFilter;
-        File outputDir = new File(outputDirName);
+        File outputDir = new File(buildOutputDirectory);
 
         if (outputDir.exists())
         {
