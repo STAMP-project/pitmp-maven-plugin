@@ -133,7 +133,7 @@ public class PmpContext
             Iterator<String> myIt = classList.iterator();
             while (myIt.hasNext())
             {
-                aFilter = ClassName.fromString(myIt.next()).getPackage().asJavaName() + ".*";
+                aFilter = ClassName.fromString(myIt.next()).asJavaName();
                 if (! classFilterList.contains(aFilter))
                 {
                     classFilterList.add(aFilter);
