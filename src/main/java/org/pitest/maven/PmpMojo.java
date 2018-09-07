@@ -256,6 +256,11 @@ public class PmpMojo extends AbstractPitMojo
             message = projectName + " is a skipped module";
             theDecision.addReason(message);
         }
+        
+        if (targetTests.isEmpty()) {
+            message = projectName + " contains no tests";
+            theDecision.addReason(message);
+        }
 
         if (shouldDisplayOnly())
         {
