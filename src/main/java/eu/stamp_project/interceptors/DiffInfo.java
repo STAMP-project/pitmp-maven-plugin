@@ -1,14 +1,11 @@
 package eu.stamp_project.interceptors;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class DiffInfo {
