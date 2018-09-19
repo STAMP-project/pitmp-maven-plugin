@@ -2,7 +2,9 @@ package org.pitest.maven;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.apache.maven.artifact.Artifact;
@@ -35,6 +37,12 @@ public class PmpMojo extends AbstractPitMojo
 
     @Parameter(property = "skippedModules")
     protected ArrayList<String> skippedModules;
+
+    /** If specified, modules before this module will be skipped. */
+    @Parameter(property = "continueFromModule")
+    protected String continueFromModule;
+
+    private static Set<String> alreadyVisitedModules = new HashSet<>();
 
     // if true: do not execute PIT, only display information about shouldRun or not
     @Parameter(defaultValue = "false", property = "shouldDisplayOnly")
@@ -121,6 +129,25 @@ public class PmpMojo extends AbstractPitMojo
 
         return(result);
     }
+
+    public void setContinueFromModule(String continueFromModule) {
+      this.continueFromModule = continueFromModule;
+    }
+
+    public String getContinueFromModule() {
+      return continueFromModule;
+    }
+
+    public boolean isContinueFromModuleSatisfied(MavenProject module) {
+      if (continueFromModule == null) {
+        // property is not specified
+        return true;
+      }
+
+      // note that the current module has already been added
+      return alreadyVisitedModules.contains(continueFromModule);
+    }
+
 
     // **********************************************************************
     // ******** associations
@@ -223,6 +250,7 @@ public class PmpMojo extends AbstractPitMojo
         RunDecision theDecision;
         PmpProject myPmpProject;
         String projectName = getProject().getArtifactId();
+        alreadyVisitedModules.add(projectName);
         // if no targetModules are specified, take all modules
         boolean isTargetModule = (getTargetModules() == null ||
             getTargetModules().isEmpty() || isInTargetModules(projectName));
@@ -255,6 +283,11 @@ public class PmpMojo extends AbstractPitMojo
         {
             message = projectName + " is a skipped module";
             theDecision.addReason(message);
+        }
+
+        if (!isContinueFromModuleSatisfied(getProject())) {
+          message = projectName + " is before " + continueFromModule + " from which the execution shall be continued";
+          theDecision.addReason(message);
         }
 
         if (shouldDisplayOnly())

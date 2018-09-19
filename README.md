@@ -165,6 +165,11 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
   mvn "-DtargetModules=aModuleToSkip,anotherModuleToSkip" pitmp:run
   ```
 
+* continueFromModule: to run PIT starting from a given project (because continuing an aborted execution with Maven -rf is not working)
+  ```
+          <continueFromModule>aModule</continueFromModule>
+  ```
+
 ## Running Descartes
 
 If you want to run Descartes:
