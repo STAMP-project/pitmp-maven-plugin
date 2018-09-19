@@ -127,14 +127,14 @@
       <version>5.2.0</version>
     </dependency>
 
-    <!-- future used: add JUnit test
+    <!-- future used: add JUnit test-->
     <dependency>
       <groupId>org.apache.maven.plugin-testing</groupId>
       <artifactId>maven-plugin-testing-harness</artifactId>
-      <version>1.1</version>
+      <version>1.2</version>
       <scope>test</scope>
     </dependency>
-    -->
+    
 
     <dependency>
       <groupId>eu.stamp-project</groupId>

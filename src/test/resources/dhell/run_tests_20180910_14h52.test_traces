@@ -1,0 +1,1180 @@
+########################################
+# pom.xml.pitmp.noconf
+########################################
+------------------------------------------------------------
+---- mvn clean install
+------------------------------------------------------------
+Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=2048M; support was removed in 8.0
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hello_app 1.2.2
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:3.0.0:clean (default-clean) @ hello_app ---
+[INFO] Deleting /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target
+[INFO] Deleting /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell (includes = [*.txt, *.traces, *.log], excludes = [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ hello_app ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ hello_app ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 4 source files to /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ hello_app ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ hello_app ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ hello_app ---
+[INFO] Surefire report directory: /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running eu.stamp_project.examples.dhell.HelloAppTest
+dhell.HelloAppTest: @BeforeClass - runOnceAtTheBeginning
+set 10, 2018 2:52:24 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+-
+- Hello World !
+-
+set 10, 2018 2:52:24 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+--------
+-------- Hello World !
+--------
+set 10, 2018 2:52:24 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+----------------------
+---------------------- Hello World !
+----------------------
+set 10, 2018 2:52:24 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:24 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+set 10, 2018 2:52:24 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+set 10, 2018 2:52:24 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+dhell.HelloAppTest: @AfterClass - runOnceAtTheEnd
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.112 sec
+Running eu.stamp_project.examples.dhell.MyStorageTest
+dhell.MyStorageTest: @BeforeClass - runOnceAtTheBeginning
+dhell.MyStorageTest: @AfterClass - runOnceAtTheEnd
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec
+
+Results :
+
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ hello_app ---
+[INFO] Building jar: /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target/hello_app-1.2.2.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ hello_app ---
+[INFO] Installing /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target/hello_app-1.2.2.jar to /home/bertazzo/.m2/repository/eu/stamp-project/examples/hello_app/1.2.2/hello_app-1.2.2.jar
+[INFO] Installing /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/pom.xml to /home/bertazzo/.m2/repository/eu/stamp-project/examples/hello_app/1.2.2/hello_app-1.2.2.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 3.099 s
+[INFO] Finished at: 2018-09-10T14:52:24+02:00
+[INFO] Final Memory: 23M/245M
+[INFO] ------------------------------------------------------------------------
+------------------------------------------------------------
+---- mvn -e pitmp:run
+------------------------------------------------------------
+######## 14:52:24
+Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=2048M; support was removed in 8.0
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hello_app 1.2.2
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- pitmp-maven-plugin:1.3.5-SNAPSHOT:run (default-cli) @ hello_app ---
+[INFO] Found plugin : Default html report plugin
+[INFO] Found plugin : Default csv report plugin
+[INFO] Found plugin : Default xml report plugin
+[INFO] Found plugin : JSON report plugin
+[INFO] Found plugin : Produces a JSON file reporting mutation results aggregated by method and each method classfied according to its mutation status
+[INFO] Found plugin : Generates an HTML document containing classes and methods with found testing issues
+[INFO] Found plugin : Filters the mutations by their location in the source code. The wanted locations are passed via an external file
+[INFO] Found plugin : Static initializer code detector plugin
+[INFO] Found plugin : Static initializer filter plugin
+[INFO] Found plugin : Excluded annotations plugin
+[INFO] Found plugin : Inlined finally block filter plugin
+[INFO] Found plugin : Try with resources filter
+[INFO] Found plugin : Implicit null check filter
+[INFO] Found plugin : For each loop filter
+[INFO] Found plugin : Logging calls filter
+[INFO] Found plugin : Infinite for loop filter
+[INFO] Found plugin : Long running iterator loop filter
+[INFO] Found plugin : For loop counter filter
+[INFO] Found plugin : Kotlin junk mutations filter
+[INFO] Found plugin : Max mutations per class limit
+[INFO] Found plugin : Equals shortcut equivalent mutant filter
+[INFO] Found plugin : Trivial return vals equivalence filter
+[INFO] Found plugin : Mutant export plugin
+[INFO] Found plugin : Removes mutation in methods which are of no interest
+[INFO] Found shared classpath plugin : Default mutation engine
+[INFO] Found shared classpath plugin : Engine for extreme mutation operators
+[INFO] Found shared classpath plugin : JUnit plugin
+[INFO] Found shared classpath plugin : TestNG plugin
+[INFO] Adding org.pitest:pitest to SUT classpath
+[INFO] Adding eu.stamp-project:descartes to SUT classpath
+[INFO] Mutating from /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target/classes
+14.52.27 PIT >> INFO : Verbose logging is disabled. If you encounter an problem please enable it before reporting an issue.
+14.52.27 PIT >> INFO : Sending 6 test classes to minion
+14.52.27 PIT >> INFO : Sent tests to minion
+14.52.28 PIT >> INFO : MINION : 14.52.28 PIT >> INFO : Checking environment
+
+14.52.28 PIT >> INFO : MINION : 14.52.28 PIT >> INFO : Found  2 tests
+
+14.52.28 PIT >> INFO : MINION : 14.52.28 PIT >> INFO : Dependency analysis reduced number of potential tests by 0
+
+14.52.28 PIT >> INFO : MINION : 14.52.28 PIT >> INFO : 2 tests received
+
+14.52.28 PIT >> INFO : MINION : set 10, 2018 2:52:28 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+
+14.52.28 PIT >> INFO : MINION : set 10, 2018 2:52:28 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+
+14.52.28 PIT >> INFO : MINION : set 10, 2018 2:52:28 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+
+14.52.28 PIT >> INFO : MINION : set 10, 2018 2:52:28 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+
+14.52.28 PIT >> INFO : MINION : set 10, 2018 2:52:28 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+
+14.52.28 PIT >> INFO : MINION : set 10, 2018 2:52:28 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+
+14.52.28 PIT >> INFO : MINION : set 10, 2018 2:52:28 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+
+/-14.52.28 PIT >> INFO : Calculated coverage in 0 seconds.
+14.52.28 PIT >> INFO : Created  4 mutation test units
+/stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName stderr  : = foo3.traces
+set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 stderr  : - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPstderr  : rintCount = 1 - MyTracesName = foo1.traces
+set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:29 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+-stderr  : set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName stderr  : = foo3.traces
+set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 stderr  : - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPstderr  : rintCount = 1 - MyTracesName = foo1.traces
+set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:30 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+14.52.33 PIT >> WARNING : Minion exited abnormally due to TIMED_OUT
+stderr  : set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName stderr  : = foo3.traces
+set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 stderr  : - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPstderr  : rintCount = 1 - MyTracesName = foo1.traces
+set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFstderr  : ORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.Hellostderr  : App <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:33 PM eu.stamp_projectstderr  : .examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:33 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+14.52.37 PIT >> WARNING : Minion exited abnormally due to TIMED_OUT
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName stderr  : = foo3.traces
+set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 stderr  : - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPstderr  : rintCount = 1 - MyTracesName = foo1.traces
+set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:37 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+\|14.52.37 PIT >> INFO : Completed in 10 seconds
+================================================================================
+- Mutators
+================================================================================
+> org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator
+>> Generated 9 Killed 4 (44%)
+> KILLED 4 SURVIVED 1 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 4 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.IncrementsMutator
+>> Generated 4 Killed 3 (75%)
+> KILLED 2 SURVIVED 0 TIMED_OUT 1 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 1 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator
+>> Generated 43 Killed 8 (19%)
+> KILLED 8 SURVIVED 8 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 27 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.ReturnValsMutator
+>> Generated 5 Killed 4 (80%)
+> KILLED 4 SURVIVED 0 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 1 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.MathMutator
+>> Generated 6 Killed 0 (0%)
+> KILLED 0 SURVIVED 0 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 6 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.NegateConditionalsMutator
+>> Generated 39 Killed 10 (26%)
+> KILLED 9 SURVIVED 7 TIMED_OUT 1 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 22 
+--------------------------------------------------------------------------------
+================================================================================
+- Timings
+================================================================================
+> scan classpath : < 1 second
+> coverage and dependency analysis : < 1 second
+> build mutation tests : < 1 second
+> run mutation analysis : 9 seconds
+--------------------------------------------------------------------------------
+> Total  : 10 seconds
+--------------------------------------------------------------------------------
+================================================================================
+- Statistics
+================================================================================
+>> Generated 106 mutations Killed 29 (27%)
+>> Ran 211 tests (1.99 tests per mutation)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 11.699 s
+[INFO] Finished at: 2018-09-10T14:52:37+02:00
+[INFO] Final Memory: 13M/244M
+[INFO] ------------------------------------------------------------------------
+######## 14:52:37
+######## pom.xml.pitmp.noconf: OK
+########################################
+########################################
+# pom.xml.pitmp.conf1
+########################################
+------------------------------------------------------------
+---- mvn clean install
+------------------------------------------------------------
+Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=2048M; support was removed in 8.0
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hello_app 1.2.2
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:3.0.0:clean (default-clean) @ hello_app ---
+[INFO] Deleting /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target
+[INFO] Deleting /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell (includes = [*.txt, *.traces, *.log], excludes = [])
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ hello_app ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ hello_app ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 4 source files to /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ hello_app ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ hello_app ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ hello_app ---
+[INFO] Surefire report directory: /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running eu.stamp_project.examples.dhell.HelloAppTest
+dhell.HelloAppTest: @BeforeClass - runOnceAtTheBeginning
+set 10, 2018 2:52:42 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+-
+- Hello World !
+-
+set 10, 2018 2:52:42 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+--------
+-------- Hello World !
+--------
+set 10, 2018 2:52:42 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+----------------------
+---------------------- Hello World !
+----------------------
+set 10, 2018 2:52:42 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:42 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+set 10, 2018 2:52:42 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+set 10, 2018 2:52:42 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+dhell.HelloAppTest: @AfterClass - runOnceAtTheEnd
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.119 sec
+Running eu.stamp_project.examples.dhell.MyStorageTest
+dhell.MyStorageTest: @BeforeClass - runOnceAtTheBeginning
+dhell.MyStorageTest: @AfterClass - runOnceAtTheEnd
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec
+
+Results :
+
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ hello_app ---
+[INFO] Building jar: /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target/hello_app-1.2.2.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ hello_app ---
+[INFO] Installing /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target/hello_app-1.2.2.jar to /home/bertazzo/.m2/repository/eu/stamp-project/examples/hello_app/1.2.2/hello_app-1.2.2.jar
+[INFO] Installing /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/pom.xml to /home/bertazzo/.m2/repository/eu/stamp-project/examples/hello_app/1.2.2/hello_app-1.2.2.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 3.160 s
+[INFO] Finished at: 2018-09-10T14:52:42+02:00
+[INFO] Final Memory: 23M/242M
+[INFO] ------------------------------------------------------------------------
+------------------------------------------------------------
+---- mvn -e pitmp:run
+------------------------------------------------------------
+######## 14:52:42
+Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=2048M; support was removed in 8.0
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hello_app 1.2.2
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- pitmp-maven-plugin:1.3.5-SNAPSHOT:run (default-cli) @ hello_app ---
+[INFO] Found plugin : Default html report plugin
+[INFO] Found plugin : Default csv report plugin
+[INFO] Found plugin : Default xml report plugin
+[INFO] Found plugin : JSON report plugin
+[INFO] Found plugin : Produces a JSON file reporting mutation results aggregated by method and each method classfied according to its mutation status
+[INFO] Found plugin : Generates an HTML document containing classes and methods with found testing issues
+[INFO] Found plugin : Filters the mutations by their location in the source code. The wanted locations are passed via an external file
+[INFO] Found plugin : Static initializer code detector plugin
+[INFO] Found plugin : Static initializer filter plugin
+[INFO] Found plugin : Excluded annotations plugin
+[INFO] Found plugin : Inlined finally block filter plugin
+[INFO] Found plugin : Try with resources filter
+[INFO] Found plugin : Implicit null check filter
+[INFO] Found plugin : For each loop filter
+[INFO] Found plugin : Logging calls filter
+[INFO] Found plugin : Infinite for loop filter
+[INFO] Found plugin : Long running iterator loop filter
+[INFO] Found plugin : For loop counter filter
+[INFO] Found plugin : Kotlin junk mutations filter
+[INFO] Found plugin : Max mutations per class limit
+[INFO] Found plugin : Equals shortcut equivalent mutant filter
+[INFO] Found plugin : Trivial return vals equivalence filter
+[INFO] Found plugin : Mutant export plugin
+[INFO] Found plugin : Removes mutation in methods which are of no interest
+[INFO] Found shared classpath plugin : Default mutation engine
+[INFO] Found shared classpath plugin : Engine for extreme mutation operators
+[INFO] Found shared classpath plugin : JUnit plugin
+[INFO] Found shared classpath plugin : TestNG plugin
+[INFO] Adding org.pitest:pitest to SUT classpath
+[INFO] Adding eu.stamp-project:descartes to SUT classpath
+[INFO] Mutating from /home/bertazzo/Progetti/2018/pitmp/pitmp-maven-plugin/test_dir/dhell/target/classes
+14.52.45 PIT >> INFO : Verbose logging is disabled. If you encounter an problem please enable it before reporting an issue.
+14.52.45 PIT >> INFO : Sending 6 test classes to minion
+14.52.45 PIT >> INFO : Sent tests to minion
+14.52.45 PIT >> INFO : MINION : 14.52.45 PIT >> INFO : Checking environment
+
+14.52.45 PIT >> INFO : MINION : 14.52.45 PIT >> INFO : Found  2 tests
+
+14.52.45 PIT >> INFO : MINION : 14.52.45 PIT >> INFO : Dependency analysis reduced number of potential tests by 0
+
+14.52.45 PIT >> INFO : MINION : 14.52.45 PIT >> INFO : 2 tests received
+
+14.52.45 PIT >> INFO : MINION : set 10, 2018 2:52:45 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+
+14.52.45 PIT >> INFO : MINION : set 10, 2018 2:52:45 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+
+14.52.45 PIT >> INFO : MINION : set 10, 2018 2:52:45 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+
+14.52.45 PIT >> INFO : MINION : set 10, 2018 2:52:45 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+
+14.52.45 PIT >> INFO : MINION : set 10, 2018 2:52:45 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+
+14.52.45 PIT >> INFO : MINION : set 10, 2018 2:52:45 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+
+14.52.45 PIT >> INFO : MINION : set 10, 2018 2:52:45 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+
+/-14.52.45 PIT >> INFO : Calculated coverage in 0 seconds.
+14.52.46 PIT >> INFO : Created  3 mutation test units
+/stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName stderr  : = foo3.traces
+set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 stderr  : - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPstderr  : rintCount = 1 - MyTracesName = foo1.traces
+set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:46 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+-stderr  : set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName stderr  : = foo3.traces
+set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 stderr  : - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPstderr  : rintCount = 1 - MyTracesName = foo1.traces
+set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFstderr  : ORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.Hellostderr  : App <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:47 PM eu.stamp_projectstderr  : .examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+set 10, 2018 2:52:47 PM eu.stampstderr  : _project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018stderr  :  2:52:47 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+14.52.50 PIT >> WARNING : Minion exited abnormally due to TIMED_OUT
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName stderr  : = foo3.traces
+set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 stderr  : - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPstderr  : rintCount = 1 - MyTracesName = foo1.traces
+set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:51 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+14.52.54 PIT >> WARNING : Minion exited abnormally due to TIMED_OUT
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName stderr  : = foo3.traces
+set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 stderr  : - MyTracesName = myHelloApp.traces
+set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPstderr  : rintCount = 1 - MyTracesName = foo1.traces
+set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:54 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo3.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 22 - MyTracesName = hello_run3.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = myHelloApp.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = foo2.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 1 - MyTracesName = foo1.traces
+stderr  : set 10, 2018 2:52:55 PM eu.stamp_project.examples.dhell.HelloApp <init>
+INFORMAZIONI: MyPrintCount = 8 - MyTracesName = myHelloApp.traces
+\14.52.55 PIT >> INFO : Completed in 9 seconds
+================================================================================
+- Mutators
+================================================================================
+> org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator
+>> Generated 9 Killed 4 (44%)
+> KILLED 4 SURVIVED 1 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 4 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.IncrementsMutator
+>> Generated 4 Killed 3 (75%)
+> KILLED 2 SURVIVED 0 TIMED_OUT 1 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 1 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator
+>> Generated 43 Killed 8 (19%)
+> KILLED 8 SURVIVED 8 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 27 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.ReturnValsMutator
+>> Generated 4 Killed 4 (100%)
+> KILLED 4 SURVIVED 0 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 0 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.MathMutator
+>> Generated 6 Killed 0 (0%)
+> KILLED 0 SURVIVED 0 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 6 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.NegateConditionalsMutator
+>> Generated 29 Killed 10 (34%)
+> KILLED 9 SURVIVED 7 TIMED_OUT 1 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 12 
+--------------------------------------------------------------------------------
+================================================================================
+- Timings
+================================================================================
+> scan classpath : < 1 second
+> coverage and dependency analysis : < 1 second
+> build mutation tests : < 1 second
+> run mutation analysis : 8 seconds
+--------------------------------------------------------------------------------
+> Total  : 9 seconds
+--------------------------------------------------------------------------------
+================================================================================
+- Statistics
+================================================================================
+>> Generated 95 mutations Killed 29 (31%)
+>> Ran 211 tests (2.22 tests per mutation)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 11.355 s
+[INFO] Finished at: 2018-09-10T14:52:55+02:00
+[INFO] Final Memory: 14M/301M
+[INFO] ------------------------------------------------------------------------
+######## 14:52:55
+######## pom.xml.pitmp.conf1: OK
+########################################
