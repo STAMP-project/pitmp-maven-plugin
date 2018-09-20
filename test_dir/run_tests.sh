@@ -122,11 +122,20 @@ then
          mvn clean install >> $traceFile 2>&1
       
          echo "------------------------------------------------------------" >> $traceFile 2>&1
-         echo "---- mvn -e pitmp:run" >> $traceFile 2>&1
+         echo "---- mvn -e pitmp:run -DoutputFormats=XML" >> $traceFile 2>&1
          echo "------------------------------------------------------------" >> $traceFile 2>&1
          tracedDate=`date +%T`
          echo "######## $tracedDate" >>$traceFile 2>&1
-         mvn -e pitmp:run >> $traceFile 2>&1
+         mvn -e pitmp:run -DoutputFormats=XML >> $traceFile 2>&1
+         tracedDate=`date +%T`
+         echo "######## $tracedDate" >>$traceFile 2>&1
+      
+         echo "------------------------------------------------------------" >> $traceFile 2>&1
+         echo "---- mvn -e pitmp:descartes -DoutputFormats=XML" >> $traceFile 2>&1
+         echo "------------------------------------------------------------" >> $traceFile 2>&1
+         tracedDate=`date +%T`
+         echo "######## $tracedDate" >>$traceFile 2>&1
+         mvn -e pitmp:descartes -DoutputFormats=XML >> $traceFile 2>&1
          tracedDate=`date +%T`
          echo "######## $tracedDate" >>$traceFile 2>&1
       
@@ -154,7 +163,7 @@ then
    done
 else
    # generate pom file
-   sed -e "s/##PITMP_VERSION##/1.1.5/" $defaultPom > $pomFile
+   sed -e "s/##PITMP_VERSION##/1.1.6/" $defaultPom > $pomFile
    mvn clean
    rm -f run_tests_*.* pom.xml
 fi

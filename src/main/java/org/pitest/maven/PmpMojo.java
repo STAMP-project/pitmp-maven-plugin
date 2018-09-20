@@ -38,7 +38,13 @@ public class PmpMojo extends AbstractPitMojo
     @Parameter(property = "skippedModules")
     protected ArrayList<String> skippedModules;
 
-    /** If specified, modules before this module will be skipped. */
+    @Parameter(property = "targetDependencies")
+    protected ArrayList<String> targetDependencies;
+
+    @Parameter(property = "ignoredDependencies")
+    protected ArrayList<String> ignoredDependencies;
+
+    // If specified, modules before this module will be skipped.
     @Parameter(property = "continueFromModule")
     protected String continueFromModule;
 
@@ -48,18 +54,18 @@ public class PmpMojo extends AbstractPitMojo
     @Parameter(defaultValue = "false", property = "shouldDisplayOnly")
     protected boolean _ShouldDisplayOnly;
 
-	/**
-	 * Pseudo Tested threshold at which to fail build
-	 */
-	@Parameter(defaultValue = "0", property = "pseudoTestedThreshold")
-	private int pseudoTestedThreshold;
+    /**
+     * Pseudo Tested threshold at which to fail build
+     */
+    @Parameter(defaultValue = "0", property = "pseudoTestedThreshold")
+    private int pseudoTestedThreshold;
 
-	/**
-	 * Partially Tested threshold at which to fail build
-	 */
-	@Parameter(defaultValue = "0", property = "partiallyTestedThreshold")
-	private int partiallyTestedThreshold;
-    
+    /**
+     * Partially Tested threshold at which to fail build
+     */
+    @Parameter(defaultValue = "0", property = "partiallyTestedThreshold")
+    private int partiallyTestedThreshold;
+
     // **********************************************************************
     // public
     // **********************************************************************
@@ -115,9 +121,9 @@ public class PmpMojo extends AbstractPitMojo
     // **********
     public boolean isInSkippedModules(MavenProject module)
     {
-    	return isInSkippedModules(module.getArtifactId());
+        return isInSkippedModules(module.getArtifactId());
     }
-    
+
     public boolean isInSkippedModules(String name)
     {
         boolean result = false;
@@ -130,24 +136,90 @@ public class PmpMojo extends AbstractPitMojo
         return(result);
     }
 
-    public void setContinueFromModule(String continueFromModule) {
-      this.continueFromModule = continueFromModule;
+    // **********************************************************************
+    public ArrayList<String> getTargetDependencies()
+    {
+        // cael: debug only
+        // if (targetDependencies == null)
+        // {
+        //     System.out.println("######## !!!!!! targetDependencies == null");
+        // }
+        return(targetDependencies);
     }
 
-    public String getContinueFromModule() {
-      return continueFromModule;
+    // **********
+    public void setTargetDependencies(ArrayList<String> moduleList)
+    {
+        targetDependencies = moduleList;
     }
 
-    public boolean isContinueFromModuleSatisfied(MavenProject module) {
-      if (continueFromModule == null) {
-        // property is not specified
-        return true;
-      }
+    // **********
+    public boolean isInTargetDependencies(String name)
+    {
+        boolean result = false;
 
-      // note that the current module has already been added
-      return alreadyVisitedModules.contains(continueFromModule);
+        for (int i = 0; i < getTargetDependencies().size() && ! result; i++)
+        {
+            result = getTargetDependencies().get(i).equals(name);
+        }
+
+        return(result);
     }
 
+    // **********************************************************************
+    public ArrayList<String> getIgnoredDependencies()
+    {
+        // cael: debug only
+        // if (ignoredDependencies == null)
+        // {
+        //     System.out.println("######## !!!!!! ignoredDependencies == null");
+        // }
+        return(ignoredDependencies);
+    }
+
+    // **********
+    public void setIgnoredDependencies(ArrayList<String> moduleList)
+    {
+        ignoredDependencies = moduleList;
+    }
+
+    // **********
+    public boolean isInIgnoredDependencies(String name)
+    {
+        boolean result = false;
+
+        for (int i = 0; i < getIgnoredDependencies().size() && ! result; i++)
+        {
+            result = getIgnoredDependencies().get(i).equals(name);
+        }
+
+        return(result);
+    }
+
+    // **********************************************************************
+    public void setContinueFromModule(String continueFromModule)
+    {
+        this.continueFromModule = continueFromModule;
+    }
+
+    // **********
+    public String getContinueFromModule()
+    {
+        return continueFromModule;
+    }
+
+    // **********
+    public boolean isContinueFromModuleSatisfied(MavenProject module)
+    {
+        if (continueFromModule == null)
+        {
+            // property is not specified
+            return true;
+        }
+
+        // note that the current module has already been added
+        return alreadyVisitedModules.contains(continueFromModule);
+    }
 
     // **********************************************************************
     // ******** associations
@@ -203,25 +275,28 @@ public class PmpMojo extends AbstractPitMojo
         for (int i = 0; i < moduleList.size(); i++)
         {
             MavenProject module = moduleList.get(i);
-            
-            if (isInSkippedModules(module)) {
-            	continue;
-            }
-            
-			classList = PmpContext.getClasses(module);
-            if (! classList.isEmpty())
+
+            if ((getTargetDependencies().size() == 0 ||
+                 isInTargetDependencies(module.getArtifactId())) &&
+                ! isInIgnoredDependencies(module.getArtifactId()))
             {
-                PmpContext.addNewStrings(targetClasses, classList);
+                classList = PmpContext.getClasses(module);
+                if (! classList.isEmpty())
+                {
+                    PmpContext.addNewStrings(targetClasses, classList);
+                }
             }
         }
     }
-    
-    public void updateTargetTests() {
-    	if (targetTests == null || targetTests.isEmpty()) {
-    		targetTests = new ArrayList<>();
-    		targetTests.addAll(PmpContext.getTestClasses(getProject()));
-    	}
-    }
+
+    // public void updateTargetTests()
+    // {
+    //     if (targetTests == null || targetTests.isEmpty())
+    //     {
+    //         targetTests = new ArrayList<>();
+    //         targetTests.addAll(PmpContext.getTestClasses(getProject()));
+    //     }
+    // }
 
     // **********************************************************************
     // protected
@@ -244,8 +319,8 @@ public class PmpMojo extends AbstractPitMojo
     @Override
     protected RunDecision shouldRun()
     {
-    	MethodThresholds.getInstance().setPartialyTestedThresold(partiallyTestedThreshold);
-    	MethodThresholds.getInstance().setPseudoTestedThresold(pseudoTestedThreshold);
+        MethodThresholds.getInstance().setPartialyTestedThresold(partiallyTestedThreshold);
+        MethodThresholds.getInstance().setPseudoTestedThresold(pseudoTestedThreshold);
 
         RunDecision theDecision;
         PmpProject myPmpProject;
@@ -262,7 +337,7 @@ public class PmpMojo extends AbstractPitMojo
         PmpContext.getInstance().setCurrentProject(myPmpProject);
 
         updateTargetClasses();
-        updateTargetTests();
+        // updateTargetTests();
 
         if (getProject().getPackaging().equals("pom") &&
              myPmpProject.hasTestCompileSourceRoots() &&
@@ -285,9 +360,11 @@ public class PmpMojo extends AbstractPitMojo
             theDecision.addReason(message);
         }
 
-        if (!isContinueFromModuleSatisfied(getProject())) {
-          message = projectName + " is before " + continueFromModule + " from which the execution shall be continued";
-          theDecision.addReason(message);
+        if (! isContinueFromModuleSatisfied(getProject()))
+        {
+            message = projectName + " is before " + continueFromModule +
+                " from which the execution shall be continued";
+            theDecision.addReason(message);
         }
 
         if (shouldDisplayOnly())

@@ -139,7 +139,9 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
 
 ### PitMP properties
 
-* targetModules: to run PIT only on specified modules    
+* targetModules: to run PIT only on specified modules, this
+  attribute filters directories where to run PIT, not classes
+  to be mutated
   You can use the property "targetModules" in the pom.xml:
   ```
           <targetModules>
@@ -152,7 +154,10 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
   mvn "-DtargetModules=yourFirstModule,anotherModule" pitmp:run
   ```
   Running PitMP from a module directory will NOT work.
-* skippedModules: to run PIT only on specified modules    
+
+* skippedModules: to skip specified modules when running PIT, this
+  attribute filters directories where to run PIT, not classes
+  to be mutated
   You can use the property "skippedModules" in the pom.xml:
   ```
           <skippedModules>
@@ -164,6 +169,14 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
   ```
   mvn "-DtargetModules=aModuleToSkip,anotherModuleToSkip" pitmp:run
   ```
+
+* targetDependencies: take only into account classes of targetDependencies, i.e.
+  only code in targetDependencies will be mutated; it impacts PIT's targetClasses
+  Note that only targetDependencies shall contains only modules of the project
+
+* ignoredDependencies: ignore classes of ignoredDependencies, i.e.
+  code in targetDependencies will not be mutated; it impacts PIT's targetClasses
+  If a module is both in targetDependencies and ignoredDependencies, it will be ignored.
 
 * continueFromModule: to run PIT starting from a given project (because continuing an aborted execution with Maven -rf is not working)
   ```
@@ -220,7 +233,7 @@ If you want to check the number of Pseudo Tested Methods and/or Partially Tested
 ## Releases
 For PIT release...         | use PitMP release... | how to use PitMP
 -------------------------- | -------------------- | ----------------
-1.4.2                     | 1.3.5 | Maven Central
+1.4.2                      | 1.3.5                | Maven Central
 1.4.0                      | 1.3.4, 1.3.3, 1.3.2, 1.3.1, 1.3.0, 1.2.0 | Maven Central
 1.3.2                      | 1.1.6, 1.1.5         | Maven Central
 1.3.1                      | 1.1.4                | Maven Central
@@ -228,8 +241,12 @@ For PIT release...         | use PitMP release... | how to use PitMP
 1.2.0, 1.2.3               | 1.0.1                | git clone & mvn install
 
 * pitmp-maven-plugin-1.3.5
-  - Dependency on Descartes v1.2.4 (hotfix for a regression in 1.3.3)
+  - Dependency on Descartes v1.2.4
   - Tested with PIT v1.4.2, Descartes v1.2.4, JUnit4 and JUnit5
+  - Adding properties targetDependencies, ignoredDependencies and continueFromModule
+  - Adding a module with no test in automated test suite
+  - Running automated tests with XML report option and adding reference files
+    (missing automated results checking)
 
 * pitmp-maven-plugin-1.3.4
   - Dependency on Descartes v1.2.4 (hotfix for a regression in 1.3.3)

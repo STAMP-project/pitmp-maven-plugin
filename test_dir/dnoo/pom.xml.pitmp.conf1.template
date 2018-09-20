@@ -4,10 +4,10 @@
      xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>eu.stamp-project</groupId>
+  <groupId>eu.stamp-project.examples</groupId>
   <artifactId>dnoo</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.1</version>
+  <version>1.1.0</version>
 
   <modules>
      <module>dnooHello</module>
@@ -15,6 +15,7 @@
      <module>dnooLogs</module>
      <module>dnooMain</module>
      <module>dnooStorage</module>
+     <module>dnooNoTest</module>
   </modules>
 
   <properties>
@@ -44,16 +45,6 @@
           <targetClasses>
             <param>eu.stamp_project.examples.dnoo*</param>
           </targetClasses>
-          <!-- property test
-          <targetModules>
-            <param>dnooIntegration</param>
-            <param>dnooMain</param>
-          </targetModules>
-          <skippedModules>
-            <param>dnooLogs</param>
-            <param>dnooStorage</param>
-          </skippedModules>
-          -->
           <!--
           -->
           <excludedClasses>

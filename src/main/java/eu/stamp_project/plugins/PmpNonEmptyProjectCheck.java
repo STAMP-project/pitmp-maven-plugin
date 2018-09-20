@@ -18,9 +18,6 @@ public class PmpNonEmptyProjectCheck implements Predicate<MavenProject>
         PmpProject theProject = PmpContext.getInstance().getCurrentProject();
         // assert(theProject != null)
 
-        boolean hasTests = theProject.hasTestCompileSourceRoots().booleanValue();
-        boolean hasClasses = theProject.hasCompileSourceRoots().booleanValue();
-
-        return(hasTests || hasClasses);
+        return theProject.hasTestCompileSourceRoots().booleanValue();
     }
 }
