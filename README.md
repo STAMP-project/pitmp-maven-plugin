@@ -248,6 +248,15 @@ For PIT release...         | use PitMP release... | how to use PitMP
   - Adding a module with no test in automated test suite
   - Running automated tests with XML report option and adding reference files
     (missing automated results checking)
+  - Fixed issues:
+    - [#16](https://github.com/STAMP-project/pitmp-maven-plugin/issues/16)
+    - [#17](https://github.com/STAMP-project/pitmp-maven-plugin/issues/17)
+    - [#19](https://github.com/STAMP-project/pitmp-maven-plugin/issues/19)
+    - [#20](https://github.com/STAMP-project/pitmp-maven-plugin/issues/20)
+    - [#21](https://github.com/STAMP-project/pitmp-maven-plugin/issues/21)
+    - [#22](https://github.com/STAMP-project/pitmp-maven-plugin/issues/22)
+    - [#27](https://github.com/STAMP-project/pitmp-maven-plugin/issues/27)
+    - [#27](https://github.com/STAMP-project/pitmp-maven-plugin/issues/31)
   - Tested on Ubuntu 18.04.1 LTS
 
 * pitmp-maven-plugin-1.3.4
@@ -263,6 +272,8 @@ For PIT release...         | use PitMP release... | how to use PitMP
 * pitmp-maven-plugin-1.3.2
   - Dependency on Descartes v1.2.2
   - Tested with PIT v1.4.0, Descartes v1.2.2, JUnit4 and JUnit5
+  - Fixed issues:
+    - [#13](https://github.com/STAMP-project/pitmp-maven-plugin/issues/13)
   - Tested on Ubuntu 16.04.4 LTS
 
 * pitmp-maven-plugin-1.3.1
@@ -290,6 +301,7 @@ For PIT release...         | use PitMP release... | how to use PitMP
   - Tested with PIT v1.3.2
   - Fixed issues:
     - [#6](https://github.com/STAMP-project/pitmp-maven-plugin/issues/6)
+    - [#7](https://github.com/STAMP-project/pitmp-maven-plugin/issues/7)
     - [#9](https://github.com/STAMP-project/pitmp-maven-plugin/issues/9)
       (Duplicate [#6](https://github.com/STAMP-project/pitmp-maven-plugin/issues/6))
   - Add automatic tests (verify_pitmp.sh)
