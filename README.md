@@ -141,7 +141,7 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
 
 * targetModules: to run PIT only on specified modules, this
   attribute filters directories where to run PIT, not classes
-  to be mutated
+  to be mutated  
   You can use the property "targetModules" in the pom.xml:
   ```
           <targetModules>
@@ -157,7 +157,7 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
 
 * skippedModules: to skip specified modules when running PIT, this
   attribute filters directories where to run PIT, not classes
-  to be mutated
+  to be mutated  
   You can use the property "skippedModules" in the pom.xml:
   ```
           <skippedModules>
@@ -171,7 +171,7 @@ You can configure your project in the root pom.xml, in the section \<plugins\>:
   ```
 
 * targetDependencies: take only into account classes of targetDependencies, i.e.
-  only code in targetDependencies will be mutated; it impacts PIT's targetClasses
+  only code in targetDependencies will be mutated; it impacts PIT's targetClasses  
   Note that only targetDependencies shall contains only modules of the project
 
 * ignoredDependencies: ignore classes of ignoredDependencies, i.e.
@@ -240,9 +240,9 @@ For PIT release...         | use PitMP release... | how to use PitMP
 1.2.1, 1.2.2, 1.2.4, 1.2.5, 1.3.0  | not tested   |
 1.2.0, 1.2.3               | 1.0.1                | git clone & mvn install
 
-* pitmp-maven-plugin-1.3.5
-  - Dependency on Descartes v1.2.4
-  - Tested with PIT v1.4.2, Descartes v1.2.4, JUnit4 and JUnit5
+* pitmp-maven-plugin-1.3.5 (TBC)
+  - Dependency on Descartes v1.?
+  - Tested with PIT v1.4.2, Descartes v1.?, JUnit4 and JUnit5
   - Adding properties targetDependencies, ignoredDependencies and continueFromModule
   - Adding a module with no test in automated test suite
   - Running automated tests with XML report option and adding reference files
