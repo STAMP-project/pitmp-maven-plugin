@@ -12,22 +12,12 @@ public class PmpMojoTest extends AbstractMojoTestCase {
 		super.setUp();
 	}
 
-	/**
-	 * @throws Exception
-	 */
-	public void testMojoGoal() throws Exception {
+	public void testMojoParameters() throws Exception {
 		File testPom = new File(getBasedir(), "/src/test/resources/dhell/pom.xml");
 		PmpMojo mojo = (PmpMojo) lookupMojo("run", testPom);
 		assertNotNull(mojo);
-//		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-//		PrintStream testConsole = new PrintStream(outStream);
-//		PrintStream trueConsole = System.out;
-//
-//		System.setOut(testConsole);
-//		mojo.execute();
-//		System.setOut(trueConsole);
-//		
-//		 outStream.toString().trim().toLowerCase();
-		
+		assertNotNull(mojo.getTargetClasses());
+		assertEquals(1, mojo.getTargetClasses().size());
+
 	}
 }
