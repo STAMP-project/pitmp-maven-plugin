@@ -248,35 +248,43 @@ For PIT release...         | use PitMP release... | how to use PitMP
   - Adding a module with no test in automated test suite
   - Running automated tests with XML report option and adding reference files
     (missing automated results checking)
+  - Tested on Ubuntu 18.04.1 LTS
 
 * pitmp-maven-plugin-1.3.4
   - Dependency on Descartes v1.2.4 (hotfix for a regression in 1.3.3)
   - Tested with PIT v1.4.0, Descartes v1.2.4, JUnit4 and JUnit5
+  - Tested on Ubuntu 16.04.4 LTS
 
 * pitmp-maven-plugin-1.3.3
   - Dependency on Descartes v1.2.3
   - Tested with PIT v1.4.0, Descartes v1.2.3, JUnit4 and JUnit5
+  - Tested on Ubuntu 16.04.4 LTS
 
 * pitmp-maven-plugin-1.3.2
   - Dependency on Descartes v1.2.2
   - Tested with PIT v1.4.0, Descartes v1.2.2, JUnit4 and JUnit5
+  - Tested on Ubuntu 16.04.4 LTS
 
 * pitmp-maven-plugin-1.3.1
   - Dependency on Descartes v1.2.1
   - Tested with PIT v1.4.0 and Descartes v1.2.1
+  - Tested on Ubuntu 16.04.4 LTS
 
 * pitmp-maven-plugin-1.3.0
   - Adding a goal 'descartes'
   - Dependency on Descartes v1.2
   - Tested with PIT v1.4.0 and Descartes v1.2
+  - Tested on Ubuntu 16.04.4 LTS
 
 * pitmp-maven-plugin-1.2.0
   - Tested with PIT v1.4.0 and Descartes v1.2
+  - Tested on Ubuntu 16.04.4 LTS
 
 * pitmp-maven-plugin-1.1.6
   - Tested with PIT v1.3.2
   - Fixed issues:
     - [#10](https://github.com/STAMP-project/pitmp-maven-plugin/issues/10)
+  - Tested on Ubuntu 16.04.4 LTS
 
 * pitmp-maven-plugin-1.1.5
   - Tested with PIT v1.3.2
@@ -286,21 +294,16 @@ For PIT release...         | use PitMP release... | how to use PitMP
       (Duplicate [#6](https://github.com/STAMP-project/pitmp-maven-plugin/issues/6))
   - Add automatic tests (verify_pitmp.sh)
   - Limitation: [#10](https://github.com/STAMP-project/pitmp-maven-plugin/issues/10)
+  - Tested on Ubuntu 16.04.4 LTS
 
 * v1.1.0, pitmp-maven-plugin-1.1.4
   - Tested with PIT v1.3.1
+  - Tested on Ubuntu 16.04.4 LTS
 
 * v1.0.1
   - Tested with PIT v1.2.0 and Descartes v0.2-SNAPSHOT
   - Tested with PIT v1.2.3
+  - Tested on Ubuntu 16.04.4 LTS
 
-## Tested on
-
-* Ubuntu 16.04.4 LTS
-
-* [dhell project on github](https://github.com/STAMP-project/dhell)
-* [dnoo project on github](https://github.com/STAMP-project/dnoo)
-* [xwiki-commons project on github](https://github.com/xwiki/xwiki-commons)
-* [xwiki-rendering project on github](https://github.com/xwiki/xwiki-rendering)
 
 Feedbacks are welcome ! :-)
