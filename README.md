@@ -240,7 +240,7 @@ Methods, you can add specific thresholds **pseudoTestedThreshold** and/or **part
 ## Releases
 For PIT release...         | use PitMP release... | how to use PitMP
 -------------------------- | -------------------- | ----------------
-1.4.2                      | 1.3.5                | Maven Central
+1.4.2                      | 1.3.5, 1.3.6         | Maven Central
 1.4.0                      | 1.3.4, 1.3.3, 1.3.2, 1.3.1, 1.3.0, 1.2.0 | Maven Central
 1.3.2                      | 1.1.6, 1.1.5         | Maven Central
 1.3.1                      | 1.1.4                | Maven Central
