@@ -49,7 +49,13 @@
         </configuration>
       </plugin>
   ```
+#### Note ####
+```
+PitMP works only from the top level directory of your project.  
+"cd <my_directory> ; mvn eu.stamp-project:pitmp-maven-plugin:run" will NOT work.
 
+c.f. properties targetModules and skippedModules to specify in which directories you want to run PitMP.
+```
 
 ## What is PitMP?
 PitMP (PIT for Multi-module Project) is a Maven plugin able to run PIT on multi-module projects.
@@ -241,9 +247,9 @@ For PIT release...         | use PitMP release... | how to use PitMP
 1.2.1, 1.2.2, 1.2.4, 1.2.5, 1.3.0  | not tested   |
 1.2.0, 1.2.3               | 1.0.1                | git clone & mvn install
 
-* pitmp-maven-plugin-1.3.5 (TBC)
-  - Dependency on Descartes v1.?
-  - Tested with PIT v1.4.2, Descartes v1.?, JUnit4 and JUnit5
+* pitmp-maven-plugin-1.3.5
+  - Dependency on Descartes v1.3.4
+  - Tested with PIT v1.4.2, Descartes v1.3.4, JUnit4 and JUnit5
   - Adding properties targetDependencies, ignoredDependencies and continueFromModule
   - Adding a module with no test in automated test suite
   - Running automated tests with XML report option and adding reference files

@@ -168,8 +168,11 @@ public class PmpContext
     // **********************************************************************
     public List<MavenProject> getProjectModules(PmpMojo mojo)
     {
-        // <cael>: getCollectedProjects() is filled in only once at the first call
-        // <cael>  of the Mojo
+        // <cael>: getCollectedProjects() returns the modules of the project
+        // <cael>  only when called from the root directory, i.e. the directory
+        // <cael>  that contains the main pom.xml
+        // <cael>  So PitMP can be called only from the root directory otherwise
+        // <cael>  it will not work
 
         List<MavenProject> moduleList = mojo.getProject().getCollectedProjects();
 
