@@ -271,7 +271,7 @@ For PIT release...         | use PitMP release... | how to use PitMP
     [#21](https://github.com/STAMP-project/pitmp-maven-plugin/issues/21),
     [#22](https://github.com/STAMP-project/pitmp-maven-plugin/issues/22),
     [#27](https://github.com/STAMP-project/pitmp-maven-plugin/issues/27),
-    [#27](https://github.com/STAMP-project/pitmp-maven-plugin/issues/31)
+    [#31](https://github.com/STAMP-project/pitmp-maven-plugin/issues/31)
   - Tested on Ubuntu 18.04.1 LTS
 
 * pitmp-maven-plugin-1.3.4
