@@ -247,6 +247,15 @@ For PIT release...         | use PitMP release... | how to use PitMP
 1.2.1, 1.2.2, 1.2.4, 1.2.5, 1.3.0  | not tested   |
 1.2.0, 1.2.3               | 1.0.1                | git clone & mvn install
 
+* pitmp-maven-plugin-1.3.6
+  - Dependency on Descartes v1.3.4
+  - Tested with PIT v1.4.2, Descartes v1.3.4, JUnit4 and JUnit5
+  - Fixed issues:
+    [#19](https://github.com/STAMP-project/pitmp-maven-plugin/issues/19),
+  - Updating reference files for automated tests
+    (missing automated results checking)
+  - Tested on Ubuntu 18.04.1 LTS
+
 * pitmp-maven-plugin-1.3.5
   - Dependency on Descartes v1.3.4
   - Tested with PIT v1.4.2, Descartes v1.3.4, JUnit4 and JUnit5

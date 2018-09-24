@@ -1,6 +1,6 @@
 package eu.stamp_project.examples.dnoo.dnooHello;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
@@ -36,6 +36,7 @@ public class HelloAppTest
       assertEquals(1, myApp.getMyPrintCount());
       assertEquals("myHelloApp.traces", myApp.getMyTracesName());
       assertEquals(0, myApp.cardMyTraces());
+      assertTrue(myApp.returnSomething() > 0);
 
       theFile = new File(myApp.getMyTracesName());
       assertEquals(false, theFile.exists());

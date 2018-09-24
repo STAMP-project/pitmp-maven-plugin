@@ -118,6 +118,14 @@ public class HelloApp
       MyLogger.getLogger().exiting(getClass().getName(), methodName);
    }
 
+    // **********************************************************************
+    public Integer returnSomething()
+    {
+        Integer myInt = 1;
+        String myName = "MyName" + myInt.toString();
+        return myName.length();
+    }
+
    // **********************************************************************
    public void computeMyUselessResult()
    {
