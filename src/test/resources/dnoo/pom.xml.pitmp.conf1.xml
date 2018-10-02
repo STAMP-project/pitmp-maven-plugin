@@ -21,24 +21,16 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <default.encoding>UTF-8</default.encoding>
+    <pitest-maven-version>1.4.2</pitest-maven-version>
+    <pitmp-maven-plugin-version>1.3.5-SNAPSHOT</pitmp-maven-plugin-version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.junit.platform</groupId>
-        <artifactId>junit-platform-launcher</artifactId>
-        <version>1.2.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-engine</artifactId>
-        <version>5.2.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.vintage</groupId>
-        <artifactId>junit-vintage-engine</artifactId>
-        <version>5.2.0</version>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -48,12 +40,31 @@
       <plugin>
         <groupId>eu.stamp-project</groupId>
         <artifactId>pitmp-maven-plugin</artifactId>
-        <version>##PITMP_VERSION##</version>
+        <version>${pitmp-maven-plugin-version}</version>
+        <!-- list all the packages of the project that contain classes you want to be mutated
+        -->
+        <configuration>
+          <targetClasses>
+            <param>eu.stamp_project.examples.dnoo*</param>
+          </targetClasses>
+          <!--
+          -->
+          <excludedClasses>
+            <param>eu.stamp_project.examples.dnoo.dnooLogs.MyUselessClass</param>
+          </excludedClasses>
+          <excludedMethods>
+            <param>eu.stamp_project.examples.dnoo.dnooLogs.MyLogger.stringToLevel</param>
+            <param>eu.stamp_project.examples.dnoo.dnooStorage.MyStorage.deleteFile</param>
+            <param>eu.stamp_project.examples.dnoo.dnooHello.HelloApp.myPrint</param>
+            <param>eu.stamp_project.examples.dnoo.dnooHello.HelloApp.cardMyTraces</param>
+            <param>eu.stamp_project.examples.dnoo.dnooHello.HelloApp.getMyTraces</param>
+          </excludedMethods>
+        </configuration>
         <dependencies>
           <dependency>
             <groupId>org.pitest</groupId>
             <artifactId>pitest-maven</artifactId>
-            <version>##PITEST_VERSION##</version>
+            <version>${pitest-maven-version}</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -75,24 +86,6 @@
             </fileset>
           </filesets>
         </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.21.0</version>
-        <dependencies>
-          <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-surefire-provider</artifactId>
-            <version>1.2.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.2.0</version>
-          </dependency>
-        </dependencies>
       </plugin>
     </plugins>
   </build>

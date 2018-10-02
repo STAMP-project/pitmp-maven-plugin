@@ -38,31 +38,12 @@
       <plugin>
         <groupId>eu.stamp-project</groupId>
         <artifactId>pitmp-maven-plugin</artifactId>
-        <version>##PITMP_VERSION##</version>
-        <!-- list all the packages of the project that contain classes you want to be mutated
-        -->
-        <configuration>
-          <targetClasses>
-            <param>eu.stamp_project.examples.dnoo*</param>
-          </targetClasses>
-          <!--
-          -->
-          <excludedClasses>
-            <param>eu.stamp_project.examples.dnoo.dnooLogs.MyUselessClass</param>
-          </excludedClasses>
-          <excludedMethods>
-            <param>eu.stamp_project.examples.dnoo.dnooLogs.MyLogger.stringToLevel</param>
-            <param>eu.stamp_project.examples.dnoo.dnooStorage.MyStorage.deleteFile</param>
-            <param>eu.stamp_project.examples.dnoo.dnooHello.HelloApp.myPrint</param>
-            <param>eu.stamp_project.examples.dnoo.dnooHello.HelloApp.cardMyTraces</param>
-            <param>eu.stamp_project.examples.dnoo.dnooHello.HelloApp.getMyTraces</param>
-          </excludedMethods>
-        </configuration>
+        <version>${pitmp-maven-plugin-version}</version>
         <dependencies>
           <dependency>
             <groupId>org.pitest</groupId>
             <artifactId>pitest-maven</artifactId>
-            <version>##PITEST_VERSION##</version>
+            <version>${pitest-maven-version}</version>
           </dependency>
         </dependencies>
       </plugin>
