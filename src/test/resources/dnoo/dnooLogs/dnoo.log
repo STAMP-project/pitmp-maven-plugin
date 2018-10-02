@@ -1,0 +1,4 @@
+Sep 28, 2018 5:16:16 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel1
+INFO: testMyLoggerSetLevel1: FINE
+Sep 28, 2018 5:16:16 PM eu.stamp_project.examples.dnoo.dnooLogs.MyLoggerTest testMyLoggerSetLevel2
+INFO: testMyLoggerSetLevel2: ALL

@@ -129,9 +129,13 @@
 			<version>5.2.0</version>
 		</dependency>
 
-		<!-- future used: add JUnit test <dependency> <groupId>org.apache.maven.plugin-testing</groupId> 
-			<artifactId>maven-plugin-testing-harness</artifactId> <version>1.1</version> 
-			<scope>test</scope> </dependency> -->
+		<!-- future used: add JUnit test -->
+		<dependency>
+			<groupId>org.apache.maven.plugin-testing</groupId>
+			<artifactId>maven-plugin-testing-harness</artifactId>
+			<version>1.2</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>eu.stamp-project</groupId>
@@ -141,16 +145,13 @@
 
 		<dependency>
 			<groupId>org.apache.maven.shared</groupId>
-			<artifactId>maven-plugin-testing-harness</artifactId>
-			<version>1.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven.shared</groupId>
 			<artifactId>maven-verifier</artifactId>
 			<version>1.6</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-simple</artifactId> 
+			<version>1.7.25</version> <scope>test</scope> </dependency> -->
 
 	</dependencies>
 
@@ -169,6 +170,18 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.0</version>
+				<configuration>
+					<excludes>
+						<exclude>dnoo/**/*</exclude>
+						<exclude>dnoo5/**/*</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 
@@ -226,18 +239,6 @@
 				<version>4.3.0</version>
 			</plugin>
 
-			<plugin>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
 		</plugins>
 	</build>
 
@@ -248,26 +249,18 @@
 
 			<build>
 				<plugins>
-					<!-- Testing : run verify_pitmp.sh after mvn install -->
 					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>exec-maven-plugin</artifactId>
-						<version>1.6.0</version>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>2.22.0</version>
 						<executions>
 							<execution>
-								<id>verify-pitmp</id>
 								<phase>install</phase>
 								<goals>
-									<goal>exec</goal>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
 								</goals>
 							</execution>
 						</executions>
-						<configuration>
-							<executable>verify_pitmp.sh</executable>
-							<arguments>
-								<argument>-runfrompom</argument>
-							</arguments>
-						</configuration>
 					</plugin>
 				</plugins>
 			</build>
