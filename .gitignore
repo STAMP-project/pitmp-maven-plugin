@@ -2,3 +2,7 @@
 **/.project
 **/target/
 **/org.eclipse.jdt.core.prefs
+.idea/
+.settings/
+*.iml
+test_dir/
