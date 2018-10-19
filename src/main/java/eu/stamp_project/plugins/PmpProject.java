@@ -1,11 +1,8 @@
 package eu.stamp_project.plugins;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 // **********************************************************************
-import java.util.List;
-import java.util.Set;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -227,9 +224,15 @@ public class PmpProject
             outputFormats = new ArrayList<String>();
             outputFormats.add("METHODS");
             getPitOptions().addOutputFormats(outputFormats);
+
+        }
+        else {
             features = new ArrayList<String>(getPitOptions().getFeatures());
-            features.add("-STOP_METHODS()");
-            getPitOptions().setFeatures(features);
+            Optional<String> result = features.stream().filter(str -> str.startsWith("+STOP_METHODS")).findAny();
+            if(!result.isPresent()) {
+                features.add("-STOP_METHODS()");
+                getPitOptions().setFeatures(features);
+            }
         }
 
         // merge test and class source directories
