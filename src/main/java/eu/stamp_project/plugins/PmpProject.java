@@ -229,7 +229,7 @@ public class PmpProject
             getPitOptions().addOutputFormats(outputFormats);
             features = new ArrayList<String>(getPitOptions().getFeatures());
             features.add("-STOP_METHODS()");
-            getPitOptions().setFeatures(outputFormats);
+            getPitOptions().setFeatures(features);
         }
 
         // merge test and class source directories
