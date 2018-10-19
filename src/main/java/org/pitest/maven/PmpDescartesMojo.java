@@ -31,25 +31,7 @@ public class PmpDescartesMojo extends PmpMojo {
     // ******** methods
     @Override public void updateTargetClasses()
     {
+        PmpContext.getInstance().getCurrentProject().setRunningDescartes(true);
         super.updateTargetClasses();
-        System.out.println("MUTATION ENGINE >>> " +
-            PmpContext.getInstance().getCurrentProject().getPmpMutationEngine());
-        PmpContext.getInstance().getCurrentProject().
-            setPmpMutationEngine("descartes");
-        ReportOptions reportOptions =
-            PmpContext.getInstance().getCurrentProject().getPitOptions();
-        Collection<String> outputFormats = null;
-
-        if (reportOptions != null)
-        {
-            outputFormats = reportOptions.getOutputFormats();
-        } else
-        {
-            reportOptions = new ReportOptions();
-            outputFormats = new ArrayList<String>();
-        }
-        outputFormats.add("METHODS");
-        reportOptions.addOutputFormats(outputFormats);
-        PmpContext.getInstance().getCurrentProject().setPitOptions(reportOptions);
     }
 }

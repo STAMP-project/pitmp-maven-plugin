@@ -41,6 +41,15 @@ public class PmpProject
         _PmpMutationEngine = value;
     }
 
+    public Boolean getRunningDescartes()
+    {
+        return(_RunningDescartes);
+    }
+    public void setRunningDescartes(Boolean value)
+    {
+        _RunningDescartes = value;
+    }
+
     // **********************************************************************
     // ******** associations
     public PmpMojo getTheMojo()
@@ -163,6 +172,7 @@ public class PmpProject
         _TheMojo = mojo;
         // initialize the mutationEngine with the one from PIT
         _PmpMutationEngine = mojo.getMutationEngine();
+        _RunningDescartes = false;
     }
 
     // **********************************************************************
@@ -205,6 +215,22 @@ public class PmpProject
         ArrayList<String> dependsCodePaths = null;
         ArrayList<String> classPathElts = null;
         ArrayList<String> dependsClassPathElts = null;
+        ArrayList<String> outputFormats = null;
+        ArrayList<String> features = null;
+
+        // Descartes behavior
+        if (getRunningDescartes())
+        {
+            setPmpMutationEngine("descartes");
+            System.out.println("MUTATION ENGINE >>> " +
+                getPmpMutationEngine());
+            outputFormats = new ArrayList<String>();
+            outputFormats.add("METHODS");
+            getPitOptions().addOutputFormats(outputFormats);
+            features = new ArrayList<String>(getPitOptions().getFeatures());
+            features.add("-STOP_METHODS()");
+            getPitOptions().setFeatures(outputFormats);
+        }
 
         // merge test and class source directories
         // <cael>: to do: check if the order impacts the execution
@@ -344,6 +370,8 @@ public class PmpProject
         System.out.println("####");
         System.out.println("#### BaseDir: " + getTheMojo().getBaseDir());
         System.out.println("#### mutationEngine: " + data.getMutationEngine());
+        System.out.println("#### outputFormats: " + data.getOutputFormats());
+        System.out.println("#### features: " + data.getFeatures());
         System.out.println("#### targetTests: " + data.getTargetTests());
         System.out.println("#### excludedClasses: " + data.getExcludedClasses());
         System.out.println("#### excludedMethods: " + data.getExcludedMethods());
@@ -364,4 +392,5 @@ public class PmpProject
     protected ReportOptions _PitOptions = null;
     protected CombinedStatistics _Results = null;
     protected String _PmpMutationEngine = null;
+    protected Boolean _RunningDescartes = false;
 }
