@@ -20,6 +20,11 @@ import eu.stamp_project.PmpContext;
 // **********************************************************************
 public class PmpProject
 {
+
+    private final static String ISSUES = "ISSUES";
+
+    private final static String METHODS = "METHODS";
+
     // **********************************************************************
     // public
     // **********************************************************************
@@ -218,15 +223,14 @@ public class PmpProject
         // Descartes behavior
         if (getRunningDescartes())
         {
+            // If runnning descartes and no output format is configured, then set ISSUES and METHODS as default
             setPmpMutationEngine("descartes");
-            System.out.println("MUTATION ENGINE >>> " +
-                getPmpMutationEngine());
-            outputFormats = new ArrayList<String>();
-            outputFormats.add("METHODS");
-            getPitOptions().addOutputFormats(outputFormats);
-
+            if(getPitOptions().getOutputFormats().isEmpty()) {
+                getPitOptions().addOutputFormats(Arrays.asList(ISSUES, METHODS));
+            }
         }
         else {
+            // If not running descartes don't use STOP_METHODS unless manually configured
             features = new ArrayList<String>(getPitOptions().getFeatures());
             Optional<String> result = features.stream().filter(str -> str.startsWith("+STOP_METHODS")).findAny();
             if(!result.isPresent()) {

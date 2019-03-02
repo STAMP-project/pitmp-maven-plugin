@@ -16,6 +16,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <default.encoding>UTF-8</default.encoding>
     <github.global.server>github</github.global.server>
+    <pit.version>1.4.5</pit.version>
+    <descartes.version>1.2.5.RC-SNAPSHOT</descartes.version>
   </properties>
 
   <licenses>
@@ -65,13 +67,13 @@
     <dependency>
       <groupId>org.pitest</groupId>
       <artifactId>pitest-maven</artifactId>
-      <version>1.4.3</version>
+      <version>${pit.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.pitest</groupId>
       <artifactId>pitest-entry</artifactId>
-      <version>1.4.3</version>
+      <version>${pit.version}</version>
     </dependency>
 
     <dependency>
@@ -153,7 +155,7 @@
     <dependency>
       <groupId>eu.stamp-project</groupId>
       <artifactId>descartes</artifactId>
-      <version>1.2.5-SNAPSHOT</version>
+      <version>${descartes.version}</version>
     </dependency>
 
   </dependencies>
