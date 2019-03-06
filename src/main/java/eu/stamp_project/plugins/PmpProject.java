@@ -207,6 +207,11 @@ public class PmpProject
         return(getResults());
     }
 
+    private boolean isDefaultNotConfiguredReportOutput() {
+        Collection<String> outputFormats = getPitOptions().getOutputFormats();
+        return outputFormats.isEmpty() || (outputFormats.size() == 1 &&  outputFormats.contains("HTML"));
+    }
+
     // **********************************************************************
     public void modifyReportOptions()
     {
@@ -217,7 +222,6 @@ public class PmpProject
         ArrayList<String> dependsCodePaths = null;
         ArrayList<String> classPathElts = null;
         ArrayList<String> dependsClassPathElts = null;
-        ArrayList<String> outputFormats = null;
         ArrayList<String> features = null;
 
         // Descartes behavior
@@ -225,9 +229,10 @@ public class PmpProject
         {
             // If runnning descartes and no output format is configured, then set ISSUES and METHODS as default
             setPmpMutationEngine("descartes");
-            if(getPitOptions().getOutputFormats().isEmpty()) {
+            if (isDefaultNotConfiguredReportOutput()) {
                 getPitOptions().addOutputFormats(Arrays.asList(ISSUES, METHODS));
             }
+
         }
         else {
             // If not running descartes don't use STOP_METHODS unless manually configured
