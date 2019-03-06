@@ -92,8 +92,7 @@ then
    fi
    if test "X$pitestVersion" = "X"
    then
-      pitestVersion=`grep '<version>' ../../$pomFile | head -n 2 | tail -n 1 | \
-         sed -e "s/ *<version>//" -e "s/<\/version>//"`
+      pitestVersion=`grep '<pit.version>' pom.xml | sed -e "s/ *<pit.version>//" -e "s/<\/pit.version>//"`
    fi
    
    fileName="run_tests_"`date +%Y%m%d_%Hh%M`

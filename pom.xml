@@ -63,7 +63,6 @@
   </distributionManagement>
 
   <dependencies>
-    <!-- dont move it, 2nd occurence of version keyword shall be PITest version -->
     <dependency>
       <groupId>org.pitest</groupId>
       <artifactId>pitest-maven</artifactId>
