@@ -23,7 +23,7 @@ public class PseudoPartialyTestingListenerTest {
 		return new MutationResult(new MutationDetails(
 				new MutationIdentifier(
 						new Location(ClassName.fromString("AClass"), MethodName.fromString(method), "()I"), 1, mutant),
-				"path/to/file", "Mutation description", 1, 0), new MutationStatusTestPair(1, status));
+				"path/to/file", "Mutation description", 1, 0), new MutationStatusTestPair(1, status, null));
 	}
 
 	private Collection<MutationResult> record(String method, DetectionStatus... statuses) {
