@@ -1,10 +1,7 @@
 package org.pitest.maven;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 
 import org.apache.maven.artifact.Artifact;
@@ -223,16 +220,16 @@ public class PmpMojo extends AbstractPitMojo
 
     // **********************************************************************
     // ******** associations
-    public Predicate<Artifact> getFilter()
-    {
-        return(filter);
-    }
+//    public Predicate<Artifact> getFilter()
+//    {
+//        return(filter);
+//    }
 
     // **********************************************************************
-    public PluginServices getPlugins()
-    {
-        return(plugins);
-    }
+//    public PluginServices getPlugins()
+//    {
+//        return(plugins);
+//    }
 
     // **********************************************************************
     // ******** methods
@@ -249,26 +246,21 @@ public class PmpMojo extends AbstractPitMojo
     public void updateTargetClasses()
     {
         // require(getProject() != null)
-        ArrayList<String> completeTargetClasses;
+
         ArrayList<String> classList;
         ArrayList<MavenProject> moduleList = null;
         MavenProject mvnProject;
 
-        if (targetClasses == null)
-        {
-            targetClasses = new ArrayList<String>();
-        }
-        if (targetClasses.isEmpty())
-        // we need to get the explicit class list of the current project
-        {
-            classList = PmpContext.getClasses(getProject());
-            if (! classList.isEmpty())
-            {
-                targetClasses.addAll(classList);
-            }
-        }
-        // else just let the target classes specified in the pom.xml
+        List<String> originaltargetClasses = getTargetClasses();
+        ArrayList<String> targetClasses = new ArrayList<>();
 
+        if(originaltargetClasses != null && !originaltargetClasses.isEmpty()) {
+            targetClasses.addAll(originaltargetClasses);
+        }
+        else {
+            // If no list of target classes is given, add all classes in the project
+            targetClasses.addAll(PmpContext.getClasses(getProject()));
+        }
         // complete the target classes with other (dependencies) modules classes
         // and add target classes of all getArtifacts which are a project module
         moduleList = PmpContext.getInstance().getDependingModules(getProject());
@@ -287,14 +279,15 @@ public class PmpMojo extends AbstractPitMojo
                 }
             }
         }
+        setTargetClasses(targetClasses);
     }
 
     public void updateTargetTests()
     {
+        List<String> targetTests = getTargetTests();
         if (targetTests == null || targetTests.isEmpty())
         {
-            targetTests = new ArrayList<>();
-            targetTests.addAll(PmpContext.getTestClasses(getProject()));
+            setTargetTests(PmpContext.getTestClasses(getProject()));
         }
     }
 
@@ -376,5 +369,15 @@ public class PmpMojo extends AbstractPitMojo
         // PitMojo displays the reasons about why we skip the project
 
         return(theDecision);
+    }
+
+    @Override
+    public PluginServices getPlugins() {
+        return super.getPlugins();
+    }
+
+    @Override
+    public Predicate<Artifact> getFilter() {
+        return super.getFilter();
     }
 }
