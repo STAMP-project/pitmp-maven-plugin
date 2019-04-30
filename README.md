@@ -35,7 +35,7 @@
       <plugin>
         <groupId>eu.stamp-project</groupId>
         <artifactId>pitmp-maven-plugin</artifactId>
-        <version>1.3.4</version>
+        <version>1.3.7</version>
       </plugin>
   ```
   - and for Descartes include:
@@ -43,7 +43,7 @@
       <plugin>
         <groupId>eu.stamp-project</groupId>
         <artifactId>pitmp-maven-plugin</artifactId>
-        <version>1.3.4</version>
+        <version>1.3.7</version>
         <configuration>
           <mutationEngine>descartes</mutationEngine>
         </configuration>
@@ -240,6 +240,7 @@ Methods, you can add specific thresholds **pseudoTestedThreshold** and/or **part
 ## Releases
 For PIT release...         | use PitMP release... | how to use PitMP
 -------------------------- | -------------------- | ----------------
+1.4.7                      | 1.3.7                | Maven Central
 1.4.2                      | 1.3.5, 1.3.6         | Maven Central
 1.4.0                      | 1.3.4, 1.3.3, 1.3.2, 1.3.1, 1.3.0, 1.2.0 | Maven Central
 1.3.2                      | 1.1.6, 1.1.5         | Maven Central
@@ -247,9 +248,12 @@ For PIT release...         | use PitMP release... | how to use PitMP
 1.2.1, 1.2.2, 1.2.4, 1.2.5, 1.3.0  | not tested   |
 1.2.0, 1.2.3               | 1.0.1                | git clone & mvn install
 
+* pitmp-maven-plugin-1.3.7
+  - Dependency on Descartes v1.2.5
+
 * pitmp-maven-plugin-1.3.6
-  - Dependency on Descartes v1.3.4
-  - Tested with PIT v1.4.2, Descartes v1.3.4, JUnit4 and JUnit5
+  - Dependency on Descartes v1.2.4
+  - Tested with PIT v1.4.2, Descartes v1.2.4, JUnit4 and JUnit5
   - Fixed issues:
     [#19](https://github.com/STAMP-project/pitmp-maven-plugin/issues/19),
   - Updating reference files for automated tests
