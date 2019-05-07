@@ -17,7 +17,7 @@
     <default.encoding>UTF-8</default.encoding>
     <github.global.server>github</github.global.server>
     <pit.version>1.4.7</pit.version>
-    <descartes.version>1.2.5-SNAPSHOT</descartes.version>
+    <descartes.version>1.2.5</descartes.version>
   </properties>
 
   <licenses>
