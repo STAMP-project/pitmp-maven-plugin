@@ -54,11 +54,11 @@ public class PmpMojoIT {
 				{ "1.4.2", "1.3.8-SNAPSHOT", "/dhell5", "pom.xml.pitmp.conf1.xml" },
 				{ "1.4.2", "1.3.8-SNAPSHOT", "/dhell5", "pom.xml.pitmp.noconf.xml" },
 
-//				{ "1.4.2", "1.3.8-SNAPSHOT", "/dnoo", "pom.xml.pitmp.conf1.xml" },
-//				{ "1.4.2", "1.3.8-SNAPSHOT", "/dnoo", "pom.xml.pitmp.noconf.xml" },
-//
-//				{ "1.4.2", "1.3.8-SNAPSHOT", "/dnoo5", "pom.xml.pitmp.conf1.xml" },
-//				{ "1.4.2", "1.3.8-SNAPSHOT", "/dnoo5", "pom.xml.pitmp.noconf.xml" }, 
+				{ "1.4.2", "1.3.8-SNAPSHOT", "/dnoo", "pom.xml.pitmp.conf1.xml" },
+				{ "1.4.2", "1.3.8-SNAPSHOT", "/dnoo", "pom.xml.pitmp.noconf.xml" },
+
+				{ "1.4.2", "1.3.8-SNAPSHOT", "/dnoo5", "pom.xml.pitmp.conf1.xml" },
+				{ "1.4.2", "1.3.8-SNAPSHOT", "/dnoo5", "pom.xml.pitmp.noconf.xml" }, 
 				});
 	}
 
