@@ -96,7 +96,6 @@ public class PmpMojoIT {
 		try {
 			props.load(stream);
 			stream.close();
-			System.out.println((String) props.get(propertyName));
 			return (String) props.get(propertyName);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
