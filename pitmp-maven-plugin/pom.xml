@@ -184,6 +184,13 @@
 			</plugin>
 
 		</plugins>
+		<!-- update version.prop with pom.xml pit and pitmp versions -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 
 	<profiles>

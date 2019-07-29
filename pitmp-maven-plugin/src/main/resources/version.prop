@@ -1,0 +1,2 @@
+pitmp_version=${project.version}
+pit_version=${pit.version}

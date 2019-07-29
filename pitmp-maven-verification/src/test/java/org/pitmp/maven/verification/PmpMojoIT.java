@@ -2,10 +2,12 @@ package org.pitmp.maven.verification;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.maven.it.VerificationException;
 import org.apache.maven.it.Verifier;
@@ -19,22 +21,19 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+import org.pitest.maven.PmpMojo;
 
 @RunWith(Parameterized.class)
 public class PmpMojoIT {
 
+	private static final String PITMP_VERSION = getProperty("pitmp_version");
+	private static final String PIT_VERSION = getProperty("pit_version");
 	private static final String LOG_FILENAME = "log.out";
 
 	@Parameter(0)
-	public String pitTestMavenVersion;
-
-	@Parameter(1)
-	public String pitmpMavenPluginVersion;
-
-	@Parameter(2)
 	public String projectPath;
 
-	@Parameter(3)
+	@Parameter(1)
 	public String pomPath;
 
 	private Verifier verifier;
@@ -45,21 +44,20 @@ public class PmpMojoIT {
 	@Rule
 	public TestName testName = new TestName();
 
-	@Parameters(name = "{index}: Project: {2}, Pom Path: {3}, Pit Test Version: {0}, Pitmp Version: {1} ")
+	@Parameters(name = "{index}: Project: {0}, Pom Path: {1}")
 	public static Collection<Object[]> configuration() {
-		return Arrays.asList(new Object[][] {
-				{ "1.4.2", "1.3.8-SNAPSHOT", "/dhell", "pom.xml.pitmp.conf1.xml" },
-				{ "1.4.2", "1.3.8-SNAPSHOT", "/dhell", "pom.xml.pitmp.noconf.xml" },
+		return Arrays.asList(new Object[][] { 
+			    { "/dhell", "pom.xml.pitmp.conf1.xml" },
+				{ "/dhell", "pom.xml.pitmp.noconf.xml" },
 
-				{ "1.4.2", "1.3.8-SNAPSHOT", "/dhell5", "pom.xml.pitmp.conf1.xml" },
-				{ "1.4.2", "1.3.8-SNAPSHOT", "/dhell5", "pom.xml.pitmp.noconf.xml" },
+				{ "/dhell5", "pom.xml.pitmp.conf1.xml" },
+				{ "/dhell5", "pom.xml.pitmp.noconf.xml" },
 
-				{ "1.4.2", "1.3.8-SNAPSHOT", "/dnoo", "pom.xml.pitmp.conf1.xml" },
-				{ "1.4.2", "1.3.8-SNAPSHOT", "/dnoo", "pom.xml.pitmp.noconf.xml" },
+				{ "/dnoo", "pom.xml.pitmp.conf1.xml" },
+				{ "/dnoo", "pom.xml.pitmp.noconf.xml" },
 
-				{ "1.4.2", "1.3.8-SNAPSHOT", "/dnoo5", "pom.xml.pitmp.conf1.xml" },
-				{ "1.4.2", "1.3.8-SNAPSHOT", "/dnoo5", "pom.xml.pitmp.noconf.xml" }, 
-				});
+				{ "/dnoo5", "pom.xml.pitmp.conf1.xml" },
+				{ "/dnoo5", "pom.xml.pitmp.noconf.xml" }, });
 	}
 
 	@Test
@@ -72,8 +70,8 @@ public class PmpMojoIT {
 		goals.add("pitmp:run");
 		// client options
 		List<String> cliOptions = new ArrayList<String>();
-		cliOptions.add("-Dpitest-maven-version=" + pitTestMavenVersion);
-		cliOptions.add("-Dpitmp-maven-plugin-version=" + pitmpMavenPluginVersion);
+		cliOptions.add("-Dpitest-maven-version=" + PIT_VERSION);
+		cliOptions.add("-Dpitmp-maven-plugin-version=" + PITMP_VERSION);
 		verifier.setCliOptions(cliOptions);
 		verifier.executeGoals(goals);
 		verifier.verifyErrorFreeLog();
@@ -89,6 +87,20 @@ public class PmpMojoIT {
 
 		FileUtils.rename(new File(path + File.separator + pomPath), new File(path + File.separator + "pom.xml"));
 		return new File(testFolder.getRoot().getAbsolutePath() + testPath);
+	}
+
+	private static String getProperty(String propertyName) {
+		String path = "/version.prop";
+		InputStream stream = PmpMojo.class.getResourceAsStream(path);
+		Properties props = new Properties();
+		try {
+			props.load(stream);
+			stream.close();
+			System.out.println((String) props.get(propertyName));
+			return (String) props.get(propertyName);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
