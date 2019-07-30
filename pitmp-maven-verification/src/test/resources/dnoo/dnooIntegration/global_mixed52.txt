@@ -1,4 +1,0 @@
-a first line, longer than the first one
-2nd line with something else: 2, 4, 8, 16
-3rd line
-the end
