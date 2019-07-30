@@ -57,7 +57,8 @@ public class PmpMojoIT {
 				{ "/dnoo", "pom.xml.pitmp.noconf.xml" },
 
 				{ "/dnoo5", "pom.xml.pitmp.conf1.xml" },
-				{ "/dnoo5", "pom.xml.pitmp.noconf.xml" }, });
+				{ "/dnoo5", "pom.xml.pitmp.noconf.xml" }, 
+				});
 	}
 
 	@Test
@@ -68,10 +69,12 @@ public class PmpMojoIT {
 		goals.add("clean");
 		goals.add("install");
 		goals.add("pitmp:run");
+		goals.add("pitmp:descartes");
 		// client options
 		List<String> cliOptions = new ArrayList<String>();
 		cliOptions.add("-Dpitest-maven-version=" + PIT_VERSION);
 		cliOptions.add("-Dpitmp-maven-plugin-version=" + PITMP_VERSION);
+		cliOptions.add("-DoutputFormats=XML");
 		verifier.setCliOptions(cliOptions);
 		verifier.executeGoals(goals);
 		verifier.verifyErrorFreeLog();
