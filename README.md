@@ -237,6 +237,31 @@ Methods, you can add specific thresholds **pseudoTestedThreshold** and/or **part
   </plugin>
 ```
 
+### Break the build upon threshold crossing (mutation score or line coverage)
+
+The plugin can break the build, when the mutation score and/or line coverage is considered too poor.
+The example below breaks the build if mutation score is less than 40% or line coverage less than 60 %, according to "mutationThreshold" and "coverageThreshold" options:
+
+```
+  <plugin>
+    <groupId>eu.stamp-project</groupId>
+    <artifactId>pitmp-maven-plugin</artifactId>
+    <version>release.you.want</version>
+    <configuration>
+      <mutationEngine>descartes</mutationEngine>
+      <skip>false</skip>
+      <failWhenNoMutations>false</failWhenNoMutations>
+      <mutationThreshold>40</mutationThreshold>
+      <coverageThreshold>60</coverageThreshold>
+    </configuration>
+  </plugin>
+```
+
+Notes concerning additional options:
+- "skip" option (default false): if set to true, the whole plugin execution is skipped (this can be parameterized).
+- "failWhenNoMutations" option (default true): if set to true, the build fails when there is no mutation.
+
+
 ## Releases
 For PIT release...         | use PitMP release... | how to use PitMP
 -------------------------- | -------------------- | ----------------
