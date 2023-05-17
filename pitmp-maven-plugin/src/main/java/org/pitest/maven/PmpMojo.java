@@ -236,8 +236,8 @@ public class PmpMojo extends AbstractPitMojo
     public PmpMojo()
     {
         super(new RunPitStrategy(),
-          new DependencyFilter(new PluginServices(AbstractPitMojo.class.getClassLoader())),
-          new PluginServices(AbstractPitMojo.class.getClassLoader()),
+          new DependencyFilter(PluginServices.makeForLoader(AbstractPitMojo.class.getClassLoader())),
+          PluginServices.makeForLoader(AbstractPitMojo.class.getClassLoader()),
           new PmpNonEmptyProjectCheck());
     }
 

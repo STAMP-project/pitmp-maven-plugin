@@ -1,6 +1,7 @@
 package eu.stamp_project;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -73,9 +74,9 @@ public class PmpContext
     }
 
     // **********************************************************************
-    public static ArrayList<File> stringsToFiles(ArrayList<String> nameList)
+    public static ArrayList<Path> stringsToFiles(ArrayList<String> nameList)
     {
-        ArrayList<File> fileList = new ArrayList<File>();
+        ArrayList<Path> fileList = new ArrayList<Path>();
         File newFile;
 
         for (int i = 0; i < nameList.size(); i++)
@@ -83,7 +84,7 @@ public class PmpContext
             newFile = new File(nameList.get(i));
             if (newFile.exists())
             {
-                fileList.add(newFile);
+                fileList.add(newFile.toPath());
             }
         }
 
