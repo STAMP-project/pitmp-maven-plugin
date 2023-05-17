@@ -1,6 +1,7 @@
 package eu.stamp_project.plugins;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.*;
 // **********************************************************************
 
@@ -216,7 +217,7 @@ public class PmpProject
     public void modifyReportOptions()
     {
         // require(getPitOptions() != null)
-        ArrayList<File> fileList = null;
+        ArrayList<Path> fileList = null;
         ArrayList<String> sourceDirList = null;
         ArrayList<String> codePaths = null;
         ArrayList<String> dependsCodePaths = null;

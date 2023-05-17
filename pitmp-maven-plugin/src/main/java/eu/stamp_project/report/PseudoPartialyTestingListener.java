@@ -1,10 +1,9 @@
 package eu.stamp_project.report;
 
+import eu.stamp_project.descartes.reporting.models.MethodRecord;
 import org.pitest.mutationtest.ClassMutationResults;
 import org.pitest.mutationtest.ListenerArguments;
 import org.pitest.mutationtest.MutationResultListener;
-
-import eu.stamp_project.mutationtest.descartes.reporting.models.MethodRecord;
 
 public class PseudoPartialyTestingListener implements MutationResultListener {
 	private Integer tested = 0;

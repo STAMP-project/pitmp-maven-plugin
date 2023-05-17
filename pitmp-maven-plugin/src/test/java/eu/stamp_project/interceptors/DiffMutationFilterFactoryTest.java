@@ -27,7 +27,7 @@ class DiffMutationFilterFactoryTest {
 		final Map<String, List<String>> values = new HashMap<>();
 		values.put(key, Arrays.asList(vals));
 		final FeatureSetting fs = new FeatureSetting(null, null, values);
-		return new InterceptorParameters(fs, null, null);
+		return new InterceptorParameters(fs, null, null, null, null);
 	}
 
 }
